@@ -12,16 +12,16 @@ class Site extends Component {
     //this.setState({page: [10, 20, 30]});
   }
   render() {
-    function drawCanvas({ctx, time}) {
-        const {width, height} = ctx.canvas;
-        ctx.save();
-        ctx.clearRect(0, 0, width, height);
-        ctx.fillStyle = 'black';
-        ctx.translate(width / 2, height / 2);
-        ctx.rotate(((time / 10) % 360) * Math.PI / 180);
-        ctx.fillRect(-1 * width / 4, -1 * height / 4, width / 2, height / 2);
-        ctx.restore();
-    }
+    // function drawCanvas({ctx, time}) {
+    //     const {width, height} = ctx.canvas;
+    //     ctx.save();
+    //     ctx.clearRect(0, 0, width, height);
+    //     ctx.fillStyle = 'black';
+    //     ctx.translate(width / 2, height / 2);
+    //     ctx.rotate(((time / 10) % 360) * Math.PI / 180);
+    //     ctx.fillRect(-1 * width / 4, -1 * height / 4, width / 2, height / 2);
+    //     ctx.restore();
+    // }
 
     return h("div", {}, [
 
@@ -49,11 +49,34 @@ class Site extends Component {
       ]),
 
       // Canvas test
-      h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
+      // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
 
+      // Hover test
+      // h(Hover, {normalComponent: h("p", {}, "first component"), onFocusComponent: h("p", {}, "second component")})
+
+
+      h("div", {}, "first component")
     ]);
   }
 }
+
+class Hover extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {isOnFocus: false, normalComponent: props.normalComponent, onFocusComponent: props.onFocusComponent};
+  }
+
+  render() {
+      const component = this.state.isOnFocus ? this.state.normalComponent : this.state.onFocusComponent;
+
+      return h("div", 
+        {onMouseEnter: () => this.setState(this.state.isOnFocus = true), 
+        onMouseLeave: () => this.setState(this.state.isOnFocus = false)}, 
+        component);
+  }
+}
+
+
 
 window.onload = () => {
   render(h("div", {}, [h(Site)]), document.getElementById("main"));
