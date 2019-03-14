@@ -97,17 +97,6 @@ eval("exports = module.exports = __webpack_require__(/*! ../css-loader/dist/runt
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/dist/cjs.js!./src/components.css":
-/*!******************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js!./src/components.css ***!
-  \******************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("exports = module.exports = __webpack_require__(/*! ../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \"/* Feature grid */\\n.feature-img {\\n  border-radius: 8px;\\n  width: 300px;\\n}\\n\\n.feature-txt {\\n  padding: 40px;\\n  font-size: 18px;\\n}\\n\\n.grid-container {\\n  display: grid;\\n  grid-template-columns: auto;\\n  background-color: #adadad;\\n  grid-row-gap: 40px;\\n  height: 1000px;\\n  width: 100%;\\n  align-content: center\\n}\\n\\n.grid-item {\\n  background-color: #ce9ffa;\\n  width: 100%;\\n  height: 350px;\\n  display: flex;\\n  align-items: center; \\n  font-size: 22px;\\n}\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/components.css?./node_modules/css-loader/dist/cjs.js");
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/dist/runtime/api.js":
 /*!*****************************************************!*\
   !*** ./node_modules/css-loader/dist/runtime/api.js ***!
@@ -200,47 +189,36 @@ eval("\n/**\n * When source maps are enabled, `style-loader` uses a link element
 
 /***/ }),
 
-/***/ "./src/components.css":
-/*!****************************!*\
-  !*** ./src/components.css ***!
-  \****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("\nvar content = __webpack_require__(/*! !../node_modules/css-loader/dist/cjs.js!./components.css */ \"./node_modules/css-loader/dist/cjs.js!./src/components.css\");\n\nif(typeof content === 'string') content = [[module.i, content, '']];\n\nvar transform;\nvar insertInto;\n\n\n\nvar options = {\"hmr\":true}\n\noptions.transform = transform\noptions.insertInto = undefined;\n\nvar update = __webpack_require__(/*! ../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\n\nif(content.locals) module.exports = content.locals;\n\nif(false) {}\n\n//# sourceURL=webpack:///./src/components.css?");
-
-/***/ }),
-
-/***/ "./src/images/bug.jpg":
-/*!****************************!*\
-  !*** ./src/images/bug.jpg ***!
-  \****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-eval("module.exports = __webpack_require__.p + \"src/images/bug.jpg\";\n\n//# sourceURL=webpack:///./src/images/bug.jpg?");
-
-/***/ }),
-
-/***/ "./src/images/catchoro.jpg":
+/***/ "./src/images/feature1.png":
 /*!*********************************!*\
-  !*** ./src/images/catchoro.jpg ***!
+  !*** ./src/images/feature1.png ***!
   \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__.p + \"src/images/catchoro.jpg\";\n\n//# sourceURL=webpack:///./src/images/catchoro.jpg?");
+eval("module.exports = __webpack_require__.p + \"src/images/feature1.png\";\n\n//# sourceURL=webpack:///./src/images/feature1.png?");
 
 /***/ }),
 
-/***/ "./src/images/formality.png":
-/*!**********************************!*\
-  !*** ./src/images/formality.png ***!
-  \**********************************/
+/***/ "./src/images/feature2.png":
+/*!*********************************!*\
+  !*** ./src/images/feature2.png ***!
+  \*********************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("module.exports = __webpack_require__.p + \"src/images/formality.png\";\n\n//# sourceURL=webpack:///./src/images/formality.png?");
+eval("module.exports = __webpack_require__.p + \"src/images/feature2.png\";\n\n//# sourceURL=webpack:///./src/images/feature2.png?");
+
+/***/ }),
+
+/***/ "./src/images/feature3.png":
+/*!*********************************!*\
+  !*** ./src/images/feature3.png ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("module.exports = __webpack_require__.p + \"src/images/feature3.png\";\n\n//# sourceURL=webpack:///./src/images/feature3.png?");
 
 /***/ }),
 
@@ -252,7 +230,19 @@ eval("module.exports = __webpack_require__.p + \"src/images/formality.png\";\n\n
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! normalize.css */ \"./node_modules/normalize.css/normalize.css\");\n/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _components_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components.css */ \"./src/components.css\");\n/* harmony import */ var _components_css__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_components_css__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _images_bug_jpg__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./images/bug.jpg */ \"./src/images/bug.jpg\");\n/* harmony import */ var _images_bug_jpg__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_bug_jpg__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _images_catchoro_jpg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./images/catchoro.jpg */ \"./src/images/catchoro.jpg\");\n/* harmony import */ var _images_catchoro_jpg__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_images_catchoro_jpg__WEBPACK_IMPORTED_MODULE_3__);\n/* harmony import */ var _images_formality_png__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./images/formality.png */ \"./src/images/formality.png\");\n/* harmony import */ var _images_formality_png__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_images_formality_png__WEBPACK_IMPORTED_MODULE_4__);\nconst {Component, render} = __webpack_require__(/*! inferno */ \"./node_modules/inferno/index.esm.js\");\nconst h = __webpack_require__(/*! inferno-hyperscript */ \"./node_modules/inferno-hyperscript/dist/index.esm.js\").h;\nconst Canvas = __webpack_require__(/*! inferno-canvas-component-2 */ \"./node_modules/inferno-canvas-component-2/inferno-canvas-component.js\");\n\n\n\n// Feature images\n\n\n\n\nclass Site extends Component {\n  constructor(props) {\n    super(props)\n    this.state = {page: \"main\"};\n  }\n  componentDidMount() {\n    //this.setState({page: [10, 20, 30]});\n  }\n  render() {\n    // function drawCanvas({ctx, time}) {\n    //     const {width, height} = ctx.canvas;\n    //     ctx.save();\n    //     ctx.clearRect(0, 0, width, height);\n    //     ctx.fillStyle = 'black';\n    //     ctx.translate(width / 2, height / 2);\n    //     ctx.rotate(((time / 10) % 360) * Math.PI / 180);\n    //     ctx.fillRect(-1 * width / 4, -1 * height / 4, width / 2, height / 2);\n    //     ctx.restore();\n    // }\n\n    return h(\"div\", {}, [\n\n      // Top menu\n      h(\"div\", {style: {\"display\": \"flex\", \"flex-flow\": \"row nowrap\", \"background-color\": \"#827fc3\", \"color\": \"#37346f\"}}, [\n        h(\"div\", {style: {\"position\": \"absolute\", \"width\": \"56px\", \"height\": \"56px\", \"font-size\": \"48px\", \"display\": \"flex\", \"justify-content\": \"center\", \"align-items\": \"center\"}}, [\"ƛ\"]),\n        h(\"div\", {style: {\"width\": \"100%\", \"height\": \"56px\", \"display\": \"flex\", \"justify-content\": \"center\", \"align-items\": \"flex-end\"}}, [\n          h(\"div\", {style: {\"height\": \"56px\", \"margin\": \"0px 32px\", \"border-bottom\": \"3px solid #37346f\", \"display\": \"flex\", \"align-items\": \"center\", \"font-size\": \"22px\"}}, \"docs\"),\n          h(\"div\", {style: {\"height\": \"56px\", \"margin\": \"0px 32px\", \"border-bottom\": \"3px solid #37346f\", \"display\": \"flex\", \"align-items\": \"center\", \"font-size\": \"22px\"}}, \"more\"),\n          h(\"div\", {style: {\"height\": \"56px\", \"margin\": \"0px 32px\", \"border-bottom\": \"3px solid #37346f\", \"display\": \"flex\", \"align-items\": \"center\", \"font-size\": \"22px\"}}, \"stuff\"),\n        ]),\n      ]),\n\n      // Top area\n      h(\"div\", {style: {\"width\": \"100%\", \"height\": \"400px\", \"background-color\": \"#827fc3\", \"color\": \"#cccbe7\"}}, [\n        h(\"div\", {style: {\"width\": \"100%\", \"height\": \"200px\", \"display\": \"flex\", \"justify-content\": \"center\", \"align-items\": \"flex-end\", \"font-size\": \"110px\"}}, \"Formality\"),\n        h(\"div\", {style: {\"width\": \"100%\", \"height\": \"100px\", \"display\": \"flex\", \"justify-content\": \"center\", \"align-items\": \"flex-start\", \"font-size\": \"32px\"}}, [\n          h(\"span\", {}, \"An efficient\\u00A0\"),\n          h(\"span\", {style: {\"font-weight\": \"bold\"}}, \"proof\"),\n          h(\"span\", {}, \"gramming language.\"),\n        ]),\n        h(\"div\", {style: {\"width\": \"100%\", \"height\": \"100px\", \"display\": \"flex\", \"justify-content\": \"center\", \"align-items\": \"flex-start\", \"font-size\": \"32px\"}}, [\n          \"[install]\"\n        ])\n      ]),\n\n      // Canvas test\n      // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})\n\n      // Hover test\n      h(Hover, {normalComponent: h(\"p\", {}, \"first component\"), onFocusComponent: h(\"p\", {}, \"second component\")}),\n\n      // Grid test\n      h(FeatureGrid, {})\n    ]);\n  }\n}\n\nclass Hover extends Component {\n  constructor(props) {\n    super(props)\n    this.state = {isOnFocus: false, normalComponent: props.normalComponent, onFocusComponent: props.onFocusComponent};\n  }\n\n  render() {\n    const component = this.state.isOnFocus ? this.state.normalComponent : this.state.onFocusComponent;\n\n    return h(\"div\", \n      {onMouseEnter: () => this.setState(this.state.isOnFocus = true), \n      onMouseLeave: () => this.setState(this.state.isOnFocus = false)}, \n      component);\n  }\n}\n\nclass FeatureGrid extends Component {\n  constructor(props) {\n    super(props)\n    this.state = {};\n  }\n\n  render() {\n    return h(\"div\", {className: \"grid-container\"}, [\n      // First element\n      h(\"div\", {className: \"grid-item\"}, [\n        h(\"div\", {className: \"feature-txt\"}, \"text of first element on grid\"),\n        h(\"img\", {src: _images_bug_jpg__WEBPACK_IMPORTED_MODULE_2___default.a, alt: \"image1\", className: \"feature-img\"})\n      ]),\n      // Second element\n      h(\"div\", {className: \"grid-item\"}, [\n        h(\"div\", {className: \"feature-txt\"}, \"text of the second element on grid\"),\n        h(\"img\", {src: _images_catchoro_jpg__WEBPACK_IMPORTED_MODULE_3___default.a, alt: \"image2\", className: \"feature-img\"})\n      ]),\n      // Third element\n      h(\"div\", {className: \"grid-item\"}, [\n        h(\"div\", {className: \"feature-txt\"}, \"text of the third element on grid\"),\n        h(\"img\", {src: _images_formality_png__WEBPACK_IMPORTED_MODULE_4___default.a, alt: \"image3\", className: \"feature-img\"})\n      ])\n    ]);\n  }\n\n}\n\n\n\nwindow.onload = () => {\n  render(h(\"div\", {}, [h(Site)]), document.getElementById(\"main\"));\n  console.log(\"ok\");\n};\n\n\n//# sourceURL=webpack:///./src/index.js?");
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! normalize.css */ \"./node_modules/normalize.css/normalize.css\");\n/* harmony import */ var normalize_css__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(normalize_css__WEBPACK_IMPORTED_MODULE_0__);\n/* harmony import */ var _images_feature1_png__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./images/feature1.png */ \"./src/images/feature1.png\");\n/* harmony import */ var _images_feature1_png__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_images_feature1_png__WEBPACK_IMPORTED_MODULE_1__);\n/* harmony import */ var _images_feature2_png__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./images/feature2.png */ \"./src/images/feature2.png\");\n/* harmony import */ var _images_feature2_png__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(_images_feature2_png__WEBPACK_IMPORTED_MODULE_2__);\n/* harmony import */ var _images_feature3_png__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./images/feature3.png */ \"./src/images/feature3.png\");\n/* harmony import */ var _images_feature3_png__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(_images_feature3_png__WEBPACK_IMPORTED_MODULE_3__);\nconst {Component, render} = __webpack_require__(/*! inferno */ \"./node_modules/inferno/index.esm.js\");\nconst h = __webpack_require__(/*! inferno-hyperscript */ \"./node_modules/inferno-hyperscript/dist/index.esm.js\").h;\nconst Canvas = __webpack_require__(/*! inferno-canvas-component-2 */ \"./node_modules/inferno-canvas-component-2/inferno-canvas-component.js\");\n\nconst s = __webpack_require__(/*! ./style */ \"./src/style.js\");\n\n// Feature images\n\n\n\n\nclass Site extends Component {\n  constructor(props) {\n    super(props)\n    this.state = {page: \"main\"};\n  }\n  componentDidMount() {\n    //this.setState({page: [10, 20, 30]});\n  }\n  render() {\n    // function drawCanvas({ctx, time}) {\n    //     const {width, height} = ctx.canvas;\n    //     ctx.save();\n    //     ctx.clearRect(0, 0, width, height);\n    //     ctx.fillStyle = 'black';\n    //     ctx.translate(width / 2, height / 2);\n    //     ctx.rotate(((time / 10) % 360) * Math.PI / 180);\n    //     ctx.fillRect(-1 * width / 4, -1 * height / 4, width / 2, height / 2);\n    //     ctx.restore();\n    // }\n\n    return h(\"div\", {}, [\n\n      // Top menu\n      h(\"div\", {style: {\"display\": \"flex\", \"flex-flow\": \"row nowrap\", \"background-color\": \"#827fc3\", \"color\": \"#37346f\"}}, [\n        h(\"div\", {style: {\"position\": \"absolute\", \"width\": \"56px\", \"height\": \"56px\", \"font-size\": \"48px\", \"display\": \"flex\", \"justify-content\": \"center\", \"align-items\": \"center\"}}, [\"ƛ\"]),\n        h(\"div\", {style: {\"width\": \"100%\", \"height\": \"56px\", \"display\": \"flex\", \"justify-content\": \"center\", \"align-items\": \"flex-end\"}}, [\n          h(\"div\", {style: {\"height\": \"56px\", \"margin\": \"0px 32px\", \"border-bottom\": \"3px solid #37346f\", \"display\": \"flex\", \"align-items\": \"center\", \"font-size\": \"22px\"}}, \"docs\"),\n          h(\"div\", {style: {\"height\": \"56px\", \"margin\": \"0px 32px\", \"border-bottom\": \"3px solid #37346f\", \"display\": \"flex\", \"align-items\": \"center\", \"font-size\": \"22px\"}}, \"more\"),\n          h(\"div\", {style: {\"height\": \"56px\", \"margin\": \"0px 32px\", \"border-bottom\": \"3px solid #37346f\", \"display\": \"flex\", \"align-items\": \"center\", \"font-size\": \"22px\"}}, \"stuff\"),\n        ]),\n      ]),\n\n      // Top area\n      h(\"div\", {style: {\"width\": \"100%\", \"height\": \"400px\", \"background-color\": \"#827fc3\", \"color\": \"#cccbe7\"}}, [\n        h(\"div\", {style: {\"width\": \"100%\", \"height\": \"200px\", \"display\": \"flex\", \"justify-content\": \"center\", \"align-items\": \"flex-end\", \"font-size\": \"110px\"}}, \"Formality\"),\n        h(\"div\", {style: {\"width\": \"100%\", \"height\": \"100px\", \"display\": \"flex\", \"justify-content\": \"center\", \"align-items\": \"flex-start\", \"font-size\": \"32px\"}}, [\n          h(\"span\", {}, \"An efficient\\u00A0\"),\n          h(\"span\", {style: {\"font-weight\": \"bold\"}}, \"proof\"),\n          h(\"span\", {}, \"gramming language.\"),\n        ]),\n        h(\"div\", {style: {\"width\": \"100%\", \"height\": \"100px\", \"display\": \"flex\", \"justify-content\": \"center\", \"align-items\": \"flex-start\", \"font-size\": \"32px\"}}, [\n          \"[install]\"\n        ])\n      ]),\n\n      // Canvas test\n      // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})\n\n      // Hover test\n      h(Hover, {normalComponent: h(\"p\", {}, \"first component\"), onFocusComponent: h(\"p\", {}, \"second component\")}),\n      \n        // Grid test\n      h(FeatureGrid, {})\n    ]);\n  }\n}\n\n\nconst buttonGetStartedNormal = {\n  \"font-weight\": \"normal\"\n}\n\nconst buttonGetStartedOnFocus= {\n  \"font-weight\": \"bold\"\n}\n\n// --- Components --- \n\n// ---- Not working --- \n// class ButtonGetStarted extends Component {\n//   constructor(props) {\n//     super(props)\n//     this.state = {linkTo: props.linkTo, style: props.style}\n//   }\n\n//   render() {\n//     function handleClick(e) {\n//       e.preventDefault();\n//       console.log('Button was clicked.');\n//     }\n//     return h(\"a\", \n//     {style: this.setState(this.state.style),\n//       onMouseEnter: () => {\n//         this.setState(this.state.style = buttonGetStartedOnFocus)\n//       },\n//       onMouseLeave: () => {\n//         this.setState(this.state.style = buttonGetStartedNormal)\n//       },\n//       onClick={handleClick}\n//     });\n//   }\n// }\n\nclass Hover extends Component {\n  constructor(props) {\n    super(props)\n    this.state = {isOnFocus: false, normalComponent: props.normalComponent, onFocusComponent: props.onFocusComponent};\n  }\n\n  render() {\n    const component = this.state.isOnFocus ? this.state.normalComponent : this.state.onFocusComponent;\n\n    return h(\"div\", \n      {onMouseEnter: () => this.setState(this.state.isOnFocus = true), \n      onMouseLeave: () => this.setState(this.state.isOnFocus = false)}, \n      component);\n  }\n}\n\nclass FeatureGrid extends Component {\n  constructor(props) {\n    super(props)\n    this.state = {};\n  }\n  // NAO PODE usar CSS, pra isso, terei que criar uma variável pra cada estilo e aí as propriedade ficam sendo propriedade do objeto. \n  // chama {style: nome_da_variável} e aí o estilo é aplicado do mesmo jeito\n  render() {\n    return h(\"div\", {style: s.gridContainer}, [\n      // First element\n      h(\"div\", {style: s.gridItem}, [\n        h(\"div\", {style: s.featureTxt}, \"text of first element on grid\"),\n        h(\"img\", {src: _images_feature1_png__WEBPACK_IMPORTED_MODULE_1___default.a, alt: \"image1\", style: s.featureImg})\n      ]),\n      // Second element\n      h(\"div\", {style: s.gridItem}, [\n        h(\"div\", {style: s.featureTxt}, \"text of the second element on grid\"),\n        h(\"img\", {src: _images_feature2_png__WEBPACK_IMPORTED_MODULE_2___default.a, alt: \"image2\", style: s.featureImg})\n      ]),\n      // Third element\n      h(\"div\", {style: s.gridItem}, [\n        h(\"div\", {style: s.featureTxt}, \"text of the third element on grid\"),\n        h(\"img\", {src: _images_feature3_png__WEBPACK_IMPORTED_MODULE_3___default.a, alt: \"image3\", style: s.featureImg})\n      ])\n    ]);\n  }\n\n}\n\n\nwindow.onload = () => {\n  render(h(\"div\", {}, [h(Site)]), document.getElementById(\"main\"));\n  console.log(\"ok\");\n};\n\n\n//# sourceURL=webpack:///./src/index.js?");
+
+/***/ }),
+
+/***/ "./src/style.js":
+/*!**********************!*\
+  !*** ./src/style.js ***!
+  \**********************/
+/*! exports provided: gridContainer, gridItem, featureImg, featureTxt */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+eval("__webpack_require__.r(__webpack_exports__);\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"gridContainer\", function() { return gridContainer; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"gridItem\", function() { return gridItem; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"featureImg\", function() { return featureImg; });\n/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, \"featureTxt\", function() { return featureTxt; });\nconst gridContainer = {\n  \"display\": \"grid\",\n  \"background-color\": \"#fdfdfb\",\n  \"grid-row-gap\": \"30px\",\n  \"flex-direction\": \"column\",\n  \"justify-content\": \"center\",\n  \"align-items\": \"center\",\n  \"height\": \"1000px\",\n  \"width\": \"100%\"\n}\n\nconst gridItem = {\n  \"width\": \"100%\",\n  \"height\": \"350px\",\n  \"display\": \"flex\",\n  \"align-items\": \"center\", \n  \"font-size\": \"22px\"\n}\n\nconst featureImg =  {\n  \"border-radius\": \"8px\",\n  \"width\": \"300px\"\n}\n\nconst featureTxt = {\n  \"padding\": \"40px\",\n  \"font-size\": \"18px\"\n}\n\n\n\n//# sourceURL=webpack:///./src/style.js?");
 
 /***/ })
 

@@ -2,12 +2,12 @@ const {Component, render} = require("inferno");
 const h = require("inferno-hyperscript").h;
 const Canvas = require("inferno-canvas-component-2");
 import "normalize.css";
-import './components.css';
+const s = require('./style');
 
 // Feature images
-import featureImage1 from './images/bug.jpg';
-import featureImage2 from './images/catchoro.jpg';
-import featureImage3 from './images/formality.png';
+import featureImage1 from './images/feature1.png';
+import featureImage2 from './images/feature2.png';
+import featureImage3 from './images/feature3.png';
 
 class Site extends Component {
   constructor(props) {
@@ -59,12 +59,48 @@ class Site extends Component {
 
       // Hover test
       h(Hover, {normalComponent: h("p", {}, "first component"), onFocusComponent: h("p", {}, "second component")}),
-
-      // Grid test
+      
+        // Grid test
       h(FeatureGrid, {})
     ]);
   }
 }
+
+
+const buttonGetStartedNormal = {
+  "font-weight": "normal"
+}
+
+const buttonGetStartedOnFocus= {
+  "font-weight": "bold"
+}
+
+// --- Components --- 
+
+// ---- Not working --- 
+// class ButtonGetStarted extends Component {
+//   constructor(props) {
+//     super(props)
+//     this.state = {linkTo: props.linkTo, style: props.style}
+//   }
+
+//   render() {
+//     function handleClick(e) {
+//       e.preventDefault();
+//       console.log('Button was clicked.');
+//     }
+//     return h("a", 
+//     {style: this.setState(this.state.style),
+//       onMouseEnter: () => {
+//         this.setState(this.state.style = buttonGetStartedOnFocus)
+//       },
+//       onMouseLeave: () => {
+//         this.setState(this.state.style = buttonGetStartedNormal)
+//       },
+//       onClick={handleClick}
+//     });
+//   }
+// }
 
 class Hover extends Component {
   constructor(props) {
@@ -87,29 +123,29 @@ class FeatureGrid extends Component {
     super(props)
     this.state = {};
   }
-
+  // NAO PODE usar CSS, pra isso, terei que criar uma variável pra cada estilo e aí as propriedade ficam sendo propriedade do objeto. 
+  // chama {style: nome_da_variável} e aí o estilo é aplicado do mesmo jeito
   render() {
-    return h("div", {className: "grid-container"}, [
+    return h("div", {style: s.gridContainer}, [
       // First element
-      h("div", {className: "grid-item"}, [
-        h("div", {className: "feature-txt"}, "text of first element on grid"),
-        h("img", {src: featureImage1, alt: "image1", className: "feature-img"})
+      h("div", {style: s.gridItem}, [
+        h("div", {style: s.featureTxt}, "text of first element on grid"),
+        h("img", {src: featureImage1, alt: "image1", style: s.featureImg})
       ]),
       // Second element
-      h("div", {className: "grid-item"}, [
-        h("div", {className: "feature-txt"}, "text of the second element on grid"),
-        h("img", {src: featureImage2, alt: "image2", className: "feature-img"})
+      h("div", {style: s.gridItem}, [
+        h("div", {style: s.featureTxt}, "text of the second element on grid"),
+        h("img", {src: featureImage2, alt: "image2", style: s.featureImg})
       ]),
       // Third element
-      h("div", {className: "grid-item"}, [
-        h("div", {className: "feature-txt"}, "text of the third element on grid"),
-        h("img", {src: featureImage3, alt: "image3", className: "feature-img"})
+      h("div", {style: s.gridItem}, [
+        h("div", {style: s.featureTxt}, "text of the third element on grid"),
+        h("img", {src: featureImage3, alt: "image3", style: s.featureImg})
       ])
     ]);
   }
 
 }
-
 
 
 window.onload = () => {
