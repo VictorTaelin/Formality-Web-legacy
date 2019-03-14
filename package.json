@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/moonad/Formality-Web#readme",
   "devDependencies": {
+    "file-loader": "^3.0.1",
     "raw-loader": "^1.0.0",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3"

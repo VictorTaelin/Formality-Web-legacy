@@ -3,6 +3,16 @@ const h = require("inferno-hyperscript").h;
 const Canvas = require("inferno-canvas-component-2");
 import "normalize.css";
 
+// Feature images
+import featureImage1 from './images/bug.jpg';
+import featureImage2 from './images/catchoro.jpg';
+import featureImage3 from './images/formality.png';
+console.log("Image1");
+console.log(featureImage1); 
+console.log("Image2");
+console.log(featureImage2); 
+
+
 class Site extends Component {
   constructor(props) {
     super(props)
@@ -52,10 +62,10 @@ class Site extends Component {
       // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
 
       // Hover test
-      // h(Hover, {normalComponent: h("p", {}, "first component"), onFocusComponent: h("p", {}, "second component")})
+      h(Hover, {normalComponent: h("p", {}, "first component"), onFocusComponent: h("p", {}, "second component")}),
 
-
-      h("div", {}, "first component")
+      // Grid test
+      h(FeatureGrid, {})
     ]);
   }
 }
@@ -67,13 +77,41 @@ class Hover extends Component {
   }
 
   render() {
-      const component = this.state.isOnFocus ? this.state.normalComponent : this.state.onFocusComponent;
+    const component = this.state.isOnFocus ? this.state.normalComponent : this.state.onFocusComponent;
 
-      return h("div", 
-        {onMouseEnter: () => this.setState(this.state.isOnFocus = true), 
-        onMouseLeave: () => this.setState(this.state.isOnFocus = false)}, 
-        component);
+    return h("div", 
+      {onMouseEnter: () => this.setState(this.state.isOnFocus = true), 
+      onMouseLeave: () => this.setState(this.state.isOnFocus = false)}, 
+      component);
   }
+}
+
+class FeatureGrid extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {};
+  }
+
+  render() {
+    return h("div", {}, [
+      // First element
+      h("div", {}, [
+        h("div", {style: {"font-size": "22px"}}, "text of first element on grid"),
+        h("img", {src: featureImage1, alt: "image1" })
+      ]),
+      // Second element
+      h("div", {}, [
+        h("div", {style: {"font-size": "22px"}}, "text of the second element on grid"),
+        h("img", {src: featureImage2, alt: "image2" })
+      ]),
+      // Third element
+      h("div", {}, [
+        h("div", {style: {"font-size": "22px"}}, "text of the third element on grid"),
+        h("img", {src: featureImage3, alt: "image3" })
+      ])
+    ]);
+  }
+
 }
 
 
