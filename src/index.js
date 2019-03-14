@@ -2,16 +2,12 @@ const {Component, render} = require("inferno");
 const h = require("inferno-hyperscript").h;
 const Canvas = require("inferno-canvas-component-2");
 import "normalize.css";
+import './components.css';
 
 // Feature images
 import featureImage1 from './images/bug.jpg';
 import featureImage2 from './images/catchoro.jpg';
 import featureImage3 from './images/formality.png';
-console.log("Image1");
-console.log(featureImage1); 
-console.log("Image2");
-console.log(featureImage2); 
-
 
 class Site extends Component {
   constructor(props) {
@@ -93,21 +89,21 @@ class FeatureGrid extends Component {
   }
 
   render() {
-    return h("div", {}, [
+    return h("div", {className: "grid-container"}, [
       // First element
-      h("div", {}, [
-        h("div", {style: {"font-size": "22px"}}, "text of first element on grid"),
-        h("img", {src: featureImage1, alt: "image1" })
+      h("div", {className: "grid-item"}, [
+        h("div", {className: "feature-txt"}, "text of first element on grid"),
+        h("img", {src: featureImage1, alt: "image1", className: "feature-img"})
       ]),
       // Second element
-      h("div", {}, [
-        h("div", {style: {"font-size": "22px"}}, "text of the second element on grid"),
-        h("img", {src: featureImage2, alt: "image2" })
+      h("div", {className: "grid-item"}, [
+        h("div", {className: "feature-txt"}, "text of the second element on grid"),
+        h("img", {src: featureImage2, alt: "image2", className: "feature-img"})
       ]),
       // Third element
-      h("div", {}, [
-        h("div", {style: {"font-size": "22px"}}, "text of the third element on grid"),
-        h("img", {src: featureImage3, alt: "image3" })
+      h("div", {className: "grid-item"}, [
+        h("div", {className: "feature-txt"}, "text of the third element on grid"),
+        h("img", {src: featureImage3, alt: "image3", className: "feature-img"})
       ])
     ]);
   }

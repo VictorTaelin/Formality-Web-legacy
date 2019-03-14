@@ -79,6 +79,7 @@ textarea, select, input, button {
 }
 
 
-/* .Feature-image1 {
-  background-image: url(./bug.jpg);
-} */
+.img {
+  border-radius: 10px;
+  max-width: 100%;
+}
