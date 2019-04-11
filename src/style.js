@@ -1,3 +1,6 @@
+const primaryColor = "#444053";
+const secondaryColor = "#ffffff";
+
 const gridContainer = {
   "display": "grid",
   "background-color": "#fdfdfb",
@@ -27,4 +30,12 @@ const featureTxt = {
   "font-size": "18px"
 }
 
-export { gridContainer, gridItem, featureImg, featureTxt };
+const logo = {
+  "width" : "50px",
+  "height" : "40px",
+  "margin-left" : "70px",
+  "margin-top" : "10px", 
+  "margin-bottom" : "10px"
+}
+
+export { primaryColor, secondaryColor,  gridContainer, gridItem, featureImg, featureTxt, logo };

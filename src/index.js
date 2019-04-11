@@ -1,13 +1,14 @@
 const {Component, render} = require("inferno");
 const h = require("inferno-hyperscript").h;
 const Canvas = require("inferno-canvas-component-2");
-import "normalize.css";
+// import "normalize.css";
 const s = require('./style');
 
 // Feature images
 import featureImage1 from './images/feature1.png';
 import featureImage2 from './images/feature2.png';
 import featureImage3 from './images/feature3.png';
+import logo from './images/logo-formality.png';
 
 class Site extends Component {
   constructor(props) {
@@ -32,19 +33,19 @@ class Site extends Component {
     return h("div", {}, [
 
       // Top menu
-      h("div", {style: {"display": "flex", "flex-flow": "row nowrap", "background-color": "#827fc3", "color": "#37346f"}}, [
-        h("div", {style: {"position": "absolute", "width": "56px", "height": "56px", "font-size": "48px", "display": "flex", "justify-content": "center", "align-items": "center"}}, ["ƛ"]),
-        h("div", {style: {"width": "100%", "height": "56px", "display": "flex", "justify-content": "center", "align-items": "flex-end"}}, [
-          h("div", {style: {"height": "56px", "margin": "0px 32px", "border-bottom": "3px solid #37346f", "display": "flex", "align-items": "center", "font-size": "22px"}}, "docs"),
-          h("div", {style: {"height": "56px", "margin": "0px 32px", "border-bottom": "3px solid #37346f", "display": "flex", "align-items": "center", "font-size": "22px"}}, "more"),
-          h("div", {style: {"height": "56px", "margin": "0px 32px", "border-bottom": "3px solid #37346f", "display": "flex", "align-items": "center", "font-size": "22px"}}, "stuff"),
+      h("div", {style: {"display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
+        // h("div", {style: {"position": "absolute", "width": "56px", "height": "56px", "font-size": "48px", "display": "flex", "justify-content": "flex-end", "align-items": "center"}}, ["ƛ"]),
+        h("img", {src: logo, alt: "logo", style: s.logo}),
+        h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "70px"}}, [
+          h("div", {style: {"height": "30px", "margin": "0px 20px", "border-bottom": "1px solid #ffffff", "display": "flex", "align-items": "center", "font-size": "15px"}}, "Specification"),
+          h("div", {style: {"height": "30px", "margin": "0px 20px", "border-bottom": "1px solid #ffffff", "display": "flex", "align-items": "center", "font-size": "15px"}}, "Try it!"),
         ]),
       ]),
 
       // Top area
-      h("div", {style: {"width": "100%", "height": "400px", "background-color": "#827fc3", "color": "#cccbe7"}}, [
-        h("div", {style: {"width": "100%", "height": "200px", "display": "flex", "justify-content": "center", "align-items": "flex-end", "font-size": "110px"}}, "Formality"),
-        h("div", {style: {"width": "100%", "height": "100px", "display": "flex", "justify-content": "center", "align-items": "flex-start", "font-size": "32px"}}, [
+      h("div", {style: {"width": "100%", "height": "400px", "color": s.primaryColor}}, [
+        h("div", {style: {"width": "100%", "height": "200px", "display": "flex", "justify-content": "center", "align-items": "flex-end", "font-size": "90px"}}, "FORMALITY"),
+        h("div", {style: {"width": "100%", "height": "100px", "display": "flex", "justify-content": "center", "align-items": "flex-start", "font-size": "30px"}}, [
           h("span", {}, "An efficient\u00A0"),
           h("span", {style: {"font-weight": "bold"}}, "proof"),
           h("span", {}, "gramming language."),
