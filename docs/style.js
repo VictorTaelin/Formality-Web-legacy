@@ -28,19 +28,29 @@ const featureImg =  {
 const logo = {
   "width" : "45px",
   "height" : "40px",
-  "margin-left" : "70px",
+  "margin-left" : "90px",
   "margin-top" : "10px", 
   "margin-bottom" : "10px"
 }
 
 const tabs = {
   "height" : "30px", 
-  "margin" : "0px 20px",
-  "border-bottom" : "1px solid #ffffff",
+  "margin" : "30px 20px 20px",
   "display" : "flex",
   "align-items" : "center",
   "font-size" : "15px",
   "font-family" : "Open Sans"
+}
+
+const tabsOnFocus = {
+  "height" : "29px", 
+  "margin" : "30px 20px 20px",
+  "border-bottom" : "1px solid #ffffff",
+  "display" : "flex",
+  "align-items" : "center",
+  "font-size" : "15px",
+  "font-family" : "Open Sans",
+  "cursor": "pointer"
 }
 
 const container30size = {
@@ -96,6 +106,6 @@ const whiteRectangle = {
   "backgroundColor" : "#123fff",
 }
 
-export { primaryColor, secondaryColor,  gridContainer, gridItem, featureImg, logo, tabs, 
+export { primaryColor, secondaryColor,  gridContainer, gridItem, featureImg, logo, tabs, tabsOnFocus, 
         container30size, bigImageBg, tryItButton, usageContainer, usageImage,
         footerContainer, whiteRectangle };

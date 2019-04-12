@@ -1,7 +1,8 @@
 const {Component, render} = require("inferno");
+const {BrowserRouter, Route, Link} = require("inferno-router");
 const h = require("inferno-hyperscript").h;
 const Canvas = require("inferno-canvas-component-2");
-// import "normalize.css";
+
 const s = require('./style');
 const fs = require("./font-style");
 
@@ -37,9 +38,11 @@ class Site extends Component {
       // Top menu
       h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
         h("img", {src: logo, alt: "logo", style: s.logo}),
-        h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "70px"}}, [
-          h("div", {style: s.tabs}, "Specification"),
-          h("div", {style: s.tabs}, "Try it!"),
+        h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
+          h(Hover, {normalComponent: h("div", {style: s.tabs}, "Specification"), 
+                    onFocusComponent: h("div", {style: s.tabsOnFocus}, "Specification")}),
+          h(Hover, {normalComponent: h("div", {style: s.tabs}, "Try it!"), 
+                    onFocusComponent: h("div", {style: s.tabsOnFocus}, "Try it!")})
         ]),
       ]),
 
@@ -53,9 +56,6 @@ class Site extends Component {
           h("span", {style: {"font-family": 'Open Sans' }}, "gramming language."),
         ]),
         // h("div", {style: {"width": "100%", "height": "100px", "display": "flex", "justify-content": "center", "align-items": "flex-start", "font-size": "32px"}}, [
-        //   "[install]"
-        // ])
-        // h("div", {style: s.tryItButton}, [
         //   "[install]"
         // ])
       ]),
@@ -86,29 +86,30 @@ const buttonGetStartedOnFocus= {
 // --- Components --- 
 
 // ---- Not working --- 
-// class ButtonGetStarted extends Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {linkTo: props.linkTo, style: props.style}
-//   }
+class Button extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {linkTo: props.linkTo, component: props.component}
+  }
 
-//   render() {
-//     function handleClick(e) {
-//       e.preventDefault();
-//       console.log('Button was clicked.');
-//     }
-//     return h("a", 
-//     {style: this.setState(this.state.style),
-//       onMouseEnter: () => {
-//         this.setState(this.state.style = buttonGetStartedOnFocus)
-//       },
-//       onMouseLeave: () => {
-//         this.setState(this.state.style = buttonGetStartedNormal)
-//       },
-//       onClick={handleClick}
-//     });
-//   }
-// }
+  render() {
+    function handleClick(e) {
+      e.preventDefault();
+      console.log('Button was clicked.');
+    }
+    return this.state.component;
+    // return h("a", 
+    // {style: this.setState(this.state.style),
+    //   onMouseEnter: () => {
+    //     this.setState(this.state.style = buttonGetStartedOnFocus)
+    //   },
+    //   onMouseLeave: () => {
+    //     this.setState(this.state.style = buttonGetStartedNormal)
+    //   },
+    //   onClick={handleClick}
+    // });
+  }
+}
 
 class Hover extends Component {
   constructor(props) {
@@ -117,7 +118,7 @@ class Hover extends Component {
   }
 
   render() {
-    const component = this.state.isOnFocus ? this.state.normalComponent : this.state.onFocusComponent;
+    const component = this.state.isOnFocus ? this.state.onFocusComponent : this.state.normalComponent ;
 
     return h("div", 
       {onMouseEnter: () => this.setState(this.state.isOnFocus = true), 
@@ -184,6 +185,12 @@ class Footer extends Component {
     ]); 
   }
 }
+
+// Other Pages
+
+const Specification = () => (
+  h("div", {}, "Specification")
+);
 
 
 window.onload = () => {
