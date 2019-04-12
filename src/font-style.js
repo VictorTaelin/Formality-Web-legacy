@@ -25,11 +25,17 @@ const title = {
   "position": "relative",
 }
 
-const featureTxt = {
+const text = {
   "padding": "40px",
-  "font-size": "14px",
+  "font-size": "20px",
   "font-family": "Open Sans",
-  "color": primaryColor
+  "color": primaryColor,
 }
 
-export {title, formalityName, formalitySubtitle, featureTxt};
+const subtitle = {
+  ...text, 
+  "margin-left" : "100px",
+  "margin-right" : "100px",
+}
+
+export {title, formalityName, formalitySubtitle, text, subtitle};

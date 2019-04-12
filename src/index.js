@@ -11,8 +11,6 @@ import featureImage1 from './images/feature1.png';
 import featureImage2 from './images/feature2.png';
 import featureImage3 from './images/feature3.png';
 import logo from './images/logo-formality.png';
-import headerBg from './images/formality-bg.jpg';
-import usageBg from './images/usageBg.jpg';
 
 class Site extends Component {
   constructor(props) {
@@ -48,7 +46,6 @@ class Site extends Component {
 
       // Top area
       h("div", {style: s.topContainer}, [
-        //h("img", {src: headerBg, alt: "bg", style: s.bigImageBg}),
         h("div", {style: fs.formalityName}, "FORMALITY"),
         h("div", {style: fs.formalitySubtitle}, [
           h("span", {style: {"font-family": 'Open Sans' }}, "An efficient\u00A0"),
@@ -139,17 +136,17 @@ class WhyGrid extends Component {
       h("div", {style: fs.title}, "Why use Formality?"),
       // First element
       h("div", {style: s.gridItem}, [
-        h("div", {style: fs.featureTxt}, "text of first element on grid"),
+        h("div", {style: fs.text}, "text of first element on grid"),
         h("img", {src: featureImage1, alt: "image1", style: s.featureImg})
       ]),
       // Second element
       h("div", {style: s.gridItem}, [
-        h("div", {style: fs.featureTxt}, "text of the second element on grid"),
+        h("div", {style: fs.text}, "text of the second element on grid"),
         h("img", {src: featureImage2, alt: "image2", style: s.featureImg})
       ]),
       // Third element
       h("div", {style: s.gridItem}, [
-        h("div", {style: fs.featureTxt}, "text of the third element on grid"),
+        h("div", {style: fs.text}, "text of the third element on grid"),
         h("img", {src: featureImage3, alt: "image3", style: s.featureImg})
       ])
     ]);
@@ -164,9 +161,21 @@ class Usage extends Component {
   }
 
   render() {
+
     return h("div", {style: s.usageContainer}, [
       // h("img", {src: usageBg, alt: "usageBg", style: s.usageImage }),
-      h("div", {style: fs.title}, "Usage")
+      h("div", {style: fs.title}, "Usage"),
+      h("div", {style: fs.subtitle }, "Formality is currently implemented as a small, dependency-free JavaScript library. It will futurely be implemented in other languages, and formalized in Agda/Coq. To use the current implementation:"), 
+      h("div", {style: fs.usageCodeContainer}, [
+        h("p", {style: {"color": '#6B747F', "font-family" : "Inconsolata"}}, "# Installs Formality"),
+        h("p", {style: {"color": '#373D41', "font-family" : "Inconsolata"}}, "npm i -g formality "),
+        h("p", {}, " "),
+        h("p", {style: {"color": '#6B747F', "font-family" : "Inconsolata" }}, "# Enters the repository"),
+        h("p", {style: {"color": '#373D41', "font-family" : "Inconsolata" }}, "git clone https://github.com/maiavictor/formality\u00A0cd formality"),
+        h("p", {}, " "),
+        h("p", {style: {"color": '#6B747F', "font-family" : "Inconsolata" }}, "# Checks and evaluates main"),
+        h("p", {style: {"color": '#373D41', "font-family" : "Inconsolata" }}, "formality main"),
+      ]),
     ]); 
   }
 }
@@ -179,9 +188,14 @@ class Footer extends Component {
 
   render() {
     return h("div", {style: s.footerContainer}, [
-      // h("img", {src: usageBg, alt: "usageBg", style: s.usageImage }),
-      h("div", {}, "Hey"),
-      h("div", {style: s.whiteRectangle}, "Hi" )
+      h("div", {}, [
+        h("p", {}, "Talk to us"),
+        h("p", {}, "irc... "),
+      ]),
+      h("div", {}, [
+        h("p", {}, "Social"),
+        h("p", {}, "github image and link to page "),
+      ]),
     ]); 
   }
 }

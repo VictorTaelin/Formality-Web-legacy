@@ -1,6 +1,11 @@
 const primaryColor = "#444053";
 const secondaryColor = "#ffffff";
 
+import headerBg from './images/formality-bg-2.jpg';
+import usageBg from './images/usageBg.jpg';
+
+import { text } from './font-style';
+
 const gridContainer = {
   "display": "grid",
   "grid-row-gap": "30px",
@@ -51,17 +56,21 @@ const tabsOnFocus = {
   "cursor": "pointer"
 }
 
-const topContainer = {
+const bigContainer = {
   "width": "100%",
-  "height": "400px",
+  "height": "650px",
   "object-fit": "cover",
-  "background-image": "url(src/images/formality-bg.jpg)",
   "background-repeat": "no-repeat, repeat",
   "background-size": "cover",
   "display": "flex",
   "flex-flow": "column nowrap",
   "justify-content": "flex-start",
-  "align-items": "center"
+  "align-items": "center",
+}
+
+const topContainer = {
+  ...bigContainer,
+  "background-image": "url(src/images/formality-bg-2.jpg)",
 }
 
 const tryItButton = {
@@ -79,29 +88,36 @@ const tryItButton = {
 }
 
 const usageContainer = {
-  // "align-items" : "flex-start",
-  "background-color": "#fff781",
-  "height": "200px",
-  // "object-fit": "cover",
-  // container30size,
+  ...bigContainer,
+  "background-image": "url(src/images/usageBg.jpg)",
 }
 
-const usageImage = {
-  "max-width": "100%",
-  "height": "auto",
+const usageCodeContainer = {
+  "background-color": "#ffffff",
+  // "margin-right" : "200px",
+  // "margin-left" : "200px",
+  // "margin-bottom" : "100px",
+  "heigth": "200px",
+  "width" : "400px",
+  "background-color": secondaryColor,
+  "flex-direction": "column",
+  "justify-content": "flex-start", 
+  "align-items" : "flex-start",
+  "font-size" : "30px",
 }
 
 const footerContainer = {
-  "background-color": "#00f781",
-  "height": "200px",
-}
-
-const whiteRectangle = {
-  "width" : "400px", // metade da tela
-  "heigth" : "200px",
-  "backgroundColor" : "#123fff",
+  "margin-top": "20px",
+  "margin-left": "90px",
+  "font-size": "20px",
+  "font-family": "Open Sans",
+  "color": primaryColor,
+  "flex-direction": "row",
+  "justify-content": "flex-start",
+  "background-color": secondaryColor,
+  "height": "100px",
 }
 
 export { primaryColor, secondaryColor,  gridContainer, gridItem, featureImg, logo, tabs, tabsOnFocus, 
-        topContainer, tryItButton, usageContainer, usageImage,
-        footerContainer, whiteRectangle };
+        topContainer, tryItButton, usageContainer,
+        footerContainer, usageCodeContainer };
