@@ -3,7 +3,7 @@ const primaryColor = "#444053";
 const formalityName = {
   "font-size": "80px",
   "color": primaryColor,
-  "margin-top": "160px"
+  "margin-top": "200px"
 }   
 
 const formalitySubtitle = {
@@ -36,6 +36,7 @@ const subtitle = {
   ...text, 
   "margin-left" : "100px",
   "margin-right" : "100px",
+  "margin-top": "20px",
 }
 
 export {title, formalityName, formalitySubtitle, text, subtitle};

@@ -2,23 +2,23 @@ const primaryColor = "#444053";
 const secondaryColor = "#ffffff";
 
 import headerBg from './images/formality-bg-2.jpg';
-import usageBg from './images/usageBg.jpg';
+import usageBg from './images/usageBg2.png';
 
 import { text } from './font-style';
 
 const gridContainer = {
-  "display": "grid",
-  "grid-row-gap": "30px",
+  "display": "flex",
+  // "grid-row-gap": "30px",
   "flex-direction": "column",
   "justify-content": "center",
   "align-items": "center",
-  "width": "100%"
+  // "width": "100%"
 }
 
 const gridItem = {
-  "width": "100%",
-  "height": "350px",
+  // "width": "100%",
   "display": "flex",
+  "height": "350px",
   "align-items": "center", 
   "font-size": "22px"
 }
@@ -33,7 +33,8 @@ const logo = {
   "height" : "40px",
   "margin-left" : "90px",
   "margin-top" : "10px", 
-  "margin-bottom" : "10px"
+  "margin-bottom" : "10px",
+  "cursor": "pointer"
 }
 
 const tabs = {
@@ -89,20 +90,17 @@ const tryItButton = {
 
 const usageContainer = {
   ...bigContainer,
-  "background-image": "url(src/images/usageBg.jpg)",
+  "background-image": "url(src/images/usageBg2.png)",
 }
 
 const usageCodeContainer = {
-  "background-color": "#ffffff",
-  // "margin-right" : "200px",
-  // "margin-left" : "200px",
-  // "margin-bottom" : "100px",
+  "margin-top": "20px",
   "heigth": "200px",
   "width" : "400px",
   "background-color": secondaryColor,
   "flex-direction": "column",
-  "justify-content": "flex-start", 
-  "align-items" : "flex-start",
+  // "justify-content": "space-between", 
+  // "align-items" : "flex-start",
   "font-size" : "30px",
 }
 
@@ -112,8 +110,7 @@ const footerContainer = {
   "font-size": "20px",
   "font-family": "Open Sans",
   "color": primaryColor,
-  "flex-direction": "row",
-  "justify-content": "flex-start",
+  "flex-direction": "row-reverse",
   "background-color": secondaryColor,
   "height": "100px",
 }
