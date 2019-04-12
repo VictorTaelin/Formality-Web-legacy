@@ -47,8 +47,8 @@ class Site extends Component {
       ]),
 
       // Top area
-      h("div", {style: s.container30size}, [
-        h("img", {src: headerBg, alt: "bg", style: s.bigImageBg}),
+      h("div", {style: s.topContainer}, [
+        //h("img", {src: headerBg, alt: "bg", style: s.bigImageBg}),
         h("div", {style: fs.formalityName}, "FORMALITY"),
         h("div", {style: fs.formalitySubtitle}, [
           h("span", {style: {"font-family": 'Open Sans' }}, "An efficient\u00A0"),
