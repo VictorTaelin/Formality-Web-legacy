@@ -2,8 +2,8 @@ const primaryColor = "#444053";
 const secondaryColor = "#ffffff";
 
 const gridContainer = {
+  "position": "static",
   "display": "grid",
-  "background-color": secondaryColor,
   "grid-row-gap": "30px",
   "flex-direction": "column",
   "justify-content": "center",
@@ -46,7 +46,7 @@ const tabs = {
 const container30size = {
   "width": "100%",
   "height": "30%",
-  "object-fit": "cover"
+  "object-fit": "cover",
 }
 
 const bigImageBg = {
@@ -69,15 +69,33 @@ const tryItButton = {
 }
 
 const usageContainer = {
-  "display": "grid",
-  "background-color": secondaryColor,
-  "grid-row-gap": "30px",
-  "flex-direction": "column",
-  "justify-content": "center",
-  "align-items": "center",
-  "height": "1000px",
-  "width": "100%"
+  // "align-items" : "flex-start",
+  "position": "static",
+  "background-color": "#fff781",
+  "height": "200px",
+  // "object-fit": "cover",
+  // container30size,
+}
+
+const usageImage = {
+  "max-width": "100%",
+  "height": "auto",
+  "position": "absolute"
+}
+
+const footerContainer = {
+  "position": "static",
+  "background-color": "#00f781",
+  "height": "200px",
+}
+
+const whiteRectangle = {
+  "position" : "static",
+  "width" : "400px", // metade da tela
+  "heigth" : "200px",
+  "backgroundColor" : "#123fff",
 }
 
 export { primaryColor, secondaryColor,  gridContainer, gridItem, featureImg, logo, tabs, 
-        container30size, bigImageBg, tryItButton };
+        container30size, bigImageBg, tryItButton, usageContainer, usageImage,
+        footerContainer, whiteRectangle };

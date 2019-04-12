@@ -37,7 +37,9 @@ const title = {
   "font-size" : "40px",
   "align-items": "center",
   "font-family": "Open Sans",
-  "color": primaryColor
+  "color": primaryColor,
+  "top": "25px",
+  "position": "relative",
 }
 
 const featureTxt = {

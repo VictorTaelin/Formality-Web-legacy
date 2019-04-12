@@ -68,7 +68,8 @@ class Site extends Component {
       
         // Grid test
       h(WhyGrid, {}),
-      h(Usage,{})
+      h(Usage,{}),
+      h(Footer, {})
     ]);
   }
 }
@@ -162,13 +163,25 @@ class Usage extends Component {
   }
 
   render() {
-    return h("div", {style: s.container30size}, [
-      h("img", {src: usageBg, alt: "usageBg", style: s.bigImageBg}),
+    return h("div", {style: s.usageContainer}, [
+      // h("img", {src: usageBg, alt: "usageBg", style: s.usageImage }),
       h("div", {style: fs.title}, "Usage")
+    ]); 
+  }
+}
 
-    ]);
-    
-  
+class Footer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {};
+  }
+
+  render() {
+    return h("div", {style: s.footerContainer}, [
+      // h("img", {src: usageBg, alt: "usageBg", style: s.usageImage }),
+      h("div", {}, "Hey"),
+      h("div", {style: s.whiteRectangle}, "Hi" )
+    ]); 
   }
 }
 
