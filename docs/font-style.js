@@ -34,9 +34,11 @@ const text = {
 
 const subtitle = {
   ...text, 
-  "margin-left" : "100px",
-  "margin-right" : "100px",
+  // "margin-left" : "300px",
+  // "margin-right" : "300px",
+  "width": "900px",
   "margin-top": "20px",
+  "text-align": "center"
 }
 
 export {title, formalityName, formalitySubtitle, text, subtitle};

@@ -129,24 +129,50 @@ class WhyGrid extends Component {
     super(props)
     this.state = {};
   }
-  // NAO PODE usar CSS, pra isso, terei que criar uma variável pra cada estilo e aí as propriedade ficam sendo propriedade do objeto. 
-  // chama {style: nome_da_variável} e aí o estilo é aplicado do mesmo jeito
+
   render() {
-    return h("div", {style: s.gridContainer}, [
+    const gridContainer = {
+      "display": "flex",
+      // "grid-row-gap": "30px",
+      "flex-direction": "column",
+      "justify-content": "center",
+      "align-items": "center",
+    }
+
+    const gridItem = {
+      "display": "flex",
+      "height": "350px",
+      "width": "800px",
+      "align-items": "center", 
+      "font-size": "22px"
+    }
+
+    return h("div", {style: gridContainer}, [
       h("div", {style: fs.title}, "Why use Formality?"),
       // First element
-      h("div", {style: s.gridItem}, [
-        h("div", {style: fs.text, "width": "300px"}, "text of first element on grid"),
+      h("div", {style: gridItem}, [
+        h("div", {style: fs.text, "width": "300px"}, [
+          h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Mathematical proof"),
+          h("p", {}, "One major difference between Inferno and React is that Inferno does not rename events or change how they work by default. Inferno only specifies that events should be camel cased, rather than lower case."),
+          h("p", {style: {"cursor": "pointer", "margin-top": "15px"}}, "Read more..."),
+        ]),
         h("img", {src: featureImage1, alt: "image1", style: s.featureImg})
       ]),
       // Second element
-      h("div", {style: s.gridItem}, [
-        h("div", {style: fs.text, "width": "300px"}, "text of the second element on grid"),
+      h("div", {style: gridItem}, [
+        h("div", {style: fs.text, "width": "300px"},[
+          h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Massive paralelism"),
+          h("p", {}, "linkEvent() is a helper function that allows attachment of props/state/context or other data to events without needing to bind() them or use arrow functions/closures. This is extremely useful when dealing with events in functional components. Below is an example:"),
+          h("p", {style: {"cursor": "pointer", "margin-top": "15px"}}, "Read more..."),
+        ]),
         h("img", {src: featureImage2, alt: "image2", style: s.featureImg})
       ]),
       // Third element
-      h("div", {style: s.gridItem}, [
-        h("div", {style: fs.text, "width": "300px"}, "text of the third element on grid"),
+      h("div", {style: gridItem}, [
+        h("div", {style: fs.text, "width": "300px"}, [
+          h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Simple standart"),
+          h("p", {}, "It's entire implementation takes 500 LOC, making it a simple standard you could implement yourself.")
+        ]),
         h("img", {src: featureImage3, alt: "image3", style: s.featureImg})
       ])
     ]);
@@ -163,18 +189,18 @@ class Usage extends Component {
   render() {
 
     return h("div", {style: s.usageContainer}, [
-      // h("img", {src: usageBg, alt: "usageBg", style: s.usageImage }),
       h("div", {style: fs.title}, "Usage"),
       h("div", {style: fs.subtitle }, "Formality is currently implemented as a small, dependency-free JavaScript library. It will futurely be implemented in other languages, and formalized in Agda/Coq. To use the current implementation:"), 
-      h("div", {style: fs.usageCodeContainer, "margin-top": "50px"}, [
-        h("p", {style: {"color": '#6B747F', "font-family" : "Inconsolata", "font-size" : "20px",}}, "# Installs Formality"),
-        h("p", {style: {"color": '#373D41', "font-family" : "Inconsolata", "font-size" : "20px",}}, "npm i -g formality "),
-        h("p", {}, "     "),
-        h("p", {style: {"color": '#6B747F', "font-family" : "Inconsolata", "font-size" : "20px",}}, "# Enters the repository"),
-        h("p", {style: {"color": '#373D41', "font-family" : "Inconsolata", "font-size" : "20px", }}, "git clone https://github.com/maiavictor/formality\u00A0cd formality"),
-        h("p", {}, "     "),
-        h("p", {style: {"color": '#6B747F', "font-family" : "Inconsolata", "font-size" : "20px", }}, "# Checks and evaluates main"),
-        h("p", {style: {"color": '#373D41', "font-family" : "Inconsolata", "font-size" : "20px", }}, "formality main"),
+      h("div", {style: s.usageCodeContainer, "margin-top": "50px"}, [
+        h("p", {style: {"color": '#6B747F' }}, "# Installs Formality"),
+        h("p", {style: {"color": '#373D41' }}, "npm i -g formality "),
+        h("br", {}, "     "),
+        h("p", {style: {"color": '#6B747F' }}, "# Enters the repository"),
+        h("p", {style: {"color": '#373D41' }}, "git clone https://github.com/maiavictor/formality"),
+        h("p", {style: {"color": '#373D41' }}, "cd formality"),
+        h("br", {}, "     "),
+        h("p", {style: {"color": '#6B747F' }}, "# Checks and evaluates main"),
+        h("p", {style: {"color": '#373D41' }}, "formality main"),
       ]),
     ]); 
   }

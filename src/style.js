@@ -8,17 +8,17 @@ import { text } from './font-style';
 
 const gridContainer = {
   "display": "flex",
-  // "grid-row-gap": "30px",
   "flex-direction": "column",
   "justify-content": "center",
   "align-items": "center",
-  // "width": "100%"
 }
 
 const gridItem = {
-  // "width": "100%",
   "display": "flex",
   "height": "350px",
+  "width": "900px",
+  // "margin-left": "100px", // max width of 1000, or 
+  // "margin-right": "100px",
   "align-items": "center", 
   "font-size": "22px"
 }
@@ -95,18 +95,23 @@ const usageContainer = {
 
 const usageCodeContainer = {
   "margin-top": "20px",
-  "heigth": "200px",
-  "width" : "400px",
+  "heigth": "250px",
+  "width" : "600px",
   "background-color": secondaryColor,
   "flex-direction": "column",
   // "justify-content": "space-between", 
   // "align-items" : "flex-start",
-  "font-size" : "30px",
+  "font-family" : "Inconsolata", 
+  "font-size" : "20px",
+  "padding-top": "20px",
+  "padding-right": "20px",
+  "padding-bottom": "20px",
+  "padding-left": "20px"
 }
 
 const footerContainer = {
   "margin-top": "20px",
-  "margin-left": "90px",
+  "margin-left": "130px",
   "font-size": "20px",
   "font-family": "Open Sans",
   "color": primaryColor,
