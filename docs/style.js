@@ -3,6 +3,7 @@ const secondaryColor = "#ffffff";
 
 import headerBg from './images/formality-bg-2.jpg';
 import usageBg from './images/usageBg2.png';
+import githubLogo from './images/github.png';
 
 import { text } from './font-style';
 
@@ -119,6 +120,13 @@ const footerContainer = {
   "height": "100px",
 }
 
+const githubIcon = {
+  "width" : "20px",
+  "height" : "20px",
+  "margin-top" : "10px", 
+  "cursor": "pointer"
+}
+
 export { primaryColor, secondaryColor,  gridContainer, gridItem, featureImg, logo, tabs, tabsOnFocus, 
         topContainer, tryItButton, usageContainer,
-        footerContainer, usageCodeContainer };
+        footerContainer, usageCodeContainer, githubIcon };

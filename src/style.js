@@ -119,6 +119,13 @@ const footerContainer = {
   "height": "100px",
 }
 
+const githubIcon = {
+  "width" : "20px",
+  "height" : "20px",
+  "margin-top" : "10px", 
+  "cursor": "pointer"
+}
+
 export { primaryColor, secondaryColor,  gridContainer, gridItem, featureImg, logo, tabs, tabsOnFocus, 
         topContainer, tryItButton, usageContainer,
-        footerContainer, usageCodeContainer };
+        footerContainer, usageCodeContainer, githubIcon };

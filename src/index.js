@@ -13,6 +13,7 @@ import featureImage1 from './images/feature1.png';
 import featureImage2 from './images/feature2.png';
 import featureImage3 from './images/feature3.png';
 import logo from './images/logo-formality.png';
+import githubLogo from './images/github.png';
 
 // Colors
 const primaryColor = "#444053";
@@ -48,6 +49,7 @@ class Site extends Component {
       "border": "2px solid #444053",
       "border-radius": "25px",
       "background-color": secondaryColor,
+      "cursor": "pointer",
     }
 
     function tryItClick(event) {
@@ -144,6 +146,17 @@ class Hover extends Component {
   }
 }
 
+// class Link extends Component { 
+//   constructor(props) { 
+//     super(props)
+//     this.state = {linktTo: props.linkTo};
+//   }
+
+//   render() {
+//     return ;
+//   }
+// }
+
 class WhyGrid extends Component {
   constructor(props) {
     super(props)
@@ -172,8 +185,8 @@ class WhyGrid extends Component {
       // First element
       h("div", {style: gridItem}, [
         h("div", {style: fs.text, "width": "300px"}, [
-          h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Mathematical proof"),
-          h("p", {}, "One major difference between Inferno and React is that Inferno does not rename events or change how they work by default. Inferno only specifies that events should be camel cased, rather than lower case."),
+          h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Secure"),
+          h("p", {}, "Formality has a type system capable of proving mathematical theorems about its own programs make it really secure. Theorem proving is possible due to dependent types, like on other proof assistants as Agda and Idris."),
           h("p", {style: {"cursor": "pointer", "margin-top": "15px"}}, "Read more..."),
         ]),
         h("img", {src: featureImage1, alt: "image1", style: s.featureImg})
@@ -181,8 +194,9 @@ class WhyGrid extends Component {
       // Second element
       h("div", {style: gridItem}, [
         h("div", {style: fs.text, "width": "300px"},[
-          h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Massive paralelism"),
-          h("p", {}, "linkEvent() is a helper function that allows attachment of props/state/context or other data to events without needing to bind() them or use arrow functions/closures. This is extremely useful when dealing with events in functional components. Below is an example:"),
+          h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Fast"),
+          h("p", {}, "No garbage-collection, optimal beta-reduction and a massively parallel GPU compiler make it insanely fast."),
+          h("p", {}, "Massively parallel evaluation is possible due to Symmetric Interaction Calculus (SIC), a new model of computation that combines the best aspects of the Turing Machine and the λ-Calculus."),
           h("p", {style: {"cursor": "pointer", "margin-top": "15px"}}, "Read more..."),
         ]),
         h("img", {src: featureImage2, alt: "image2", style: s.featureImg})
@@ -191,7 +205,7 @@ class WhyGrid extends Component {
       h("div", {style: gridItem}, [
         h("div", {style: fs.text, "width": "300px"}, [
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Simple standart"),
-          h("p", {}, "It's entire implementation takes 500 LOC, making it a simple standard you could implement yourself.")
+          h("p", {}, "The entire implementation takes 500 LOC, making it a simple standard you could implement yourself.")
         ]),
         h("img", {src: featureImage3, alt: "image3", style: s.featureImg})
       ])
@@ -233,6 +247,7 @@ class Footer extends Component {
   }
 
   render() {
+
     return h("div", {style: s.footerContainer}, [
       h("div", {}, [
         h("p", {}, "Talk to us"),
@@ -240,7 +255,7 @@ class Footer extends Component {
       ]),
       h("div", {}, [
         h("p", {}, "Social"),
-        h("p", {}, "github image and link to page "),
+        h("img", {src: githubLogo, alt: "logo", style: s.githubIcon}),
       ]),
     ]); 
   }
@@ -255,5 +270,4 @@ const Specification = () => (
 
 window.onload = () => {
   render(h("div", {}, [h(Site)]), document.getElementById("main"));
-  console.log("ok");
 };
