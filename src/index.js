@@ -250,10 +250,10 @@ class Footer extends Component {
 
     return h("div", {style: s.footerContainer}, [
       h("div", {}, [
-        h("p", {}, "Talk to us"),
+        h("p", {}, "Talk to us "),
         h("p", {}, "irc... "),
       ]),
-      h("div", {}, [
+      h("div", {"margin-top": "30px", "margin-bottom": "30px"}, [
         h("p", {}, "Social"),
         h("img", {src: githubLogo, alt: "logo", style: s.githubIcon}),
       ]),

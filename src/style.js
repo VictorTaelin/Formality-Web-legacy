@@ -108,6 +108,7 @@ const usageCodeContainer = {
 }
 
 const footerContainer = {
+  "display": "flex",
   "margin-top": "20px",
   "margin-left": "130px",
   "font-size": "20px",

@@ -3,7 +3,6 @@ const secondaryColor = "#ffffff";
 
 import headerBg from './images/formality-bg-2.jpg';
 import usageBg from './images/usageBg2.png';
-import githubLogo from './images/github.png';
 
 import { text } from './font-style';
 
@@ -109,6 +108,7 @@ const usageCodeContainer = {
 }
 
 const footerContainer = {
+  "display": "flex",
   "margin-top": "20px",
   "margin-left": "130px",
   "font-size": "20px",
