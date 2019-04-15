@@ -14,7 +14,6 @@ const gridContainer = {
 }
 
 const gridItem = {
-  // "width": "100%",
   "display": "flex",
   "height": "350px",
   "width": "900px",
@@ -100,8 +99,6 @@ const usageCodeContainer = {
   "width" : "600px",
   "background-color": secondaryColor,
   "flex-direction": "column",
-  // "justify-content": "space-between", 
-  // "align-items" : "flex-start",
   "font-family" : "Inconsolata", 
   "font-size" : "20px",
   "padding-top": "20px",
@@ -116,7 +113,8 @@ const footerContainer = {
   "font-size": "20px",
   "font-family": "Open Sans",
   "color": primaryColor,
-  "flex-direction": "row-reverse",
+  "flex-direction": "row",
+  "justify-content": "flex-start",
   "background-color": secondaryColor,
   "height": "100px",
 }

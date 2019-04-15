@@ -1,5 +1,7 @@
-const {Component, render} = require("inferno");
+const {Component, render, linkEvent} = require("inferno");
 const {BrowserRouter, Route, Link} = require("inferno-router");
+// const {MarkdownBlock} = require ("CompLibrary.MarkdownBlock"); // Used to read markdown. It's used in the Inferno website
+
 const h = require("inferno-hyperscript").h;
 const Canvas = require("inferno-canvas-component-2");
 
@@ -11,6 +13,10 @@ import featureImage1 from './images/feature1.png';
 import featureImage2 from './images/feature2.png';
 import featureImage3 from './images/feature3.png';
 import logo from './images/logo-formality.png';
+
+// Colors
+const primaryColor = "#444053";
+const secondaryColor = "#ffffff";
 
 class Site extends Component {
   constructor(props) {
@@ -31,16 +37,36 @@ class Site extends Component {
     //     ctx.fillRect(-1 * width / 4, -1 * height / 4, width / 2, height / 2);
     //     ctx.restore();
     // }
+    const tryItButton = {
+      "width": "100px", 
+      "height": "50px", 
+      "display": "flex", 
+      "justify-content": "center", 
+      "font-size": "20px",
+      "margin-top": "60px",
+      "color": primaryColor,
+      "border": "2px solid #444053",
+      "border-radius": "25px",
+      "background-color": secondaryColor,
+    }
+
+    function tryItClick(event) {
+      console.log('Clicked !', event)
+    }
+
+    // Se uma tab é clicada, as outras voltam ao estato normal
+    function manageTabs(event) {
+      console.log('Clicked !', event)
+    }
 
     return h("div", {}, [
       // Top menu
       h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
         h("img", {src: logo, alt: "logo", style: s.logo}),
         h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
-          h(Hover, {normalComponent: h("div", {style: s.tabs}, "Specification"), 
-                    onFocusComponent: h("div", {style: s.tabsOnFocus}, "Specification")}),
-          h(Hover, {normalComponent: h("div", {style: s.tabs}, "Try it!"), 
-                    onFocusComponent: h("div", {style: s.tabsOnFocus}, "Try it!")})
+          h(Tab, {title: "Home"}),
+          h(Tab, {title: "Specification"}),
+          h(Tab, {title: "Try it!"})
         ]),
       ]),
 
@@ -52,9 +78,7 @@ class Site extends Component {
           h("span", {style: {"font-family": 'Open Sans', "font-weight": "bold"}}, "proof"),
           h("span", {style: {"font-family": 'Open Sans' }}, "gramming language."),
         ]),
-        // h("div", {style: {"width": "100%", "height": "100px", "display": "flex", "justify-content": "center", "align-items": "flex-start", "font-size": "32px"}}, [
-        //   "[install]"
-        // ])
+        h("button", {style: tryItButton, onClick: { tryItClick }}, "Try it"),
       ]),
 
       // Canvas test
@@ -69,15 +93,6 @@ class Site extends Component {
       h(Footer, {})
     ]);
   }
-}
-
-
-const buttonGetStartedNormal = {
-  "font-weight": "normal"
-}
-
-const buttonGetStartedOnFocus= {
-  "font-weight": "bold"
 }
 
 // --- Components --- 
@@ -95,16 +110,21 @@ class Button extends Component {
       console.log('Button was clicked.');
     }
     return this.state.component;
-    // return h("a", 
-    // {style: this.setState(this.state.style),
-    //   onMouseEnter: () => {
-    //     this.setState(this.state.style = buttonGetStartedOnFocus)
-    //   },
-    //   onMouseLeave: () => {
-    //     this.setState(this.state.style = buttonGetStartedNormal)
-    //   },
-    //   onClick={handleClick}
-    // });
+  }
+}
+
+
+
+class Tab extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {title: props.title, isCurrentPage: false};
+  }
+  
+  render() {
+    const hover = h(Hover, {normalComponent: h("div", {style: s.tabs},  this.state.title), 
+                            onFocusComponent: h("div", {style: s.tabsOnFocus}, this.state.title)})
+    return hover;                        
   }
 }
 
