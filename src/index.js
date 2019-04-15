@@ -9,6 +9,7 @@ const s = require('./style');
 const fs = require("./font-style");
 
 // Feature images
+import formalityTitle from './images/formality-title.png';
 import featureImage1 from './images/feature1.png';
 import featureImage2 from './images/feature2.png';
 import featureImage3 from './images/feature3.png';
@@ -38,6 +39,22 @@ class Site extends Component {
     //     ctx.fillRect(-1 * width / 4, -1 * height / 4, width / 2, height / 2);
     //     ctx.restore();
     // }
+
+    const formalityTitleContainer = {
+      "width": "650px",
+      "height": "85px",
+      "object-fit": "cover",
+      "background-repeat": "no-repeat, repeat",
+      "background-size": "cover",
+      "display": "flex",
+      "flex-flow": "column nowrap",
+      "justify-content": "flex-start",
+      "align-items": "center",
+      "background-image": "url(src/images/formality-title.png)",
+      "margin-top": "200px",
+      "margin-bottom": "30px"
+    }
+
     const tryItButton = {
       "width": "100px", 
       "height": "50px", 
@@ -74,11 +91,11 @@ class Site extends Component {
 
       // Top area
       h("div", {style: s.topContainer}, [
-        h("div", {style: fs.formalityName}, "FORMALITY"),
+        h("div", {style: formalityTitleContainer}),    
         h("div", {style: fs.formalitySubtitle}, [
           h("span", {style: {"font-family": 'Open Sans' }}, "An efficient\u00A0"),
           h("span", {style: {"font-family": 'Open Sans', "font-weight": "bold"}}, "proof"),
-          h("span", {style: {"font-family": 'Open Sans' }}, "gramming language."),
+          h("span", {style: {"font-family": 'Open Sans' }}, "gramming language"),
         ]),
         h("button", {style: tryItButton, onClick: { tryItClick }}, "Try it"),
       ]),

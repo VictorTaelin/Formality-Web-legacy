@@ -6,6 +6,18 @@ import usageBg from './images/usageBg2.png';
 
 import { text } from './font-style';
 
+const formalityTitleContainer = {
+  "width": "600px",
+  "height": "60px",
+  "object-fit": "cover",
+  "background-repeat": "no-repeat, repeat",
+  "background-size": "cover",
+  "display": "flex",
+  "flex-flow": "column nowrap",
+  "justify-content": "flex-start",
+  "align-items": "center",
+}
+
 const gridContainer = {
   "display": "flex",
   "flex-direction": "column",
@@ -31,7 +43,7 @@ const featureImg =  {
 const logo = {
   "width" : "45px",
   "height" : "40px",
-  "margin-left" : "90px",
+  "margin-left" : "130px",
   "margin-top" : "10px", 
   "margin-bottom" : "10px",
   "cursor": "pointer"
@@ -115,9 +127,10 @@ const footerContainer = {
   "font-family": "Open Sans",
   "color": primaryColor,
   "flex-direction": "row",
-  "justify-content": "flex-start",
+  "justify-content": "space-between",
   "background-color": secondaryColor,
   "height": "100px",
+  "width": "250px",
 }
 
 const githubIcon = {
@@ -127,6 +140,6 @@ const githubIcon = {
   "cursor": "pointer"
 }
 
-export { primaryColor, secondaryColor,  gridContainer, gridItem, featureImg, logo, tabs, tabsOnFocus, 
+export { formalityTitleContainer, primaryColor, secondaryColor,  gridContainer, gridItem, featureImg, logo, tabs, tabsOnFocus, 
         topContainer, tryItButton, usageContainer,
         footerContainer, usageCodeContainer, githubIcon };
