@@ -16,9 +16,9 @@ const fs = require("./font-style");
 
 // Feature images
 import formalityTitle from './images/formality-title.png';
-import featureImage1 from './images/feature1.png';
-import featureImage2 from './images/feature2.png';
-import featureImage3 from './images/feature3.png';
+import featureImage1 from './images/math.png';
+import featureImage2 from './images/fast.png';
+import featureImage3 from './images/code.png';
 import logo from './images/logo-formality.png';
 import githubLogo from './images/github.png';
 
@@ -173,10 +173,8 @@ var hsText = [
       h("p", [
         h("strong", `Fast:`),
         ` no garbage-collection, `,
-        h("a", {
-          "attributes": {
+        h("a", {  
             "href": "https://medium.com/@maiavictor/solving-the-mystery-behind-abstract-algorithms-magical-optimizations-144225164b07"
-          }
         }, `optimal beta-reduction`),
         ` and a massively parallel GPU compiler make it `,
         h("em", `insanely fast`),
