@@ -19,14 +19,10 @@ import githubLogo from './images/github.png';
 const primaryColor = "#444053";
 const secondaryColor = "#ffffff";
 
-const Specification2 = () => (
-  h("div", {}, "Specification")
-);
-
 class Site extends Component {
   constructor(props) {
     super(props)
-    this.state = {page: "home"};
+    this.state = {page: "specification"};
   }
   componentDidMount() {
     //this.setState({page: [10, 20, 30]});
@@ -107,8 +103,9 @@ class Site extends Component {
 
     // ============= Specification Page =============
     } else if (this.state.page === "specification") {
+      console.log("Specificiation carregou");
       // return h("div", {}, ["lalala"]);
-      h("div", {}, [
+      return h("div", {"display": "flex", "justify-content": "space-between"}, [
         h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
           h("img", {src: logo, alt: "logo", style: s.logo}),
           h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
@@ -117,15 +114,23 @@ class Site extends Component {
             h(Tab, {title: "Try it!", isCurrentPage: false, onClick: () => { this.setState({page: "tryIt"}) }})
           ]),
         ]),
-        h(Specification2, {})
-      ])
+        h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
+          h("div", {style: {"height": "500px"}}, "content in MD aaaa"),
+        ]),
+        h("div", {}, [
+          h("div", {style: {"background-color": s.primaryColor, "height": "1px"}}),
+          h(Footer, {})
+        ]),
+      ]);
       
 
     // ============= Try it Page =============  
     } else if (this.state.page === "tryIt") {
-      h("div", {}, [
-        h(Specification, {})
-      ])
+      // h("div", {style: {"height": "1000px","display": "flex", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
+      //   h("div", {}, "content in MD"), 
+      //   h("div", {"background-color": s.primaryColor, "heigth": "1px"}),
+      //   h(Footer, {})
+      // ])
     }
   }
 }
@@ -164,7 +169,7 @@ class Tab extends Component {
   render() {
     var element = h("div", {style: s.tabs},  this.state.title)
     if (this.state.isCurrentPage) {
-      console.log("element on focus!");
+      console.log(this.state.title+" on focus!");
       element = h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.state.title)
     } else {
       element = h(Hover, {normalComponent: h("div", {style: s.tabs},  this.state.title), 
