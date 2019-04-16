@@ -1,5 +1,4 @@
 const {Component, render, linkEvent} = require("inferno");
-const {BrowserRouter, Route, Link} = require("inferno-router");
 // const {MarkdownBlock} = require ("CompLibrary.MarkdownBlock"); // Used to read markdown. It's used in the Inferno website
 
 const h = require("inferno-hyperscript").h;
@@ -20,10 +19,14 @@ import githubLogo from './images/github.png';
 const primaryColor = "#444053";
 const secondaryColor = "#ffffff";
 
+const Specification2 = () => (
+  h("div", {}, "Specification")
+);
+
 class Site extends Component {
   constructor(props) {
     super(props)
-    this.state = {page: "main"};
+    this.state = {page: "home"};
   }
   componentDidMount() {
     //this.setState({page: [10, 20, 30]});
@@ -69,81 +72,105 @@ class Site extends Component {
       "cursor": "pointer",
     }
 
-    function tryItClick(event) {
-      console.log('Clicked !', event)
-    }
+    // ============= Home =============
+    if (this.state.page === "home" ) {
+      return h("div", [
 
-    // Se uma tab é clicada, as outras voltam ao estato normal
-    function manageTabs(event) {
-      console.log('Clicked !', event)
-    }
-
-    return h("div", {}, [
-      // Top menu
-      h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
-        h("img", {src: logo, alt: "logo", style: s.logo}),
-        h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
-          h(Tab, {title: "Home"}),
-          h(Tab, {title: "Specification"}),
-          h(Tab, {title: "Try it!"})
+        // Top menu
+        h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
+          h("img", {src: logo, alt: "logo", style: s.logo}),
+          h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
+            h(Tab, {title: "Home", isCurrentPage: true, onClick: () => { this.setState({page: "home"}) }}),
+            h(Tab, {title: "Specification", isCurrentPage: false, onClick: () => { this.setState({page: "specification"}) }}),
+            h(Tab, {title: "Try it!", isCurrentPage: false, onClick: () => { this.setState({page: "tryIt"}) }})
+          ]),
         ]),
-      ]),
 
-      // Top area
-      h("div", {style: s.topContainer}, [
-        h("div", {style: formalityTitleContainer}),    
-        h("div", {style: fs.formalitySubtitle}, [
-          h("span", {style: {"font-family": 'Open Sans' }}, "An efficient\u00A0"),
-          h("span", {style: {"font-family": 'Open Sans', "font-weight": "bold"}}, "proof"),
-          h("span", {style: {"font-family": 'Open Sans' }}, "gramming language"),
+        // Top area: Formality title and subtitle
+        h("div", {style: s.topContainer}, [
+          h("div", {style: formalityTitleContainer}),    
+          h("div", {style: fs.formalitySubtitle}, [
+            h("span", {style: {"font-family": 'Open Sans' }}, "An efficient\u00A0"),
+            h("span", {style: {"font-family": 'Open Sans', "font-weight": "bold"}}, "proof"),
+            h("span", {style: {"font-family": 'Open Sans' }}, "gramming language"),
+          ]),
+          h("button", {style: tryItButton, onClick: () => { this.setState({page: "tryIt"}) }}, "Try it"),
         ]),
-        h("button", {style: tryItButton, onClick: { tryItClick }}, "Try it"),
-      ]),
 
-      // Canvas test
-      // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
+        // Canvas test
+        // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
 
-      // Hover test
-      // h(Hover, {normalComponent: h("p", {}, "first component"), onFocusComponent: h("p", {}, "second component")}),
+        h(WhyGrid, {}),
+        h(Usage,{}),
+        h(Footer, {})
+      ]);
+
+    // ============= Specification Page =============
+    } else if (this.state.page === "specification") {
+      // return h("div", {}, ["lalala"]);
+      h("div", {}, [
+        h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
+          h("img", {src: logo, alt: "logo", style: s.logo}),
+          h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
+            h(Tab, {title: "Home", isCurrentPage: false, onClick: () => { this.setState({page: "home"}) }}),
+            h(Tab, {title: "Specification", isCurrentPage: true, onClick: () => { this.setState({page: "specification"}) }}),
+            h(Tab, {title: "Try it!", isCurrentPage: false, onClick: () => { this.setState({page: "tryIt"}) }})
+          ]),
+        ]),
+        h(Specification2, {})
+      ])
       
-        // Grid test
-      h(WhyGrid, {}),
-      h(Usage,{}),
-      h(Footer, {})
-    ]);
+
+    // ============= Try it Page =============  
+    } else if (this.state.page === "tryIt") {
+      h("div", {}, [
+        h(Specification, {})
+      ])
+    }
   }
 }
 
 // --- Components --- 
 
-// ---- Not working --- 
-class Button extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {linkTo: props.linkTo, component: props.component}
-  }
+// Top menu: logo and tabs
+// class Header extends Component {
+//   constructor(props) {
+//     super(props)
+//     this.onClick = props.onClick;
+//     this.state = {linkTo: props.linkTo}
+//   }
 
-  render() {
-    function handleClick(e) {
-      e.preventDefault();
-      console.log('Button was clicked.');
-    }
-    return this.state.component;
-  }
-}
+//   render() {
+//     return h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
+//             h("img", {src: logo, alt: "logo", style: s.logo}),
+//             h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
+//               h(Tab, {title: "Home", onClick: () => { this.setState({page: this.state.linkTo}) }}),
+//               h(Tab, {title: "Specification", onClick: () => { this.setState({page: "specification"}) }}),
+//               h(Tab, {title: "Try it!", onClick: () => { this.setState({page: "tryIt"}) }})
+//             ]),
+//           ]);
+//   }
+// }
 
 
-
+// ------ Auxiliars ---- 
 class Tab extends Component {
   constructor(props) {
     super(props)
-    this.state = {title: props.title, isCurrentPage: false};
+    this.onClick = props.onClick;
+    this.state = {title: props.title, isCurrentPage: props.isCurrentPage};
   }
   
   render() {
-    const hover = h(Hover, {normalComponent: h("div", {style: s.tabs},  this.state.title), 
-                            onFocusComponent: h("div", {style: s.tabsOnFocus}, this.state.title)})
-    return hover;                        
+    var element = h("div", {style: s.tabs},  this.state.title)
+    if (this.state.isCurrentPage) {
+      console.log("element on focus!");
+      element = h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.state.title)
+    } else {
+      element = h(Hover, {normalComponent: h("div", {style: s.tabs},  this.state.title), 
+                          onFocusComponent: h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.state.title)})
+    }
+    return element;                        
   }
 }
 
@@ -162,17 +189,8 @@ class Hover extends Component {
       component);
   }
 }
+// -------------------
 
-// class Link extends Component { 
-//   constructor(props) { 
-//     super(props)
-//     this.state = {linktTo: props.linkTo};
-//   }
-
-//   render() {
-//     return ;
-//   }
-// }
 
 class WhyGrid extends Component {
   constructor(props) {
@@ -270,7 +288,7 @@ class Footer extends Component {
         h("p", {}, "Talk to us "),
         h("p", {}, "irc... "),
       ]),
-      h("div", {"margin-top": "30px", "margin-bottom": "30px"}, [
+      h("div", {}, [
         h("p", {}, "Social"),
         h("img", {src: githubLogo, alt: "logo", style: s.githubIcon}),
       ]),
@@ -279,7 +297,6 @@ class Footer extends Component {
 }
 
 // Other Pages
-
 const Specification = () => (
   h("div", {}, "Specification")
 );

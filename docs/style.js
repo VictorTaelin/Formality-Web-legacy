@@ -59,8 +59,8 @@ const tabs = {
 }
 
 const tabsOnFocus = {
-  "height" : "29px", 
-  "margin" : "30px 20px 20px",
+  "height" : "30px", 
+  "margin" : "30px 20px 19px",
   "border-bottom" : "1px solid #ffffff",
   "display" : "flex",
   "align-items" : "center",
