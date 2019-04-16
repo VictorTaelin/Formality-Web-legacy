@@ -76,6 +76,7 @@ const bigContainer = {
   "background-repeat": "no-repeat, repeat",
   "background-size": "cover",
   "display": "flex",
+  "flex-direction": "column",
   "flex-flow": "column nowrap",
   "justify-content": "flex-start",
   "align-items": "center",
