@@ -1,5 +1,7 @@
 # Formality
 
+TESTS
+
 A general-purpose proof-gramming language for front-end apps, back-end services and smart-contracts. It is:
 
 - **Fast:** no garbage-collection, [optimal beta-reduction](https://medium.com/@maiavictor/solving-the-mystery-behind-abstract-algorithms-magical-optimizations-144225164b07) and a massively parallel GPU compiler make it *insanely fast*.
@@ -11,7 +13,6 @@ A general-purpose proof-gramming language for front-end apps, back-end services 
 [Specification](spec.md) ~ [Examples](stdlib.fm)
 
 ## Usage
-<a name="usage"/>
 
 Formality is currently implemented as a small, dependency-free JavaScript library. It will futurely be implemented in other languages, and formalized in Agda/Coq. To use the current implementation:
 

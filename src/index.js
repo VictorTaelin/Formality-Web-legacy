@@ -14,6 +14,9 @@ const Canvas = require("inferno-canvas-component-2");
 const s = require('./style');
 const fs = require("./font-style");
 
+const formality_md = require("./markdown/formality.md.js");
+console.log(formality_md);
+
 // Feature images
 import formalityTitle from './images/formality-title.png';
 import featureImage1 from './images/math.png';
@@ -25,27 +28,6 @@ import githubLogo from './images/github.png';
 // Colors
 const primaryColor = "#444053";
 const secondaryColor = "#ffffff";
-
-
-const textFormality = () => {
-  h("h1#formality", `Formality`),
-  h("p", `A general-purpose proof-gramming language for front-end apps, back-end services and smart-contracts. It is:`),
-  h("ul", [
-    h("li", [
-      h("strong", `Fast:`),
-      ` no garbage-collection, `,
-      h("a", {
-        "attributes": {
-          "href": "https://medium.com/@maiavictor/solving-the-mystery-behind-abstract-algorithms-magical-optimizations-144225164b07"
-        }
-      }, `optimal beta-reduction`),
-      ` and a massively parallel GPU compiler make it. JUST DO IT!! `,
-      h("em", `insanely fast`),
-      `.`
-    ])
-  ])
-}
-
 
 class Site extends Component {
   constructor(props) {
@@ -143,9 +125,7 @@ class Site extends Component {
         ]),
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
           h("div ", {style: {"font-family": 'Open Sans', "color": s.primaryColor, "margin-left": "90px", "margin-top": "20px", "line-height": "1.6"}}, [
-
-            h(MarkdownRender)
-
+            formality_md
           ]),
         ]),
         h("div", {}, [
@@ -165,84 +145,16 @@ class Site extends Component {
     }
   }
 }
-var hsText = [
-  h("h1#formality", `Formality`),
-  h("p", `A general-purpose proof-gramming language for front-end apps, back-end services and smart-contracts. It is:`),
-  h("ul", [
-    h("li", [
-      h("p", [
-        h("strong", `Fast:`),
-        ` no garbage-collection, `,
-        h("a", {  
-            "href": "https://medium.com/@maiavictor/solving-the-mystery-behind-abstract-algorithms-magical-optimizations-144225164b07"
-        }, `optimal beta-reduction`),
-        ` and a massively parallel GPU compiler make it `,
-        h("em", `insanely fast`),
-        `.`
-      ])
-    ]),
-    h("li", [
-      h("p", [
-        h("strong", `Safe:`),
-        ` a type system capable of proving mathematical theorems about its own programs make it `,
-        h("em", `really secure`),
-        `.`
-      ])
-    ]),
-    h("li", [
-      h("p", [
-        h("strong", `Simple:`),
-        ` its entire implementation takes `,
-        h("a", {
-          "attributes": {
-            "href": "javascript/formality.js"
-          }
-        }, `<1k LOC`),
-        `, making it a simple standard `,
-        h("em", `you could implement yourself`),
-        `.`
-      ])
-    ])
-  ]),
-  h("p", [
-    h("a", {
-      "attributes": {
-        "href": "spec.md"
-      }
-    }, `Specification`),
-    ` ~ `,
-    h("a", {
-      "attributes": {
-        "href": "stdlib.fm"
-      }
-    }, `Examples`)
-  ]),
-  h("h2#usage", `Usage`),
-  h("p", `<a name="usage"/>`),
-  h("p", `Formality is currently implemented as a small, dependency-free JavaScript library. It will futurely be implemented in other languages, and formalized in Agda/Coq. To use the current implementation:`),
-  h("pre", [
-    h("code.bash", `# Installs formality
-npm i -g formality
-
-# Enters the repository
-git clone https://github.com/maiavictor/formality
-cd formality
-
-# Checks and evaluates main
-formality main`)
-  ]),
-  h("p", `You can also use it as a library from your own JS code.`)
-];
-
-class MarkdownRender extends Component {
-  constructor(props) {
-      super(props)
-      this.state = {};
-  }
-  render() {
-      return hsText;
-  }
-}
+//class MarkdownRender extends Component {
+  //constructor(props) {
+    //super(props)
+    //this.markdown = props.markdown;
+    //this.state = {};
+  //}
+  //render() {
+    //return this.markdown;
+  //}
+//}
 
 // --- Components --- 
 
