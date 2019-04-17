@@ -23,16 +23,16 @@ const gridContainer = {
   "flex-direction": "column",
   "justify-content": "center",
   "align-items": "center",
+  "width": "900px",
 }
 
 const gridItem = {
   "display": "flex",
   "height": "350px",
   "width": "900px",
-  // "margin-left": "100px", // max width of 1000, or 
-  // "margin-right": "100px",
   "align-items": "center", 
-  "font-size": "22px"
+  "font-size": "22px",
+  "margin-left": "0px",
 }
 
 const featureImg =  {

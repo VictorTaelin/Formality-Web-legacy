@@ -34,8 +34,6 @@ const text = {
 
 const subtitle = {
   ...text, 
-  // "margin-left" : "300px",
-  // "margin-right" : "300px",
   "width": "900px",
   "margin-top": "20px",
   "text-align": "center"
