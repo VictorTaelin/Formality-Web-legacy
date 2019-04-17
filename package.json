@@ -24,7 +24,7 @@
     "file-loader": "^3.0.1",
     "raw-loader": "^1.0.0",
     "simple-markdown": "^0.4.4",
-    "webpack": "^4.29.3",
+    "webpack": "^4.30.0",
     "webpack-cli": "^3.2.3"
   },
   "dependencies": {
