@@ -16,16 +16,7 @@ const fs = require("./font-style");
 
 const formality_md = require("./markdown/formality.md.js");
 const test_hs = [
-  h('p',
-    [
-      "# H1\n",
-      "#",
-      "# H2\n",
-      "#",
-      "#",
-      "# H3"
-    ]
-  )
+
   // h("h1#formality", `Formality`),
   // h("h2#formality", `Formality`),
   // h("h3#formality", `Formality`)

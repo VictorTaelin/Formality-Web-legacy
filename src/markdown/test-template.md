@@ -1,5 +1,7 @@
 # H1
+
 ## H2
+
 ### H3
 
 **bold text**
@@ -20,7 +22,7 @@
 
 ---
 
-<!-- [title](https://www.example.com)
+[title](https://www.example.com)
 
 | Syntax | Description |
 | ----------- | ----------- |
@@ -48,4 +50,4 @@ term
 
 - [x] Write the press release
 - [ ] Update the website
-- [ ] Contact the media -->
+- [ ] Contact the media
