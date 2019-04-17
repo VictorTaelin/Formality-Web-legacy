@@ -27,16 +27,15 @@ const title = {
 
 const text = {
   "padding": "40px",
-  "font-size": "20px",
+  "font-size": "15px",
   "font-family": "Open Sans",
   "color": primaryColor,
 }
 
 const subtitle = {
   ...text, 
-  // "margin-left" : "300px",
-  // "margin-right" : "300px",
-  "width": "900px",
+  "font-size": "20px",
+  "width": "800px",
   "margin-top": "20px",
   "text-align": "center"
 }

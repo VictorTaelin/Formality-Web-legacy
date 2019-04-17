@@ -113,7 +113,7 @@ const usageCodeContainer = {
   "background-color": secondaryColor,
   "flex-direction": "column",
   "font-family" : "Inconsolata", 
-  "font-size" : "20px",
+  "font-size" : "15px",
   "padding-top": "20px",
   "padding-right": "20px",
   "padding-bottom": "20px",
@@ -124,14 +124,14 @@ const footerContainer = {
   "display": "flex",
   "margin-top": "20px",
   "margin-left": "130px",
-  "font-size": "20px",
+  "font-size": "13px",
   "font-family": "Open Sans",
   "color": primaryColor,
   "flex-direction": "row",
   "justify-content": "space-between",
   "background-color": secondaryColor,
   "height": "100px",
-  "width": "250px",
+  "width": "200px",
 }
 
 const githubIcon = {
