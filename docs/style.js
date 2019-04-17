@@ -32,7 +32,6 @@ const gridItem = {
   "width": "900px",
   "align-items": "center", 
   "font-size": "22px",
-  "margin-left": "0px",
 }
 
 const featureImg =  {

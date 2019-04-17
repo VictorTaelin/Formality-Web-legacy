@@ -15,7 +15,22 @@ const s = require('./style');
 const fs = require("./font-style");
 
 const formality_md = require("./markdown/formality.md.js");
-console.log(formality_md);
+const test_hs = [
+  h('p',
+    [
+      "# H1\n",
+      "#",
+      "# H2\n",
+      "#",
+      "#",
+      "# H3"
+    ]
+  )
+  // h("h1#formality", `Formality`),
+  // h("h2#formality", `Formality`),
+  // h("h3#formality", `Formality`)
+]
+
 
 // Feature images
 import formalityTitle from './images/formality-title.png';
@@ -125,7 +140,7 @@ class Site extends Component {
         ]),
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
           h("div ", {style: {"font-family": 'Open Sans', "color": s.primaryColor, "margin-left": "90px", "margin-top": "20px", "line-height": "1.6"}}, [
-            formality_md
+            test_hs
           ]),
         ]),
         h("div", {}, [

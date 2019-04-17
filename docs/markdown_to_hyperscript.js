@@ -1,21 +1,23 @@
-var markdown = `
-## titulo
+// var markdown = `
+// ## titulo
 
-conteudo
+// conteudo
 
-\`\`\`javascript
-function(x){return x}
-\`\`\`
+// \`\`\`javascript
+// function(x){return x}
+// \`\`\`
 
-- teste
+// - teste
 
-- de
+// - de
 
-- lista
-`;
+// - lista
+// `;
 
 var fs = require("fs");
 var md2json = require("simple-markdown").defaultBlockParse;
+
+var mdFile = fs.readFileSync('./markdown/test-template.md', 'utf8');
 
 const json2h = (node) => {
   var str = "";
@@ -93,14 +95,14 @@ const json2h = (node) => {
   return str;
 };
 
-console.log(":: MARKDOWN\n");
-console.log(markdown);
-console.log("");
+// console.log(":: MARKDOWN\n");
+// console.log(markdown);
+// console.log("");
 
 console.log(":: JSON\n");
-console.log(JSON.stringify(md2json(markdown), null, 2));
+console.log(JSON.stringify(md2json(mdFile), null, 2));
 console.log("");
 
 console.log(":: HYPERSCRIPT\n");
-console.log(json2h(md2json(markdown), null, 2));
+console.log(json2h(md2json(mdFile), null, 2));
 console.log("");
