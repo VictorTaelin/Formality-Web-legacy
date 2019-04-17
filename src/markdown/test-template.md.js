@@ -93,38 +93,38 @@ module.exports = [
       )
     ]
   ),
-  h('table', [
+  h('table', {style: {'border-collapse': 'collapse'}}, [
     h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start'}}, [
-      h('th', 
+      h('th', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'text-align': 'left', 'font-weight': 'bold', 'font-size': '15px'}}, 
         [
           "Syntax"
         ]
       ),
-      h('th', 
+      h('th', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'text-align': 'left', 'font-weight': 'bold', 'font-size': '15px'}}, 
         [
           "Description"
         ]
       ),
   ]), 
-  h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start', 'flex-direction': 'column', 'color': '#123666'}}, [
-      h('td', 
+  h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start'}}, [
+      h('td', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'font-size': '15px'}},
         [
           "Header"
         ]
       ), 
-      h('td', 
+      h('td', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'font-size': '15px'}},
         [
           "Title"
         ]
       ), 
   ]), 
-  h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start', 'flex-direction': 'column', 'color': '#123666'}}, [
-      h('td', 
+  h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start'}}, [
+      h('td', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'font-size': '15px'}},
         [
           "Paragraph"
         ]
       ), 
-      h('td', 
+      h('td', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'font-size': '15px'}},
         [
           "Text"
         ]

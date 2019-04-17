@@ -139,12 +139,12 @@ const json2h = (node) => {
         case "table": 
           // console.log("======== Table ");
           // console.log(JSON.stringify(node, null, 2));
-          line(lv, "h('table', [");
+          line(lv, "h('table', {style: {'border-collapse': 'collapse'}}, [");
 
             // ----- Header
             line(lv + 1, "h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start'}}, [");
             for (var i = 0; i < node.header.length; ++i) {
-              line(lv + 2, "h('th', ");
+              line(lv + 2, "h('th', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'text-align': 'left', 'font-weight': 'bold', 'font-size': '15px'}}, ");
                 // console.log("============== Header item "+ i);
                 // console.log(JSON.stringify(node.header[i], null, 2));
                 make(lv + 3, node.header[i]);
@@ -156,14 +156,14 @@ const json2h = (node) => {
 
             // ------ Cells
             for (var i = 0; i < node.cells.length; ++i) {
-              line(lv, "h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start', 'flex-direction': 'column', 'color': '#123666'}}, [");
+              line(lv, "h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start'}}, [");
               // console.log("============== Cells item "+ i);
               // console.log(JSON.stringify(node.cells[i], null, 2));
 
               for (var j = 0; j < node.cells[i].length; ++j) {
                 // console.log("----------");
                 // console.log(JSON.stringify(node.cells[i][j], null, 2));
-                line(lv + 2, "h('td', ");
+                line(lv + 2, "h('td', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'font-size': '15px'}},");
                 make(lv + 3, node.cells[i][j]);
                 line(lv + 2, "), ");
                 // text(",");
