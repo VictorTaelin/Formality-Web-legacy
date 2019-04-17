@@ -1,27 +1,29 @@
 {
-  "name": "moonad",
+  "name": "formality",
   "version": "0.1.0",
-  "description": "A P2P operating system.",
-  "main": "moonad.js",
+  "description": "",
+  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "cp src/* docs; webpack"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/moonad/moonad.git"
+    "url": "git+https://github.com/moonad/Formality-Web.git"
   },
   "keywords": [
-    "moonad"
+    "formality"
   ],
   "author": "Victor Maia",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/moonad/moonad/issues"
+    "url": "https://github.com/moonad/Formality-Web/issues"
   },
-  "homepage": "https://github.com/moonad/moonad#readme",
+  "homepage": "https://github.com/moonad/Formality-Web#readme",
   "devDependencies": {
+    "file-loader": "^3.0.1",
     "raw-loader": "^1.0.0",
+    "simple-markdown": "^0.4.4",
     "webpack": "^4.29.3",
     "webpack-cli": "^3.2.3"
   },
