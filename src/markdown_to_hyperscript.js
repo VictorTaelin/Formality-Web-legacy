@@ -1,41 +1,15 @@
-// var markdown = `
-// ## titulo
-
-// conteudo
-
-// \`\`\`javascript
-// function(x){return x}
-// \`\`\`
-
-// - teste
-
-// - de
-
-// - lista
-// `;
-
 var fs = require("fs");
 var md2json = require("simple-markdown").defaultBlockParse;
 
 var mdFile = fs.readFileSync('./markdown/test-template.md', 'utf8');
-// var mdFile = `
-// **bold text**
 
-// *italicized text*
-
-// > blockquote
-
-// 1. First item
-// 2. Second item
-// 3. Third item
-
-// - First item
-// - Second item
-// - Third item
-
-// ---
-// `
-
+/**
+ *  TODO
+ * - blockquote (não funcionando apropriadamente)
+ * - table 
+ * - footer
+ * - term definition 
+ */
 const json2h = (node) => {
   var str = "";
   const make = (lv, node) => {
@@ -53,8 +27,6 @@ const json2h = (node) => {
     };
 
     if (node instanceof Array) {
-      // console.log(">> Node");
-      // console.log(JSON.stringify(node, null, 2));
       line(lv, "[");
       for (var i = 0; i < node.length; ++i) {
         make(lv + 1, node[i]);
@@ -65,11 +37,11 @@ const json2h = (node) => {
       switch (node.type) {
 
         case "newline":
-          line(lv, "h('br')");
+          line(lv, "h('br', {style: {'margin-top': '10px'}})");
           break;
 
         case "paragraph":
-          line(lv, "h('p',");
+          line(lv, "h('p', ");
           
           // var auxTitle = 1;
           // var content = "";
@@ -108,9 +80,9 @@ const json2h = (node) => {
           break;
 
         case "list":
-          line(lv, "h(" + (node.ordered ? "'ol'" : "'ul'") + ", [");
+          line(lv, "h(" + (node.ordered ? "'ol'" : "'ul'") + ", {style: {'margin-left': '23px'}}, [");
           for (var i = 0; i < node.items.length; ++i) {
-            line(lv+1, "h('li',");
+            line(lv+1, "h('li', ");
             make(lv+2, node.items[i]);
             line(lv+1, ")");
             text(",");
@@ -120,7 +92,7 @@ const json2h = (node) => {
 
         case "codeBlock":
           line(lv, "h('pre', [");
-          line(lv+1, "h('code.bash', ");
+          line(lv+1, "h('code.bash', {style: {'font-size': '15px' }},");
           line(lv+2, JSON.stringify(node.content));
           line(lv+1, ")");
           line(lv, "])");
@@ -145,7 +117,7 @@ const json2h = (node) => {
           break;
 
         case "inlineCode":
-          line(lv, "h('code', "+node.content+")");
+          line(lv, "h('code', {style: {'font-size': '15px' }},'"+node.content+"')");
           break;
 
         case "hr":
@@ -157,8 +129,52 @@ const json2h = (node) => {
           make(lv + 1, node.content);
           line(lv, ")");
           break;
-
         
+        case "del": 
+          line(lv, "h('del', ");
+          make(lv + 1, node.content);
+          line(lv, ")");
+          break;
+        
+        case "table": 
+          // console.log("======== Table ");
+          // console.log(JSON.stringify(node, null, 2));
+          line(lv, "h('table', [");
+
+            // ----- Header
+            line(lv + 1, "h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start'}}, [");
+            for (var i = 0; i < node.header.length; ++i) {
+              line(lv + 2, "h('th', ");
+                // console.log("============== Header item "+ i);
+                // console.log(JSON.stringify(node.header[i], null, 2));
+                make(lv + 3, node.header[i]);
+              line(lv + 2, ")");
+              text(",");
+            }
+            line(lv, "]), ");
+            // ------ 
+
+            // ------ Cells
+            for (var i = 0; i < node.cells.length; ++i) {
+              line(lv, "h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start', 'flex-direction': 'column', 'color': '#123666'}}, [");
+              // console.log("============== Cells item "+ i);
+              // console.log(JSON.stringify(node.cells[i], null, 2));
+
+              for (var j = 0; j < node.cells[i].length; ++j) {
+                // console.log("----------");
+                // console.log(JSON.stringify(node.cells[i][j], null, 2));
+                line(lv + 2, "h('td', ");
+                make(lv + 3, node.cells[i][j]);
+                line(lv + 2, "), ");
+                // text(",");
+              }   
+              line(lv, "]), ");
+            }
+           
+          // ------
+
+          line(lv, "])");
+          break;
 
         default:
           line(lv, "h('div', 'UNKNOWN_TYPE: " + node.type + "')");
@@ -178,9 +194,10 @@ const json2h = (node) => {
 // console.log(JSON.stringify(md2json(mdFile), null, 2));
 // console.log("");
 
-console.log("---------------------- OUTPUT");
-console.log(json2h(md2json(mdFile), null, 2));
-
-// console.log(":: HYPERSCRIPT\n");
+// json2h(md2json(mdFile), null, 2);
+// console.log("---------------------- OUTPUT");
 // console.log(json2h(md2json(mdFile), null, 2));
-// console.log("");
+
+console.log(":>>>>>>>>>>>>>>  HYPERSCRIPT\n");
+console.log(json2h(md2json(mdFile), null, 2));
+console.log("");

@@ -14,13 +14,7 @@ const Canvas = require("inferno-canvas-component-2");
 const s = require('./style');
 const fs = require("./font-style");
 
-const formality_md = require("./markdown/formality.md.js");
-const test_hs = [
-
-  // h("h1#formality", `Formality`),
-  // h("h2#formality", `Formality`),
-  // h("h3#formality", `Formality`)
-]
+const test_hs = require("./markdown/test-template.md.js");
 
 
 // Feature images
