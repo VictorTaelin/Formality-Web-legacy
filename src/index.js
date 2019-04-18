@@ -124,7 +124,7 @@ class Site extends Component {
           ]),
         ]),
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
-          h("div ", {style: {"font-family": 'Open Sans', "color": s.primaryColor, "margin-left": "90px", "margin-right": "90px", "margin-top": "20px", "line-height": "1.6"}}, [
+          h("div ", {style: {"font-family": 'Open Sans', "color": s.primaryColor, "margin-left": "100px", "margin-right": "100px", "margin-top": "20px", "line-height": "1.6"}}, [
             markdown
           ]),
         ]),
@@ -325,26 +325,25 @@ class Footer extends Component {
     return h("div", {style: s.footerContainer}, [
       h("div", {}, [
         h("p", {}, "Talk to us "),
-        h("p", {}, "irc... "),
+        h("p", {}, "(soon...) "),
       ]),
       h("div", {}, [
         h("p", {}, "Social"),
         h('span', {}, [
           h('a', {'href': 'https://github.com/moonad/Formality', 'text-decoration': 'none',}, h("img", {src: githubLogo, alt: "logo", style: s.githubIcon}),),
         ])
-        // h("img", {src: githubLogo, alt: "logo", style: s.githubIcon}),
       ]),
       h('div', {style: {'flex-direction': 'column'}}, [
         h('p', {}, [ 
           h('span', {}, "Landing images by "),
           h('span', {}, [
-            h('a', {'href': 'https://undraw.co', 'text-decoration': 'none', }, "unDraw"),
+            h('a', {'href': 'https://undraw.co', style: {'color': '#68c3d4', 'text-decoration': 'none'}}, "unDraw"),
           ])
         ]),
         h('p', {style: {'margin-top': '5px'}}, [ 
           h('span', {}, "Background photo by Paul Earle on "),
           h('span', {}, [
-            h('a', {'href': 'https://unsplash.com/photos/wVjd0eWNqI8', 'text-decoration': 'none', }, "Unsplash"),
+            h('a', {'href': 'https://unsplash.com/photos/wVjd0eWNqI8', style: {'color': '#68c3d4', 'text-decoration': 'none'} }, "Unsplash"),
           ])
         ])
       ]),

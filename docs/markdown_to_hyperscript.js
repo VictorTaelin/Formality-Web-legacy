@@ -97,7 +97,7 @@ const json2h = (node) => {
           break;
 
         case "codeBlock":
-          line(lv, "h('pre', {style: {'margin-top': '20px', 'margin-bottom': '20px', 'background-color': '#F6F8FA'}}, [");
+          line(lv, "h('pre', {style: {'margin-top': '20px', 'margin-bottom': '20px', 'background-color': '#F6F8FA', 'padding': '15px'}}, [");
           line(lv+1, "h('code.bash', {style: {'font-size': '15px'}},");
           line(lv+2, JSON.stringify(node.content));
           line(lv+1, ")");

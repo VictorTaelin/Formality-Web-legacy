@@ -42,7 +42,7 @@ const featureImg =  {
 const logo = {
   "width" : "45px",
   "height" : "40px",
-  "margin-left" : "130px",
+  "margin-left" : "100px",
   "margin-top" : "10px", 
   "margin-bottom" : "10px",
   "cursor": "pointer"
@@ -122,7 +122,7 @@ const usageCodeContainer = {
 const footerContainer = {
   "display": "flex",
   "margin-top": "20px",
-  "margin-left": "130px",
+  "margin-left": "100px",
   "font-size": "13px",
   "font-family": "Open Sans",
   "color": primaryColor,
@@ -136,7 +136,7 @@ const footerContainer = {
 const githubIcon = {
   "width" : "20px",
   "height" : "20px",
-  "margin-top" : "10px", 
+  "margin-top" : "5px", 
   "cursor": "pointer"
 }
 
