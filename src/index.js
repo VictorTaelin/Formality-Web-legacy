@@ -14,7 +14,7 @@ const Canvas = require("inferno-canvas-component-2");
 const s = require('./style');
 const fs = require("./font-style");
 
-const test_hs = require("./markdown/test-template.md.js");
+const markdown = require("./markdown/test-template.md.js");
 
 
 // Feature images
@@ -124,8 +124,8 @@ class Site extends Component {
           ]),
         ]),
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
-          h("div ", {style: {"font-family": 'Open Sans', "color": s.primaryColor, "margin-left": "90px", "margin-top": "20px", "line-height": "1.6"}}, [
-            test_hs
+          h("div ", {style: {"font-family": 'Open Sans', "color": s.primaryColor, "margin-left": "90px", "margin-right": "90px", "margin-top": "20px", "line-height": "1.6"}}, [
+            markdown
           ]),
         ]),
         h("div", {style: {'flex-direction': 'row'}}, [
@@ -196,7 +196,9 @@ class Tab extends Component {
   constructor(props) {
     super(props)
     this.onClick = props.onClick;
-    this.state = {title: props.title, isCurrentPage: props.isCurrentPage};
+    this.isCurrentPage = props.isCurrentPage;
+    this.title = props.title;
+    this.state = {};
   }
 
   render() {

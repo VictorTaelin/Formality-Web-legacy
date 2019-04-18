@@ -1,6 +1,6 @@
 const h = require('inferno-hyperscript').h;
 module.exports = [
-  h('h1',
+  h('h1', {style: {'margin-top': '20px'}}, 
     [
       "Formality"
     ]
@@ -37,7 +37,7 @@ module.exports = [
             " no garbage",
             "-collection",
             ", ",
-            h('a', {href: 'https://medium.com/@maiavictor/solving-the-mystery-behind-abstract-algorithms-magical-optimizations-144225164b07'}, 
+            h('a', {href: 'https://medium.com/@maiavictor/solving-the-mystery-behind-abstract-algorithms-magical-optimizations-144225164b07', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
               [
                 "optimal beta",
                 "-reduction"
@@ -86,7 +86,7 @@ module.exports = [
               ]
             ),
             " its entire implementation takes ",
-            h('a', {href: 'javascript/formality.js'}, 
+            h('a', {href: 'javascript/formality.js', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
               [
                 "<1k LOC"
               ]
@@ -105,21 +105,21 @@ module.exports = [
   ]),
   h('p', 
     [
-      h('a', {href: 'spec.md'}, 
+      h('a', {href: 'spec.md', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
         [
           "Specification"
         ]
       ),
       " ",
       "~ ",
-      h('a', {href: 'stdlib.fm'}, 
+      h('a', {href: 'stdlib.fm', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
         [
           "Examples"
         ]
       )
     ]
   ),
-  h('h2',
+  h('h2', {style: {'margin-top': '15px'}}, 
     [
       "Usage"
     ]
@@ -136,8 +136,8 @@ module.exports = [
       ":"
     ]
   ),
-  h('pre', [
-    h('code.bash', {style: {'font-size': '15px' }},
+  h('pre', {style: {'margin-top': '20px', 'margin-bottom': '20px', 'background-color': '#F6F8FA', 'padding': '15px'}}, [
+    h('code.bash', {style: {'font-size': '15px'}},
       "# Installs formality\nnpm i -g formality\n\n# Enters the repository\ngit clone https://github.com/maiavictor/formality\ncd formality\n\n# Checks and evaluates main\nformality main"
     )
   ]),

@@ -37,7 +37,7 @@ const json2h = (node) => {
       switch (node.type) {
 
         case "newline":
-          line(lv, "h('br', {style: {'margin-top': '10px'}})");
+          line(lv, "h('br')");
           break;
 
         case "paragraph":
@@ -74,7 +74,13 @@ const json2h = (node) => {
           break;
 
         case "heading":
-          line(lv, "h('h" + node.level + "',");
+          if (node.level === 1) {
+            line(lv, "h('h1', {style: {'margin-top': '20px'}}, ");
+          } else if (node.level === 2) {
+            line(lv, "h('h2', {style: {'margin-top': '15px'}}, ");
+          } else {
+            line(lv, "h('h3', {style: {'margin-top': '10px'}}, ");
+          }
           make(lv + 1, node.content);
           line(lv, ")");
           break;
@@ -91,8 +97,8 @@ const json2h = (node) => {
           break;
 
         case "codeBlock":
-          line(lv, "h('pre', [");
-          line(lv+1, "h('code.bash', {style: {'font-size': '15px' }},");
+          line(lv, "h('pre', {style: {'margin-top': '20px', 'margin-bottom': '20px', 'background-color': '#F6F8FA'}}, [");
+          line(lv+1, "h('code.bash', {style: {'font-size': '15px'}},");
           line(lv+2, JSON.stringify(node.content));
           line(lv+1, ")");
           line(lv, "])");
@@ -111,21 +117,21 @@ const json2h = (node) => {
           break;
 
         case "blockQuote":
-          line(lv, "h('blockquote', ");
+          line(lv, "h('blockquote', {style: {'margin-top': '10px', 'margin-bottom': '10px'}}, ");
           make(lv + 1, node.content);
           line(lv, ")");
           break;
 
         case "inlineCode":
-          line(lv, "h('code', {style: {'font-size': '15px' }},'"+node.content+"')");
+          line(lv, "h('code', {style: {'font-size': '15px'}},'"+node.content+"')");
           break;
 
         case "hr":
-          line(lv, "h('hr')");
+          line(lv, "h('hr', {style: {'margin-bottom': '15px'}})");
           break;
 
         case "link":
-          line(lv, "h('a', {href: '"+node.target+"'}, ");
+          line(lv, "h('a', {href: '"+node.target+"', style: {'color': '#0769D7', 'text-decoration': 'none'}},  ");
           make(lv + 1, node.content);
           line(lv, ")");
           break;
@@ -137,7 +143,7 @@ const json2h = (node) => {
           break;
         
         case "table": 
-          line(lv, "h('table', {style: {'border-collapse': 'collapse'}}, [");
+          line(lv, "h('table', {style: {'border-collapse': 'collapse', 'margin-top': '20px', 'margin-bottom': '20px'}}, [");
 
             // ----- Header
             line(lv + 1, "h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start'}}, [");
