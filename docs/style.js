@@ -130,7 +130,7 @@ const footerContainer = {
   "justify-content": "space-between",
   "background-color": secondaryColor,
   "height": "100px",
-  "width": "200px",
+  "width": "600px",
 }
 
 const githubIcon = {

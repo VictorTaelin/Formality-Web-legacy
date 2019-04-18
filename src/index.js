@@ -32,7 +32,7 @@ const secondaryColor = "#ffffff";
 class Site extends Component {
   constructor(props) {
     super(props)
-    this.state = {page: "specification"};
+    this.state = {page: "specification", currentTab: props.currentTab};
   }
   componentDidMount() {
     //this.setState({page: [10, 20, 30]});
@@ -84,11 +84,12 @@ class Site extends Component {
 
         // Top menu
         h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
-          h("img", {src: logo, alt: "logo", style: s.logo}),
+          // h("img", {src: logo, alt: "logo", style: s.logo}),
+          h(Logo),
           h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
-            h(Tab, {title: "Home", isCurrentPage: true, onClick: () => { this.setState({page: "home"}) }}),
-            h(Tab, {title: "Specification", isCurrentPage: false, onClick: () => { this.setState({page: "specification"}) }}),
-            h(Tab, {title: "Try it!", isCurrentPage: false, onClick: () => { this.setState({page: "tryIt"}) }})
+            h(Tab, {title: "Home", onClick: () => { this.setState({page: "home"}) }}),
+            h(Tab, {title: "Specification", onClick: () => { this.setState({page: "specification"}) }}),
+            h(Tab, {title: "Try it!", onClick: () => { this.setState({page: "tryIt"}) }})
           ]),
         ]),
 
@@ -116,7 +117,7 @@ class Site extends Component {
       console.log("Specificiation carregou");
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
-          h("img", {src: logo, alt: "logo", style: s.logo}),
+          h(Logo, {onClick: () => {this.setState({page: "home"})}}),
           h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
             h(Tab, {title: "Home", isCurrentPage: false, onClick: () => { this.setState({page: "home"}) }}),
             h(Tab, {title: "Specification", isCurrentPage: true, onClick: () => { this.setState({page: "specification"}) }}),
@@ -128,9 +129,9 @@ class Site extends Component {
             test_hs
           ]),
         ]),
-        h("div", {}, [
+        h("div", {style: {'flex-direction': 'row'}}, [
           h("div", {style: {"background-color": s.primaryColor, "height": "1px"}}),
-          h(Footer, {})
+          h(Footer, {}),
         ]),
       ]);
       
@@ -145,6 +146,18 @@ class Site extends Component {
     }
   }
 }
+
+class Logo extends Component {
+  constructor(props) {
+    super(props)
+    this.onClick = props.onClick;
+    this.state = {};
+  }
+  render() {
+    return h("img", {src: logo, alt: "logo", style: s.logo, onClick: this.onClick});
+  }
+}
+
 //class MarkdownRender extends Component {
   //constructor(props) {
     //super(props)
@@ -189,13 +202,13 @@ class Tab extends Component {
   
   render() {
     var element = h("div", {style: s.tabs},  this.state.title)
-    if (this.state.isCurrentPage) {
-      console.log(this.state.title+" on focus!");
-      element = h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.state.title)
-    } else {
+    // if (this.state.isCurrentPage) {
+    //   console.log(this.state.title+" on focus!");
+    //   element = h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.state.title)
+    // } else {
       element = h(Hover, {normalComponent: h("div", {style: s.tabs},  this.state.title), 
                           onFocusComponent: h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.state.title)})
-    }
+    // }
     return element;                        
   }
 }
@@ -316,9 +329,27 @@ class Footer extends Component {
       ]),
       h("div", {}, [
         h("p", {}, "Social"),
-        h("img", {src: githubLogo, alt: "logo", style: s.githubIcon}),
+        h('span', {}, [
+          h('a', {'href': 'https://github.com/moonad/Formality', 'text-decoration': 'none',}, h("img", {src: githubLogo, alt: "logo", style: s.githubIcon}),),
+        ])
+        // h("img", {src: githubLogo, alt: "logo", style: s.githubIcon}),
       ]),
-    ]); 
+      h('div', {style: {'flex-direction': 'column'}}, [
+        h('p', {}, [ 
+          h('span', {}, "Landing images by "),
+          h('span', {}, [
+            h('a', {'href': 'https://undraw.co', 'text-decoration': 'none', }, "unDraw"),
+          ])
+        ]),
+        h('p', {style: {'margin-top': '5px'}}, [ 
+          h('span', {}, "Background photo by Paul Earle on "),
+          h('span', {}, [
+            h('a', {'href': 'https://unsplash.com/photos/wVjd0eWNqI8', 'text-decoration': 'none', }, "Unsplash"),
+          ])
+        ])
+      ]),
+    ],
+    ); 
   }
 }
 
