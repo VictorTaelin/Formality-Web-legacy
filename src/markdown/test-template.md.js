@@ -2,202 +2,149 @@ const h = require('inferno-hyperscript').h;
 module.exports = [
   h('h1',
     [
-      "H1"
-    ]
-  ),
-  h('h2',
-    [
-      "H2"
-    ]
-  ),
-  h('h3',
-    [
-      "H3"
+      "Formality"
     ]
   ),
   h('p', 
     [
-      h('b', 
-        [
-          "bold text"
-        ]
-      )
+      "TESTS"
     ]
   ),
   h('p', 
     [
-      h('i', 
-        [
-          "italicized text"
-        ]
-      )
+      "A general",
+      "-purpose proof",
+      "-gramming language for front",
+      "-end apps",
+      ", back",
+      "-end services and smart",
+      "-contracts",
+      ". It is",
+      ":"
     ]
   ),
-  h('blockquote', 
-    [
-      h('p', 
-        [
-          "blockquote"
-        ]
-      )
-    ]
-  ),
-  h('ol', {style: {'margin-left': '23px'}}, [
-    h('li', 
-      [
-        "First item"
-      ]
-    ),
-    h('li', 
-      [
-        "Second item"
-      ]
-    ),
+  h('ul', {style: {'margin-left': '23px'}}, [
     h('li', 
       [
         h('p', 
           [
-            "Third item"
+            h('b', 
+              [
+                "Fast",
+                ":"
+              ]
+            ),
+            " no garbage",
+            "-collection",
+            ", ",
+            h('a', {href: 'https://medium.com/@maiavictor/solving-the-mystery-behind-abstract-algorithms-magical-optimizations-144225164b07'}, 
+              [
+                "optimal beta",
+                "-reduction"
+              ]
+            ),
+            " and a massively parallel GPU compiler make it ",
+            h('i', 
+              [
+                "insanely fast"
+              ]
+            ),
+            "."
           ]
         )
       ]
     ),
     h('li', 
       [
-        "First item"
+        h('p', 
+          [
+            h('b', 
+              [
+                "Safe",
+                ":"
+              ]
+            ),
+            " a type system capable of proving mathematical theorems about its own programs make it ",
+            h('i', 
+              [
+                "really secure"
+              ]
+            ),
+            "."
+          ]
+        )
       ]
     ),
     h('li', 
       [
-        "Second item"
-      ]
-    ),
-    h('li', 
-      [
-        "Third item"
+        h('p', 
+          [
+            h('b', 
+              [
+                "Simple",
+                ":"
+              ]
+            ),
+            " its entire implementation takes ",
+            h('a', {href: 'javascript/formality.js'}, 
+              [
+                "<1k LOC"
+              ]
+            ),
+            ", making it a simple standard ",
+            h('i', 
+              [
+                "you could implement yourself"
+              ]
+            ),
+            "."
+          ]
+        )
       ]
     ),
   ]),
   h('p', 
     [
-      h('code', {style: {'font-size': '15px' }},'code')
-    ]
-  ),
-  h('hr'),
-  h('p', 
-    [
-      h('a', {href: 'https://www.example.com'}, 
+      h('a', {href: 'spec.md'}, 
         [
-          "title"
+          "Specification"
+        ]
+      ),
+      " ",
+      "~ ",
+      h('a', {href: 'stdlib.fm'}, 
+        [
+          "Examples"
         ]
       )
     ]
   ),
-  h('table', {style: {'border-collapse': 'collapse'}}, [
-    h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start'}}, [
-      h('th', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'text-align': 'left', 'font-weight': 'bold', 'font-size': '15px'}}, 
-        [
-          "Syntax"
-        ]
-      ),
-      h('th', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'text-align': 'left', 'font-weight': 'bold', 'font-size': '15px'}}, 
-        [
-          "Description"
-        ]
-      ),
-  ]), 
-  h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start'}}, [
-      h('td', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'font-size': '15px'}},
-        [
-          "Header"
-        ]
-      ), 
-      h('td', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'font-size': '15px'}},
-        [
-          "Title"
-        ]
-      ), 
-  ]), 
-  h('tr', {style: {'border': '1px solid #dddddd', 'justify-content': 'flex-start'}}, [
-      h('td', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'font-size': '15px'}},
-        [
-          "Paragraph"
-        ]
-      ), 
-      h('td', {style: {'border': '1px solid #dddddd', 'padding': '8px', 'font-size': '15px'}},
-        [
-          "Text"
-        ]
-      ), 
-  ]), 
-  ]),
+  h('h2',
+    [
+      "Usage"
+    ]
+  ),
+  h('p', 
+    [
+      "Formality is currently implemented as a small",
+      ", dependency",
+      "-free JavaScript library",
+      ". It will futurely be implemented in other languages",
+      ", and formalized in Agda",
+      "/Coq",
+      ". To use the current implementation",
+      ":"
+    ]
+  ),
   h('pre', [
     h('code.bash', {style: {'font-size': '15px' }},
-      "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Smith\",\n  \"age\": 25\n}"
+      "# Installs formality\nnpm i -g formality\n\n# Enters the repository\ngit clone https://github.com/maiavictor/formality\ncd formality\n\n# Checks and evaluates main\nformality main"
     )
   ]),
   h('p', 
     [
-      "Here",
-      "'s a sentence with a footnote",
-      ". ",
-      "[",
-      "^1",
-      "]"
-    ]
-  ),
-  h('p', 
-    [
-      "[",
-      "^1",
-      "]",
-      ": This is the footnote",
+      "You can also use it as a library from your own JS code",
       "."
     ]
-  ),
-  h('h3',
-    [
-      "My Great Heading ",
-      "{",
-      "#custom",
-      "-id",
-      "}"
-    ]
-  ),
-  h('p', 
-    [
-      "term\n",
-      ": definition"
-    ]
-  ),
-  h('p', 
-    [
-      h('del', 
-        [
-          "The world is flat",
-          "."
-        ]
-      )
-    ]
-  ),
-  h('ul', {style: {'margin-left': '23px'}}, [
-    h('li', 
-      [
-        "[x",
-        "] Write the press release"
-      ]
-    ),
-    h('li', 
-      [
-        "[ ",
-        "] Update the website"
-      ]
-    ),
-    h('li', 
-      [
-        "[ ",
-        "] Contact the media"
-      ]
-    ),
-  ])
+  )
 ]

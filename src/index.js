@@ -87,9 +87,9 @@ class Site extends Component {
           // h("img", {src: logo, alt: "logo", style: s.logo}),
           h(Logo),
           h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
-            h(Tab, {title: "Home", onClick: () => { this.setState({page: "home"}) }}),
-            h(Tab, {title: "Specification", onClick: () => { this.setState({page: "specification"}) }}),
-            h(Tab, {title: "Try it!", onClick: () => { this.setState({page: "tryIt"}) }})
+            h(Tab, {title: "Home", isCurrentPage: true, onClick: () => { this.setState({page: "home"}) }}),
+            h(Tab, {title: "Specification", isCurrentPage: false, onClick: () => { this.setState({page: "specification"}) }}),
+            h(Tab, {title: "Try it!", isCurrentPage: false, onClick: () => { this.setState({page: "tryIt"}) }})
           ]),
         ]),
 
@@ -114,7 +114,6 @@ class Site extends Component {
 
     // ============= Specification Page =============
     } else if (this.state.page === "specification") {
-      console.log("Specificiation carregou");
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
           h(Logo, {onClick: () => {this.setState({page: "home"})}}),
@@ -199,16 +198,15 @@ class Tab extends Component {
     this.onClick = props.onClick;
     this.state = {title: props.title, isCurrentPage: props.isCurrentPage};
   }
-  
+
   render() {
-    var element = h("div", {style: s.tabs},  this.state.title)
-    // if (this.state.isCurrentPage) {
-    //   console.log(this.state.title+" on focus!");
-    //   element = h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.state.title)
-    // } else {
-      element = h(Hover, {normalComponent: h("div", {style: s.tabs},  this.state.title), 
-                          onFocusComponent: h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.state.title)})
-    // }
+    var element;
+    if (this.props.isCurrentPage) {
+      element = h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.props.title)
+    } else {
+      element = h(Hover, {normalComponent: h("div", {style: s.tabs, isCurrentPage: this.isCurrentPage },  this.props.title), 
+                          onFocusComponent: h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.props.title)})
+    }
     return element;                        
   }
 }

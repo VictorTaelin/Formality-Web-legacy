@@ -1,7 +1,7 @@
 var fs = require("fs");
 var md2json = require("simple-markdown").defaultBlockParse;
 
-var mdFile = fs.readFileSync('./markdown/test-template.md', 'utf8');
+var mdFile = fs.readFileSync('./markdown/formality.md', 'utf8');
 
 /**
  *  TODO
