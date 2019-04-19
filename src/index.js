@@ -32,12 +32,28 @@ const secondaryColor = "#ffffff";
 class Site extends Component {
   constructor(props) {
     super(props)
-    this.state = {page: "specification", currentTab: props.currentTab};
+    this.state = {page: "home"};
   }
-  componentDidMount() {
-    //this.setState({page: [10, 20, 30]});
+  /**
+   * Quando o onpopstate acontece, a página é renderizada antes que o state seja atualizado, resultando em uma página em branco
+   */
+  componentDidMount(){  
+    console.log("The page is: "+this.state.page);
+    window.onpopstate = (event) => {
+      console.log("on pop occurred");
+      console.log("Voltando para: location: " + document.location + ", state: " + JSON.stringify(event.state));
+      var prevPage = JSON.stringify(event.state.page);
+      if (event.state !== null && this.state.page !== prevPage) {
+        this.setState({page: prevPage}); 
+        console.log("Now the page is"+this.state.page);  
+      } else { // go Home
+        this.setState({page: "home"});
+      }
+    }
   }
+
   render() {
+    console.log("... Render is called");
     // function drawCanvas({ctx, time}) {
     //     const {width, height} = ctx.canvas;
     //     ctx.save();
@@ -78,21 +94,42 @@ class Site extends Component {
       "cursor": "pointer",
     }
 
+      // Top menu
+    var topMenu = h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
+      h(Logo),
+      h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
+        h(Tab, {title: "Home", isCurrentPage: this.state.page === "home", 
+                onClick: () => { 
+                  if (this.state.page !== "home") {
+                    this.setState({page: "home"}); 
+                    history.pushState({page: "home"}, "home", "home"); 
+                  }
+                }
+              }),
+        h(Tab, {title: "Specification", isCurrentPage: this.state.page === "specification", 
+                onClick: () => { 
+                  if (this.state.page !== "specification") {
+                    this.setState({page: "specification"}); 
+                    history.pushState({page: "specification"}, "specification", "specification"); 
+                  }
+                }
+              }),
+        h(Tab, {title: "Try it!", isCurrentPage: this.state.page === "tryIt", 
+                onClick: () => { 
+                    if (this.state.page !== "tryIt") {
+                    this.setState({page: "tryIt"}); 
+                    history.pushState({page: "tryit"}, "tryit", "tryit"); 
+                    }
+                }
+              })
+      ]),
+    ])
+    console.log("State page on Render: "+this.state.page);
     // ============= Home =============
-    if (this.state.page === "home" ) {
+    if (this.state.page === "home" || this.state.page === null ) {
+      console.log("... rendering Home");
       return h("div", [
-
-        // Top menu
-        h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
-          // h("img", {src: logo, alt: "logo", style: s.logo}),
-          h(Logo),
-          h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
-            h(Tab, {title: "Home", isCurrentPage: true, onClick: () => { this.setState({page: "home"}) }}),
-            h(Tab, {title: "Specification", isCurrentPage: false, onClick: () => { this.setState({page: "specification"}) }}),
-            h(Tab, {title: "Try it!", isCurrentPage: false, onClick: () => { this.setState({page: "tryIt"}) }})
-          ]),
-        ]),
-
+        topMenu,
         // Top area: Formality title and subtitle
         h("div", {style: s.topContainer}, [
           h("div", {style: formalityTitleContainer}),    
@@ -115,14 +152,7 @@ class Site extends Component {
     // ============= Specification Page =============
     } else if (this.state.page === "specification") {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
-        h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
-          h(Logo, {onClick: () => {this.setState({page: "home"})}}),
-          h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
-            h(Tab, {title: "Home", isCurrentPage: false, onClick: () => { this.setState({page: "home"}) }}),
-            h(Tab, {title: "Specification", isCurrentPage: true, onClick: () => { this.setState({page: "specification"}) }}),
-            h(Tab, {title: "Try it!", isCurrentPage: false, onClick: () => { this.setState({page: "tryIt"}) }})
-          ]),
-        ]),
+        topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
           h("div ", {style: {"font-family": 'Open Sans', "color": s.primaryColor, "margin-left": "100px", "margin-right": "100px", "margin-top": "20px", "line-height": "1.6"}}, [
             markdown
@@ -351,12 +381,6 @@ class Footer extends Component {
     ); 
   }
 }
-
-
-// Other Pages
-const Specification = () => (
-  h("div", {}, "Specification")
-);
 
 
 window.onload = () => {
