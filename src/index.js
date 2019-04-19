@@ -38,18 +38,18 @@ class Site extends Component {
    * Quando o onpopstate acontece, a página é renderizada antes que o state seja atualizado, resultando em uma página em branco
    */
   componentDidMount(){  
-    console.log("The page is: "+this.state.page);
-    window.onpopstate = (event) => {
-      console.log("on pop occurred");
-      console.log("Voltando para: location: " + document.location + ", state: " + JSON.stringify(event.state));
-      var prevPage = JSON.stringify(event.state.page);
-      if (event.state !== null && this.state.page !== prevPage) {
-        this.setState({page: prevPage}); 
-        console.log("Now the page is"+this.state.page);  
-      } else { // go Home
-        this.setState({page: "home"});
-      }
-    }
+    // console.log("The page is: "+this.state.page);
+    // window.onpopstate = (event) => {
+    //   console.log("on pop occurred");
+    //   console.log("Voltando para: location: " + document.location + ", state: " + JSON.stringify(event.state));
+    //   var prevPage = JSON.stringify(event.state.page);
+    //   if (event.state !== null && this.state.page !== prevPage) {
+    //     this.setState({page: prevPage}); 
+    //     console.log("Now the page is"+this.state.page);  
+    //   } else { // go Home
+    //     this.setState({page: "home"});
+    //   }
+    // }
   }
 
   render() {
@@ -78,20 +78,6 @@ class Site extends Component {
       "background-image": "url(src/images/formality-title.png)",
       "margin-top": "200px",
       "margin-bottom": "30px"
-    }
-
-    const tryItButton = {
-      "width": "100px", 
-      "height": "50px", 
-      "display": "flex", 
-      "justify-content": "center", 
-      "font-size": "20px",
-      "margin-top": "60px",
-      "color": primaryColor,
-      "border": "2px solid #444053",
-      "border-radius": "25px",
-      "background-color": secondaryColor,
-      "cursor": "pointer",
     }
 
       // Top menu
@@ -138,7 +124,8 @@ class Site extends Component {
             h("span", {style: {"font-family": 'Open Sans', "font-weight": "bold"}}, "proof"),
             h("span", {style: {"font-family": 'Open Sans' }}, "gramming language"),
           ]),
-          h("button", {style: tryItButton, onClick: () => { this.setState({page: "tryIt"}) }}, "Try it"),
+          // h("button", {style: tryItButton, onClick: () => { this.setState({page: "tryIt"}) }}, "Try it"),
+          h(Button, {title: "Try it", onClick: () => { this.setState({page: "tryIt"})}}),
         ]),
 
         // Canvas test
@@ -239,7 +226,40 @@ class Tab extends Component {
       element = h(Hover, {normalComponent: h("div", {style: s.tabs, isCurrentPage: this.isCurrentPage },  this.props.title), 
                           onFocusComponent: h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.props.title)})
     }
-    return element;                        
+    return element;                                      
+  }
+}
+
+class Button extends Component {
+  constructor(props) {
+    super(props)
+    this.title = props.title;
+    this.onClick = props.onClick;
+    this.state = {};
+  }
+  render() {
+    const tryItButton = {
+      "width": "100px", 
+      "height": "50px", 
+      "display": "flex", 
+      "justify-content": "center", 
+      "font-size": "20px",
+      "margin-top": "60px",
+      "color": s.primaryColor,
+      "border": "2px solid #444053",
+      "border-radius": "25px",
+      "background-color": s.secondaryColor,
+    }
+
+    const tryItButtonOnFocus = {
+      ...tryItButton,
+      "color": s.secondaryColor,
+      "background-color": s.primaryColor,
+      "cursor": "pointer",
+    }
+
+    return h(Hover, {normalComponent: h("button", {style: tryItButton, onClick: this.onClick}, this.props.title),
+                    onFocusComponent: h("button", {style: tryItButtonOnFocus, onClick: this.onClick}, this.props.title)});
   }
 }
 
