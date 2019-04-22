@@ -113,7 +113,7 @@ class Site extends Component {
       console.log("... rendering Home");
       return h("div", [
         topMenu,
-        // Top area: Formality title and subtitle
+        // Top area: Formality title and subtitlenp
         h("div", {style: s.topContainer}, [
           h("div", {style: formalityTitleContainer}),    
           h("div", {style: fs.formalitySubtitle}, [
@@ -127,7 +127,7 @@ class Site extends Component {
         // Canvas test
         // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
 
-        // h(WhyGrid, {onClick: (nextPage) => { this.setState({page: nextPage}); console.log("Why grid clicked"); }}),sss
+        // h(WhyGrid, {onClick: (nextPage) => { this.setState({page: nextPage}); console.log("Why grid clicked"); }})gst
         // h(WhyGrid, { onClick: ev => {console.log(ev);} }),
         h(WhyGrid, {changePage: this.onChangeInternalLink.bind(this)}),
         h(Usage,{}),
@@ -304,12 +304,11 @@ class WhyGrid extends Component {
   constructor(props) {
     super(props)
     this.onClick = props.onClick;
-    this.state = {nextPage: "specification"};
+    this.state = {};
   }
 
-  onChangeLink() {
-    // this.setState({nextPage: pageName});
-    this.props.changePage(this.state.nextPage);
+  onChangeLink(nextPage) {
+    this.props.changePage(nextPage);
   }
 
   render() {
@@ -340,7 +339,7 @@ class WhyGrid extends Component {
         h("div", {style: fs.text, "width": "300px"}, [
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Secure"),
           h("p", {}, "Formality has a type system capable of proving mathematical theorems about its own programs making it really secure. Theorem proving is possible due to dependent types, like on other proof assistants as Agda and Idris."),
-          h(InternalLink, {title: "Read mooore...", onClick: this.onChangeLink.bind(this) } ),
+          h(InternalLink, {title: "Read mooore...", onClick: this.onChangeLink.bind(this, "whyTopic1") }),
         ]),
         h("img", {src: featureImage1, alt: "image1", style: featureImg})
       ]),
@@ -350,7 +349,7 @@ class WhyGrid extends Component {
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Fast"),
           h("p", {}, "No garbage-collection, optimal beta-reduction and a massively parallel GPU compiler make it insanely fast."),
           h("p", {}, "Massively parallel evaluation is possible due to Symmetric Interaction Calculus (SIC), a new model of computation that combines the best aspects of the Turing Machine and the λ-Calculus."),
-          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this) }),
+          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, "whyTopic2") }),
         ]),
         h("img", {src: featureImage2, alt: "image2", style: featureImg})
       ]),
@@ -372,11 +371,10 @@ class InternalLink extends Component {
     super(props)
     this.onClick = props.onClick;
     this.title = props.title;
-    this.changePage = props.changePage;
     this.state = {};
   }
   render(){
-    return h("p", {style: {"cursor": "pointer", "margin-top": "15px"}, changePage: this.changePage, onClick: this.onClick}, this.title);
+    return h("p", {style: {"cursor": "pointer", "margin-top": "15px"}, onClick: this.onClick}, this.title);
   }
 }
 
