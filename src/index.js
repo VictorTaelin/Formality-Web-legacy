@@ -1,12 +1,5 @@
-/**
- * Não da pra usar  markdown-parse porque
- * >  fica dando erro no yaml.js
- *    Module not found: Error: Can't resolve 'fs' in '/Users/maisa/Documents/Formality-Web/node_modules/yaml-js/lib'
- * > não encontra o fs no '/Users/maisa/Documents/Formality-Web/src'
- */
 const {Component, render, linkEvent} = require("inferno");
-// const md = require('markdown-it')();
-// var readMarkdown = require('read-markdown');
+
 
 const h = require("inferno-hyperscript").h;
 const Canvas = require("inferno-canvas-component-2");
