@@ -30,17 +30,21 @@ class Site extends Component {
   /**
    * PROBLEMA: Quando o onpopstate acontece, a página é renderizada antes que o state seja atualizado, resultando em uma página em branco
    */
-  componentWillUpdate(){  
-    console.log("The page is: "+this.state.page);
+  componentDidMount(){  
+    console.log("0. The page is: "+this.state.page);
     window.onpopstate = (event) => {
-      console.log("on pop occurred");
-      console.log("Voltando para: location: " + document.location + ", state: " + JSON.stringify(event.state));
-      var prevPage = JSON.stringify(event.state.page);
-      if (event.state !== null && this.state.page !== prevPage) {
-        this.setState({page: prevPage}); 
-        console.log("Now the page is"+this.state.page);  
+      console.log("1. On pop occurred");
+      console.log("2. Going back to: location: " + document.location + ", state: " + JSON.stringify(event.state));
+      
+      if (event.state !== null) {
+        var prevPage = event.state.page;
+        if (this.state.page !== prevPage) {
+          console.log("3. Updating page from "+this.state.page);  
+          this.setState({page: prevPage}); 
+        }
       } else { // go Home
         this.setState({page: "home"});
+        console.log("3. State null, going home: "+this.state.page);
       }
     }
   }
@@ -50,7 +54,7 @@ class Site extends Component {
   }
 
   render() {
-    console.log("... Render is called");
+    console.log("> Render is called for state "+this.state.page);
     // function drawCanvas({ctx, time}) {
     //     const {width, height} = ctx.canvas;
     //     ctx.save();
@@ -107,10 +111,11 @@ class Site extends Component {
               })
       ]),
     ])
-    console.log("State page on Render: "+this.state.page);
+
     // ============= Home =============
+    console.log(this.state.page, this.state.page === "home", this.state.page.length, [].slice.call(this.state.page, 0).map(x => x.charCodeAt(0)));
     if (this.state.page === "home" || this.state.page === null ) {
-      console.log("... rendering Home");
+      console.log(">> rendering Home");
       return h("div", [
         topMenu,
         // Top area: Formality title and subtitlenp
@@ -127,8 +132,6 @@ class Site extends Component {
         // Canvas test
         // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
 
-        // h(WhyGrid, {onClick: (nextPage) => { this.setState({page: nextPage}); console.log("Why grid clicked"); }})gst
-        // h(WhyGrid, { onClick: ev => {console.log(ev);} }),
         h(WhyGrid, {changePage: this.onChangeInternalLink.bind(this)}),
         h(Usage,{}),
         h(Footer, {})
@@ -136,6 +139,7 @@ class Site extends Component {
 
     // ============= Specification Page =============
     } else if (this.state.page === "specification") {
+      console.log(">> rendering Specification");
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
