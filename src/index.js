@@ -35,21 +35,21 @@ class Site extends Component {
     this.state = {page: "home"};
   }
   /**
-   * Quando o onpopstate acontece, a página é renderizada antes que o state seja atualizado, resultando em uma página em branco
+   * PROBLEMA: Quando o onpopstate acontece, a página é renderizada antes que o state seja atualizado, resultando em uma página em branco
    */
-  componentDidMount(){  
-    // console.log("The page is: "+this.state.page);
-    // window.onpopstate = (event) => {
-    //   console.log("on pop occurred");
-    //   console.log("Voltando para: location: " + document.location + ", state: " + JSON.stringify(event.state));
-    //   var prevPage = JSON.stringify(event.state.page);
-    //   if (event.state !== null && this.state.page !== prevPage) {
-    //     this.setState({page: prevPage}); 
-    //     console.log("Now the page is"+this.state.page);  
-    //   } else { // go Home
-    //     this.setState({page: "home"});
-    //   }
-    // }
+  componentWillUpdate(){  
+    console.log("The page is: "+this.state.page);
+    window.onpopstate = (event) => {
+      console.log("on pop occurred");
+      console.log("Voltando para: location: " + document.location + ", state: " + JSON.stringify(event.state));
+      var prevPage = JSON.stringify(event.state.page);
+      if (event.state !== null && this.state.page !== prevPage) {
+        this.setState({page: prevPage}); 
+        console.log("Now the page is"+this.state.page);  
+      } else { // go Home
+        this.setState({page: "home"});
+      }
+    }
   }
 
   render() {
@@ -103,8 +103,8 @@ class Site extends Component {
         h(Tab, {title: "Try it!", isCurrentPage: this.state.page === "tryIt", 
                 onClick: () => { 
                     if (this.state.page !== "tryIt") {
-                    this.setState({page: "tryIt"}); 
-                    history.pushState({page: "tryit"}, "tryit", "tryit"); 
+                      this.setState({page: "tryIt"}); 
+                      history.pushState({page: "tryit"}, "tryit", "tryit"); 
                     }
                 }
               })
@@ -124,14 +124,14 @@ class Site extends Component {
             h("span", {style: {"font-family": 'Open Sans', "font-weight": "bold"}}, "proof"),
             h("span", {style: {"font-family": 'Open Sans' }}, "gramming language"),
           ]),
-          // h("button", {style: tryItButton, onClick: () => { this.setState({page: "tryIt"}) }}, "Try it"),
-          h(Button, {title: "Try it", onClick: () => { this.setState({page: "tryIt"})}}),
+          h(Button, {title: "Try it", onClick: () => { this.setState({page: "tryIt"}); }}),
         ]),
 
         // Canvas test
         // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
 
-        h(WhyGrid, {}),
+        // h(WhyGrid, {onClick: (nextPage) => { this.setState({page: nextPage}); console.log("Why grid clicked"); }}),sss
+        h(WhyGrid, { onClick: ev => {console.log(ev);} }),
         h(Usage,{}),
         h(Footer, {})
       ]);
@@ -141,26 +141,47 @@ class Site extends Component {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
-          h("div ", {style: {"font-family": 'Open Sans', "color": s.primaryColor, "margin-left": "100px", "margin-right": "100px", "margin-top": "20px", "line-height": "1.6"}}, [
+          h("div ", {style: s.pageContentMD}, [
             markdown
           ]),
         ]),
-        h("div", {style: {'flex-direction': 'row'}}, [
-          h("div", {style: {"background-color": s.primaryColor, "height": "1px"}}),
-          h(Footer, {}),
-        ]),
+         h(FooterContainer),
       ]);
       
 
     // ============= Try it Page =============  
     } else if (this.state.page === "tryIt") {
-      // h("div", {style: {"height": "1000px","display": "flex", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
-      //   h("div", {}, "content in MD"), 
-      //   h("div", {"background-color": s.primaryColor, "heigth": "1px"}),
-      //   h(Footer, {})
-      // ])
+      return h("div", {"display": "flex", "justify-content": "space-between"}, [
+        topMenu,
+        h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
+          h("div ", {style: s.pageContentMD}, [
+            markdown
+          ]),
+        ]),
+        h(FooterContainer),
+      ]);
+    } else if (this.state.page === "whyTopic1") {
+      return h("div", {"display": "flex", "justify-content": "space-between"}, [
+        topMenu,
+        h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
+          h("div ", {style: s.pageContentMD}, [
+            h("div", {}, "Hi, Why Topic 1")
+          ]),
+        ]),
+        h(FooterContainer),
+      ]);
+    } else if (this.state.page === "whyTopic2") {
+      return h("div", {"display": "flex", "justify-content": "space-between"}, [
+        topMenu,
+        h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
+          h("div ", {style: s.pageContentMD}, [
+            h("div", {}, "Hi, Why Topic 2")
+          ]),
+        ]),
+        h(FooterContainer),
+      ]);
     }
-  }
+  } 
 }
 
 class Logo extends Component {
@@ -284,13 +305,14 @@ class Hover extends Component {
 class WhyGrid extends Component {
   constructor(props) {
     super(props)
+    this.onClick = props.onClick;
+    // this.nextPage = "specification";
     this.state = {};
   }
 
   render() {
     const gridContainer = {
       "display": "flex",
-      // "grid-row-gap": "30px",
       "flex-direction": "column",
       "justify-content": "center",
       "align-items": "center",
@@ -304,16 +326,21 @@ class WhyGrid extends Component {
       "font-size": "22px"
     }
 
+    const featureImg =  {
+      "border-radius": "8px",
+      "width": "300px"
+    }
+
     return h("div", {style: gridContainer}, [
       h("div", {style: fs.title}, "Why use Formality?"),
       // First element
       h("div", {style: gridItem}, [
         h("div", {style: fs.text, "width": "300px"}, [
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Secure"),
-          h("p", {}, "Formality has a type system capable of proving mathematical theorems about its own programs make it really secure. Theorem proving is possible due to dependent types, like on other proof assistants as Agda and Idris."),
-          h("p", {style: {"cursor": "pointer", "margin-top": "15px"}}, "Read more..."),
+          h("p", {}, "Formality has a type system capable of proving mathematical theorems about its own programs making it really secure. Theorem proving is possible due to dependent types, like on other proof assistants as Agda and Idris."),
+          h(InternalLink, {title: "Read more...", onClick: this.onClick } ),
         ]),
-        h("img", {src: featureImage1, alt: "image1", style: s.featureImg})
+        h("img", {src: featureImage1, alt: "image1", style: featureImg})
       ]),
       // Second element
       h("div", {style: gridItem}, [
@@ -321,9 +348,9 @@ class WhyGrid extends Component {
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Fast"),
           h("p", {}, "No garbage-collection, optimal beta-reduction and a massively parallel GPU compiler make it insanely fast."),
           h("p", {}, "Massively parallel evaluation is possible due to Symmetric Interaction Calculus (SIC), a new model of computation that combines the best aspects of the Turing Machine and the λ-Calculus."),
-          h("p", {style: {"cursor": "pointer", "margin-top": "15px"}}, "Read more..."),
+          h(InternalLink, {title: "Read more...", onClick: () => { this.setState({page: "whyTopic2"}); console.log("whyTopic2 onClick called"); }}),
         ]),
-        h("img", {src: featureImage2, alt: "image2", style: s.featureImg})
+        h("img", {src: featureImage2, alt: "image2", style: featureImg})
       ]),
       // Third element
       h("div", {style: gridItem}, [
@@ -331,12 +358,25 @@ class WhyGrid extends Component {
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Simple standart"),
           h("p", {}, "The entire implementation takes 500 LOC, making it a simple standard you could implement yourself.")
         ]),
-        h("img", {src: featureImage3, alt: "image3", style: s.featureImg})
+        h("img", {src: featureImage3, alt: "image3", style: featureImg})
       ])
     ]);
   }
 
 }
+
+class InternalLink extends Component {
+  constructor(props){
+    super(props)
+    this.onClick = props.onClick;
+    this.title = props.title;
+    this.state = {};
+  }
+  render(){
+    return h("p", {style: {"cursor": "pointer", "margin-top": "15px"}, onClick: this.onClick}, this.title);
+  }
+}
+
 
 class Usage extends Component {
   constructor(props) {
@@ -361,6 +401,21 @@ class Usage extends Component {
         h("p", {style: {"color": '#373D41' }}, "formality main"),
       ]),
     ]); 
+  }
+}
+
+// Footer with a purple line on top of it. Used for pages that is not Home
+class FooterContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {};
+  }
+
+  render() {
+    return h("div", {style: {'flex-direction': 'row'}}, [
+             h("div", {style: {"background-color": s.primaryColor, "height": "1px"}}),
+             h(Footer, {}),
+           ])
   }
 }
 

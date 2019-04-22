@@ -34,11 +34,6 @@ const gridItem = {
   "font-size": "22px",
 }
 
-const featureImg =  {
-  "border-radius": "8px",
-  "width": "300px"
-}
-
 const logo = {
   "width" : "45px",
   "height" : "40px",
@@ -119,6 +114,15 @@ const usageCodeContainer = {
   "padding-left": "20px"
 }
 
+const pageContentMD = {
+  "font-family": 'Open Sans', 
+  "color": primaryColor, 
+  "margin-left": "100px", 
+  "margin-right": "100px", 
+  "margin-top": "20px", 
+  "line-height": "1.6",
+}
+
 const footerContainer = {
   "display": "flex",
   "margin-top": "20px",
@@ -140,6 +144,6 @@ const githubIcon = {
   "cursor": "pointer"
 }
 
-export { formalityTitleContainer, primaryColor, secondaryColor,  gridContainer, gridItem, featureImg, logo, tabs, tabsOnFocus, 
-        topContainer, tryItButton, usageContainer,
+export { formalityTitleContainer, primaryColor, secondaryColor,  gridContainer, gridItem, logo, tabs, tabsOnFocus, 
+        topContainer, tryItButton, usageContainer, pageContentMD,
         footerContainer, usageCodeContainer, githubIcon };
