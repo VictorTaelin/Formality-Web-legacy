@@ -52,6 +52,10 @@ class Site extends Component {
     }
   }
 
+  onChangeInternalLink(nextPage){
+    this.setState({page: nextPage});
+  }
+
   render() {
     console.log("... Render is called");
     // function drawCanvas({ctx, time}) {
@@ -131,7 +135,8 @@ class Site extends Component {
         // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
 
         // h(WhyGrid, {onClick: (nextPage) => { this.setState({page: nextPage}); console.log("Why grid clicked"); }}),sss
-        h(WhyGrid, { onClick: ev => {console.log(ev);} }),
+        // h(WhyGrid, { onClick: ev => {console.log(ev);} }),
+        h(WhyGrid, {changePage: this.onChangeInternalLink.bind(this)}),
         h(Usage,{}),
         h(Footer, {})
       ]);
@@ -306,8 +311,12 @@ class WhyGrid extends Component {
   constructor(props) {
     super(props)
     this.onClick = props.onClick;
-    // this.nextPage = "specification";
-    this.state = {};
+    this.state = {nextPage: "specification"};
+  }
+
+  onChangeLink() {
+    // this.setState({nextPage: pageName});
+    this.props.changePage(this.state.nextPage);
   }
 
   render() {
@@ -338,7 +347,7 @@ class WhyGrid extends Component {
         h("div", {style: fs.text, "width": "300px"}, [
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Secure"),
           h("p", {}, "Formality has a type system capable of proving mathematical theorems about its own programs making it really secure. Theorem proving is possible due to dependent types, like on other proof assistants as Agda and Idris."),
-          h(InternalLink, {title: "Read more...", onClick: this.onClick } ),
+          h(InternalLink, {title: "Read mooore...", onClick: this.onChangeLink.bind(this) } ),
         ]),
         h("img", {src: featureImage1, alt: "image1", style: featureImg})
       ]),
@@ -348,7 +357,7 @@ class WhyGrid extends Component {
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Fast"),
           h("p", {}, "No garbage-collection, optimal beta-reduction and a massively parallel GPU compiler make it insanely fast."),
           h("p", {}, "Massively parallel evaluation is possible due to Symmetric Interaction Calculus (SIC), a new model of computation that combines the best aspects of the Turing Machine and the λ-Calculus."),
-          h(InternalLink, {title: "Read more...", onClick: () => { this.setState({page: "whyTopic2"}); console.log("whyTopic2 onClick called"); }}),
+          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this) }),
         ]),
         h("img", {src: featureImage2, alt: "image2", style: featureImg})
       ]),
@@ -370,10 +379,11 @@ class InternalLink extends Component {
     super(props)
     this.onClick = props.onClick;
     this.title = props.title;
+    this.changePage = props.changePage;
     this.state = {};
   }
   render(){
-    return h("p", {style: {"cursor": "pointer", "margin-top": "15px"}, onClick: this.onClick}, this.title);
+    return h("p", {style: {"cursor": "pointer", "margin-top": "15px"}, changePage: this.changePage, onClick: this.onClick}, this.title);
   }
 }
 
