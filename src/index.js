@@ -8,6 +8,13 @@ const fs = require("./font-style");
 
 const markdown = require("./markdown/test-template.md.js");
 
+// Pages
+const pageHome = "home";
+const pageWhyContent1 = "math-proof";
+const pageWhyContent2 = "massive-paralelism";
+const pageSpecification = "specification";
+const pageTryIt = "tryIt";
+
 
 // Feature images
 import formalityTitle from './images/formality-title.png';
@@ -17,12 +24,6 @@ import featureImage3 from './images/code.png';
 import logo from './images/logo-formality.png';
 import githubLogo from './images/github.png';
 
-// Colors
-const primaryColor = "#444053";
-const secondaryColor = "#ffffff";
-
-
-/// >>> OBS: para atualizar o state com a url que digitar, tem que ler o window.location
 class Site extends Component {
   constructor(props) {
     super(props)
@@ -30,6 +31,14 @@ class Site extends Component {
   }
 
   componentDidMount(){  
+    if (window.location.pathname === "/home") {
+      this.setState({page: "home"});
+    } else if (window.location.pathname === "/specification") {
+      this.setState({page: "specification"});
+    } else if (window.location.pathname === "/tryIt") {
+      this.setState({page: "tryIt"});
+    }
+
     window.onpopstate = (event) => {
       if (event.state !== null) {
         var prevPage = event.state.page;
@@ -43,6 +52,7 @@ class Site extends Component {
   }
 
   onChangeInternalLink(nextPage){
+    history.pushState({page: nextPage}, nextPage, nextPage); 
     this.setState({page: nextPage});
     window.scrollTo(0, 0); 
   }
@@ -78,27 +88,27 @@ class Site extends Component {
     var topMenu = h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
       h(Logo),
       h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
-        h(Tab, {title: "Home", isCurrentPage: this.state.page === "home", 
+        h(Tab, {title: "Home", isCurrentPage: this.state.page === pageHome, 
                 onClick: () => { 
-                  if (this.state.page !== "home") {
-                    this.setState({page: "home"}); 
-                    history.pushState({page: "home"}, "home", "home"); 
+                  if (this.state.page !== pageHome) {
+                    this.setState({page: pageHome}); 
+                    history.pushState({page: pageHome}, pageHome, pageHome); 
                   }
                 }
               }),
-        h(Tab, {title: "Specification", isCurrentPage: this.state.page === "specification", 
+        h(Tab, {title: "Specification", isCurrentPage: this.state.page === pageSpecification, 
                 onClick: () => { 
-                  if (this.state.page !== "specification") {
-                    this.setState({page: "specification"}); 
-                    history.pushState({page: "specification"}, "specification", "specification"); 
+                  if (this.state.page !== pageSpecification) {
+                    this.setState({page: pageSpecification}); 
+                    history.pushState({page: pageSpecification}, pageSpecification, pageSpecification); 
                   }
                 }
               }),
-        h(Tab, {title: "Try it!", isCurrentPage: this.state.page === "tryIt", 
+        h(Tab, {title: "Try it!", isCurrentPage: this.state.page === pageTryIt, 
                 onClick: () => { 
-                    if (this.state.page !== "tryIt") {
-                      this.setState({page: "tryIt"}); 
-                      history.pushState({page: "tryit"}, "tryit", "tryit"); 
+                    if (this.state.page !== pageTryIt) {
+                      this.setState({page: pageTryIt}); 
+                      history.pushState({page: pageTryIt}, pageTryIt, pageTryIt); 
                     }
                 }
               })
@@ -106,7 +116,7 @@ class Site extends Component {
     ])
 
     // ============= Home =============
-    if (this.state.page === "home" || this.state.page === null ) {
+    if (this.state.page === pageHome || this.state.page === null ) {
       return h("div", [
         topMenu,
         // Top area: Formality title and subtitle
@@ -117,7 +127,7 @@ class Site extends Component {
             h("span", {style: {"font-family": 'Open Sans', "font-weight": "bold"}}, "proof"),
             h("span", {style: {"font-family": 'Open Sans' }}, "gramming language"),
           ]),
-          h(Button, {title: "Try it", onClick: () => { this.setState({page: "tryIt"}); window.scrollTo(0, 0); }}),
+          h(Button, {title: "Try it", onClick: () => { this.setState({page: pageTryIt}); window.scrollTo(0, 0); }}),
         ]),
 
         // Canvas test
@@ -129,7 +139,7 @@ class Site extends Component {
       ]);
 
     // ============= Specification Page =============
-    } else if (this.state.page === "specification") {
+    } else if (this.state.page === pageSpecification) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
@@ -142,7 +152,7 @@ class Site extends Component {
       
 
     // ============= Try it Page =============  
-    } else if (this.state.page === "tryIt") {
+    } else if (this.state.page === pageTryIt) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
@@ -152,7 +162,7 @@ class Site extends Component {
         ]),
         h(FooterContainer),
       ]);
-    } else if (this.state.page === "whyTopic1") {
+    } else if (this.state.page === pageWhyContent1) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
@@ -162,7 +172,7 @@ class Site extends Component {
         ]),
         h(FooterContainer),
       ]);
-    } else if (this.state.page === "whyTopic2") {
+    } else if (this.state.page === pageWhyContent2) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
@@ -333,7 +343,7 @@ class WhyGrid extends Component {
         h("div", {style: fs.text, "width": "300px"}, [
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Secure"),
           h("p", {}, "Formality has a type system capable of proving mathematical theorems about its own programs making it really secure. Theorem proving is possible due to dependent types, like on other proof assistants as Agda and Idris."),
-          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, "whyTopic1") }),
+          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageWhyContent1) }),
         ]),
         h("img", {src: featureImage1, alt: "image1", style: featureImg})
       ]),
@@ -343,7 +353,7 @@ class WhyGrid extends Component {
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Fast"),
           h("p", {}, "No garbage-collection, optimal beta-reduction and a massively parallel GPU compiler make it insanely fast."),
           h("p", {}, "Massively parallel evaluation is possible due to Symmetric Interaction Calculus (SIC), a new model of computation that combines the best aspects of the Turing Machine and the λ-Calculus."),
-          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, "whyTopic2") }),
+          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageWhyContent2) }),
         ]),
         h("img", {src: featureImage2, alt: "image2", style: featureImg})
       ]),
