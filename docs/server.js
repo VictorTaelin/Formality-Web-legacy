@@ -7,10 +7,10 @@ var router = express.Router();
 
 app.get('/oi', (req, res) => res.send('Hello World!'));
 
-app.get('**', (req, res) => {
-  console.log(">>> I'm **!");
-  express.static(path.join(__dirname, "..", "docs"));
-});
+// app.get('**', (req, res) => {
+//   console.log(">>> I'm **!");
+//   express.static(path.join(__dirname, "..", "docs"));
+// });
 
 // app.use(express.static(path.join(__dirname, "..", "docs"))); //Serves resources from public folder
 
@@ -20,6 +20,6 @@ app.get('/specification', function (req, res, next) {
   console.log("/specification case");
 });
 
-// app.use(express.static(path.join(__dirname, "..", "docs"))); //Serves resources from public folder
+app.use(express.static(path.join(__dirname, "..", "docs"))); //Serves resources from public folder
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));
