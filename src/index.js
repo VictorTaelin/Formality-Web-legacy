@@ -27,34 +27,26 @@ class Site extends Component {
     super(props)
     this.state = {page: "home"};
   }
-  /**
-   * PROBLEMA: Quando o onpopstate acontece, a página é renderizada antes que o state seja atualizado, resultando em uma página em branco
-   */
+
   componentDidMount(){  
-    console.log("0. The page is: "+this.state.page);
     window.onpopstate = (event) => {
-      console.log("1. On pop occurred");
-      console.log("2. Going back to: location: " + document.location + ", state: " + JSON.stringify(event.state));
-      
       if (event.state !== null) {
         var prevPage = event.state.page;
         if (this.state.page !== prevPage) {
-          console.log("3. Updating page from "+this.state.page);  
           this.setState({page: prevPage}); 
         }
       } else { // go Home
         this.setState({page: "home"});
-        console.log("3. State null, going home: "+this.state.page);
       }
     }
   }
 
   onChangeInternalLink(nextPage){
     this.setState({page: nextPage});
+    window.scrollTo(0, 0); 
   }
 
   render() {
-    console.log("> Render is called for state "+this.state.page);
     // function drawCanvas({ctx, time}) {
     //     const {width, height} = ctx.canvas;
     //     ctx.save();
@@ -113,12 +105,10 @@ class Site extends Component {
     ])
 
     // ============= Home =============
-    console.log(this.state.page, this.state.page === "home", this.state.page.length, [].slice.call(this.state.page, 0).map(x => x.charCodeAt(0)));
     if (this.state.page === "home" || this.state.page === null ) {
-      console.log(">> rendering Home");
       return h("div", [
         topMenu,
-        // Top area: Formality title and subtitlenp
+        // Top area: Formality title and subtitle
         h("div", {style: s.topContainer}, [
           h("div", {style: formalityTitleContainer}),    
           h("div", {style: fs.formalitySubtitle}, [
@@ -126,7 +116,7 @@ class Site extends Component {
             h("span", {style: {"font-family": 'Open Sans', "font-weight": "bold"}}, "proof"),
             h("span", {style: {"font-family": 'Open Sans' }}, "gramming language"),
           ]),
-          h(Button, {title: "Try it", onClick: () => { this.setState({page: "tryIt"}); }}),
+          h(Button, {title: "Try it", onClick: () => { this.setState({page: "tryIt"}); window.scrollTo(0, 0); }}),
         ]),
 
         // Canvas test
@@ -139,7 +129,6 @@ class Site extends Component {
 
     // ============= Specification Page =============
     } else if (this.state.page === "specification") {
-      console.log(">> rendering Specification");
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
@@ -303,7 +292,7 @@ class Hover extends Component {
 }
 // -------------------
 
-
+// Content about why use Formality
 class WhyGrid extends Component {
   constructor(props) {
     super(props)
@@ -343,7 +332,7 @@ class WhyGrid extends Component {
         h("div", {style: fs.text, "width": "300px"}, [
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Secure"),
           h("p", {}, "Formality has a type system capable of proving mathematical theorems about its own programs making it really secure. Theorem proving is possible due to dependent types, like on other proof assistants as Agda and Idris."),
-          h(InternalLink, {title: "Read mooore...", onClick: this.onChangeLink.bind(this, "whyTopic1") }),
+          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, "whyTopic1") }),
         ]),
         h("img", {src: featureImage1, alt: "image1", style: featureImg})
       ]),
@@ -370,6 +359,7 @@ class WhyGrid extends Component {
 
 }
 
+// Links to pages inside the App
 class InternalLink extends Component {
   constructor(props){
     super(props)
@@ -382,7 +372,7 @@ class InternalLink extends Component {
   }
 }
 
-
+// Content about how to use Formality
 class Usage extends Component {
   constructor(props) {
     super(props)
