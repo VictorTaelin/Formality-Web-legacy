@@ -29,6 +29,7 @@
   },
   "dependencies": {
     "css-loader": "^2.1.1",
+    "express": "^4.16.4",
     "formality-io": "^0.1.20",
     "formality-lang": "^0.1.20",
     "formality-stdlib": "^0.1.2",

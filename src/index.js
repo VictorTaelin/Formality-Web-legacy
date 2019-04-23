@@ -1,6 +1,5 @@
 const {Component, render, linkEvent} = require("inferno");
 
-
 const h = require("inferno-hyperscript").h;
 const Canvas = require("inferno-canvas-component-2");
 
@@ -22,6 +21,8 @@ import githubLogo from './images/github.png';
 const primaryColor = "#444053";
 const secondaryColor = "#ffffff";
 
+
+/// >>> OBS: para atualizar o state com a url que digitar, tem que ler o window.location
 class Site extends Component {
   constructor(props) {
     super(props)
