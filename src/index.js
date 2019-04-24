@@ -89,7 +89,7 @@ class Site extends Component {
       "margin-bottom": "30px"
     }
 
-      // Top menu
+    // Top menu
     var topMenu = h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
       h(Logo),
       h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
