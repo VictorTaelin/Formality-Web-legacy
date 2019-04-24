@@ -39,7 +39,8 @@ const subtitle = {
   "font-size": "20px",
   "width": "800px",
   "margin-top": "20px",
-  "text-align": "center"
+  "text-align": "center", 
+  "line-height": "1.6",
 }
 
 export {title, formalityName, formalitySubtitle, text, subtitle};

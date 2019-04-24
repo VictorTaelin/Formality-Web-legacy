@@ -18,22 +18,6 @@ const formalityTitleContainer = {
   "align-items": "center",
 }
 
-const gridContainer = {
-  "display": "flex",
-  "flex-direction": "column",
-  "justify-content": "center",
-  "align-items": "center",
-  "width": "900px",
-}
-
-const gridItem = {
-  "display": "flex",
-  "height": "350px",
-  "width": "900px",
-  "align-items": "center", 
-  "font-size": "22px",
-}
-
 const logo = {
   "width" : "45px",
   "height" : "40px",
@@ -144,6 +128,6 @@ const githubIcon = {
   "cursor": "pointer"
 }
 
-export { formalityTitleContainer, primaryColor, secondaryColor,  gridContainer, gridItem, logo, tabs, tabsOnFocus, 
+export { formalityTitleContainer, primaryColor, secondaryColor, logo, tabs, tabsOnFocus, 
         topContainer, tryItButton, usageContainer, pageContentMD,
         footerContainer, usageCodeContainer, githubIcon };

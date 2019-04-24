@@ -132,7 +132,7 @@ class Site extends Component {
 
         // Canvas test
         // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
-
+        h(Introduction),
         h(WhyGrid, {changePage: this.onChangeInternalLink.bind(this)}),
         h(Usage,{}),
         h(Footer, {})
@@ -268,6 +268,33 @@ class Hover extends Component {
   }
 }
 // -------------------
+
+class Introduction extends Component {
+  constructor(props){
+    super(props)
+    state: {}
+  }
+
+  render() {
+    const container = {
+      "display": "flex",
+      "flex-direction": "column",
+      "justify-content": "center",
+      "align-items": "center",
+      "height": "300px",
+    }
+
+    const subtitle = {
+      ...fs.subtitle,
+      "line-height": "1.8",
+    }
+
+    return h("div", {style: container }, [
+        h("p", {style: subtitle}, `Formality is a new, massively parallel, minimal “proof”gramming language being developed at the Ethereum Foundation. 
+        It has an ambitious goal of redefining how programs, smart-contracts and even scientific papers are written, by combining several academic breakthroughs in a single tool that “just works”.`),
+    ]);
+  }
+}
 
 // Content about why use Formality
 class WhyGrid extends Component {
@@ -410,7 +437,7 @@ class Footer extends Component {
         h("p", {}, "(soon...) "),
       ]),
       h("div", {}, [
-        h("p", {}, "Social"),
+        h("p", {}, "Community"),
         h('span', {}, [
           h('a', {'href': 'https://github.com/moonad/Formality', 'text-decoration': 'none',}, h("img", {src: githubLogo, alt: "logo", style: s.githubIcon}),),
         ])
