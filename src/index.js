@@ -197,40 +197,6 @@ class Logo extends Component {
   }
 }
 
-//class MarkdownRender extends Component {
-  //constructor(props) {
-    //super(props)
-    //this.markdown = props.markdown;
-    //this.state = {};
-  //}
-  //render() {
-    //return this.markdown;
-  //}
-//}
-
-// --- Components --- 
-
-// Top menu: logo and tabs
-// class Header extends Component {
-//   constructor(props) {
-//     super(props)
-//     this.onClick = props.onClick;
-//     this.state = {linkTo: props.linkTo}
-//   }
-
-//   render() {
-//     return h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
-//             h("img", {src: logo, alt: "logo", style: s.logo}),
-//             h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
-//               h(Tab, {title: "Home", onClick: () => { this.setState({page: this.state.linkTo}) }}),
-//               h(Tab, {title: "Specification", onClick: () => { this.setState({page: "specification"}) }}),
-//               h(Tab, {title: "Try it!", onClick: () => { this.setState({page: "tryIt"}) }})
-//             ]),
-//           ]);
-//   }
-// }
-
-
 // ------ Auxiliars ---- 
 class Tab extends Component {
   constructor(props) {
@@ -342,7 +308,10 @@ class WhyGrid extends Component {
       h("div", {style: gridItem}, [
         h("div", {style: fs.text, "width": "300px"}, [
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Secure"),
-          h("p", {}, "Formality has a type system capable of proving mathematical theorems about its own programs making it really secure. Theorem proving is possible due to dependent types, like on other proof assistants as Agda and Idris."),
+          h("p", {}, `Formality has a type system capable of proving mathematical theorems about its own programs. 
+          It's not only about preventing bugs or proving the theorem itself. We are talking about a whole new tool to work with, 
+          a language of specifications, one on which we can state precisely, in a way that a computer can understand, what an algorithm is supposed to do.  `),
+          h("p", {style: {"margin-top": "5px"}}, "This opens doors for use-cases that are only limited by your imagination!"),
           h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageWhyContent1) }),
         ]),
         h("img", {src: featureImage1, alt: "image1", style: featureImg})
@@ -361,7 +330,9 @@ class WhyGrid extends Component {
       h("div", {style: gridItem}, [
         h("div", {style: fs.text, "width": "300px"}, [
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Simple standart"),
-          h("p", {}, "The entire implementation takes 500 LOC, making it a simple standard you could implement yourself.")
+          h("p", {}, "Its reference implementation, including parser, stringifier, evaluator and type checker has about 1,000 lines of code. This is important to: "),
+          h("p", {style: {"margin-top": "5px"}}, "1. Portability: we want Formality to be a library in many languages, just like JSON"),
+          h("p", {style: {"margin-top": "5px"}}, "2. Trust: we don't want people to trust on a single, monolithic, bug-prone implementation"),
         ]),
         h("img", {src: featureImage3, alt: "image3", style: featureImg})
       ])
@@ -397,7 +368,7 @@ class Usage extends Component {
       h("div", {style: fs.subtitle }, "Formality is currently implemented as a small, dependency-free JavaScript library. It will futurely be implemented in other languages, and formalized in Agda/Coq. To use the current implementation:"), 
       h("div", {style: s.usageCodeContainer, "margin-top": "50px"}, [
         h("p", {style: {"color": '#6B747F' }}, "# Installs Formality"),
-        h("p", {style: {"color": '#373D41' }}, "npm i -g formality "),
+        h("p", {style: {"color": '#373D41' }}, "npm i -g formality-lang"),
         h("br", {}, "     "),
         h("p", {style: {"color": '#6B747F' }}, "# Enters the repository"),
         h("p", {style: {"color": '#373D41' }}, "git clone https://github.com/maiavictor/formality"),

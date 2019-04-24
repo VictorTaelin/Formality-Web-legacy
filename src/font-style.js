@@ -30,6 +30,8 @@ const text = {
   "font-size": "15px",
   "font-family": "Open Sans",
   "color": primaryColor,
+  "line-height": "1.6",
+  "text-align": "justify",
 }
 
 const subtitle = {
