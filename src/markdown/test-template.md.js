@@ -7,11 +7,6 @@ module.exports = [
   ),
   h('p', 
     [
-      "TESTS"
-    ]
-  ),
-  h('p', 
-    [
       "A general",
       "-purpose proof",
       "-gramming language for front",
@@ -103,22 +98,6 @@ module.exports = [
       ]
     ),
   ]),
-  h('p', 
-    [
-      h('a', {href: 'spec.md', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
-        [
-          "Specification"
-        ]
-      ),
-      " ",
-      "~ ",
-      h('a', {href: 'stdlib.fm', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
-        [
-          "Examples"
-        ]
-      )
-    ]
-  ),
   h('h2', {style: {'margin-top': '15px'}}, 
     [
       "Usage"

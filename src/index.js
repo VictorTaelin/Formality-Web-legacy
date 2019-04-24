@@ -23,6 +23,7 @@ import featureImage2 from './images/fast.png';
 import featureImage3 from './images/code.png';
 import logo from './images/logo-formality.png';
 import githubLogo from './images/github.png';
+import developmentPageImage from './images/development-page.png';
 
 class Site extends Component {
   constructor(props) {
@@ -30,20 +31,24 @@ class Site extends Component {
     this.state = {page: "home"};
   }
 
-  componentDidMount(){  
-    if (window.location.pathname === "/home") {
-      this.setState({page: "home"});
-    } else if (window.location.pathname === "/specification") {
-      this.setState({page: "specification"});
-    } else if (window.location.pathname === "/tryIt") {
-      this.setState({page: "tryIt"});
+  componentDidMount(){
+    if (window.location.pathname === "/"+pageHome) {
+      this.setState({page: pageHome});
+    } else if (window.location.pathname === "/"+pageSpecification) {
+      this.setState({page: pageSpecification});
+    } else if (window.location.pathname === "/"+pageTryIt) {
+      this.setState({page: pageTryIt});
+    } else if (window.location.pathname === "/"+pageWhyContent1) {
+      this.setState({page: pageWhyContent1});
+    } else if (window.location.pathname === "/"+pageWhyContent2) {
+      this.setState({page: pageWhyContent2});
     }
 
     window.onpopstate = (event) => {
       if (event.state !== null) {
         var prevPage = event.state.page;
         if (this.state.page !== prevPage) {
-          this.setState({page: prevPage}); 
+          this.setState({page: prevPage});
         }
       } else { // go Home
         this.setState({page: "home"});
@@ -52,9 +57,9 @@ class Site extends Component {
   }
 
   onChangeInternalLink(nextPage){
-    history.pushState({page: nextPage}, nextPage, nextPage); 
+    history.pushState({page: nextPage}, nextPage, nextPage);
     this.setState({page: nextPage});
-    window.scrollTo(0, 0); 
+    window.scrollTo(0, 0);
   }
 
   render() {
@@ -88,27 +93,27 @@ class Site extends Component {
     var topMenu = h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
       h(Logo),
       h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
-        h(Tab, {title: "Home", isCurrentPage: this.state.page === pageHome, 
-                onClick: () => { 
+        h(Tab, {title: "Home", isCurrentPage: this.state.page === pageHome,
+                onClick: () => {
                   if (this.state.page !== pageHome) {
-                    this.setState({page: pageHome}); 
-                    history.pushState({page: pageHome}, pageHome, pageHome); 
+                    this.setState({page: pageHome});
+                    history.pushState({page: pageHome}, pageHome, pageHome);
                   }
                 }
               }),
-        h(Tab, {title: "Specification", isCurrentPage: this.state.page === pageSpecification, 
-                onClick: () => { 
+        h(Tab, {title: "Specification", isCurrentPage: this.state.page === pageSpecification,
+                onClick: () => {
                   if (this.state.page !== pageSpecification) {
-                    this.setState({page: pageSpecification}); 
-                    history.pushState({page: pageSpecification}, pageSpecification, pageSpecification); 
+                    this.setState({page: pageSpecification});
+                    history.pushState({page: pageSpecification}, pageSpecification, pageSpecification);
                   }
                 }
               }),
-        h(Tab, {title: "Try it!", isCurrentPage: this.state.page === pageTryIt, 
-                onClick: () => { 
+        h(Tab, {title: "Try it!", isCurrentPage: this.state.page === pageTryIt,
+                onClick: () => {
                     if (this.state.page !== pageTryIt) {
-                      this.setState({page: pageTryIt}); 
-                      history.pushState({page: pageTryIt}, pageTryIt, pageTryIt); 
+                      this.setState({page: pageTryIt});
+                      history.pushState({page: pageTryIt}, pageTryIt, pageTryIt);
                     }
                 }
               })
@@ -121,7 +126,7 @@ class Site extends Component {
         topMenu,
         // Top area: Formality title and subtitle
         h("div", {style: s.topContainer}, [
-          h("div", {style: formalityTitleContainer}),    
+          h("div", {style: formalityTitleContainer}),
           h("div", {style: fs.formalitySubtitle}, [
             h("span", {style: {"font-family": 'Open Sans' }}, "An efficient\u00A0"),
             h("span", {style: {"font-family": 'Open Sans', "font-weight": "bold"}}, "proof"),
@@ -149,15 +154,15 @@ class Site extends Component {
         ]),
          h(FooterContainer),
       ]);
-      
 
-    // ============= Try it Page =============  
+
+    // ============= Try it Page =============
     } else if (this.state.page === pageTryIt) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
           h("div ", {style: s.pageContentMD}, [
-            markdown
+            h(DevelopmentPage)
           ]),
         ]),
         h(FooterContainer),
@@ -167,7 +172,7 @@ class Site extends Component {
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
           h("div ", {style: s.pageContentMD}, [
-            h("div", {}, "Hi, Why Topic 1")
+            h(DevelopmentPage)
           ]),
         ]),
         h(FooterContainer),
@@ -177,13 +182,13 @@ class Site extends Component {
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
           h("div ", {style: s.pageContentMD}, [
-            h("div", {}, "Hi, Why Topic 2")
+            h(DevelopmentPage)
           ]),
         ]),
         h(FooterContainer),
       ]);
     }
-  } 
+  }
 }
 
 class Logo extends Component {
@@ -197,7 +202,7 @@ class Logo extends Component {
   }
 }
 
-// ------ Auxiliars ---- 
+// ------ Auxiliars ----
 class Tab extends Component {
   constructor(props) {
     super(props)
@@ -212,10 +217,10 @@ class Tab extends Component {
     if (this.props.isCurrentPage) {
       element = h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.props.title)
     } else {
-      element = h(Hover, {normalComponent: h("div", {style: s.tabs, isCurrentPage: this.isCurrentPage },  this.props.title), 
+      element = h(Hover, {normalComponent: h("div", {style: s.tabs, isCurrentPage: this.isCurrentPage },  this.props.title),
                           onFocusComponent: h("div", {style: s.tabsOnFocus, onClick: this.onClick}, this.props.title)})
     }
-    return element;                                      
+    return element;
   }
 }
 
@@ -228,10 +233,10 @@ class Button extends Component {
   }
   render() {
     const tryItButton = {
-      "width": "100px", 
-      "height": "50px", 
-      "display": "flex", 
-      "justify-content": "center", 
+      "width": "100px",
+      "height": "50px",
+      "display": "flex",
+      "justify-content": "center",
       "font-size": "20px",
       "margin-top": "60px",
       "color": s.primaryColor,
@@ -261,10 +266,33 @@ class Hover extends Component {
   render() {
     const component = this.state.isOnFocus ? this.state.onFocusComponent : this.state.normalComponent ;
 
-    return h("div", 
-      {onMouseEnter: () => this.setState(this.state.isOnFocus = true), 
-      onMouseLeave: () => this.setState(this.state.isOnFocus = false)}, 
+    return h("div",
+      {onMouseEnter: () => this.setState(this.state.isOnFocus = true),
+      onMouseLeave: () => this.setState(this.state.isOnFocus = false)},
       component);
+  }
+}
+
+class DevelopmentPage extends Component {
+  render() {
+    const container = {
+      "height": "500px",
+      "display": "flex",
+      "flex-direction": "column",
+      "justify-content": "center",
+      "align-items": "center",
+      "font-family": "Open Sans",
+      "color": s.primaryColor,
+      "font-size": "20px",
+    }
+    const image = {
+      "width" : "400px",
+      "height" : "300px",
+    }
+    return h("div", {style: container}, [
+      h("p", {style: {"margin-bottom": "10px"}}, "We are still working on this page :)"),
+      h("img", {src: developmentPageImage, alt: "development", style: image})
+    ]);
   }
 }
 // -------------------
@@ -290,7 +318,7 @@ class Introduction extends Component {
     }
 
     return h("div", {style: container }, [
-        h("p", {style: subtitle}, `Formality is a new, massively parallel, minimal “proof”gramming language being developed at the Ethereum Foundation. 
+        h("p", {style: subtitle}, `Formality is a new, massively parallel, minimal “proof”gramming language being developed at the Ethereum Foundation.
         It has an ambitious goal of redefining how programs, smart-contracts and even scientific papers are written, by combining several academic breakthroughs in a single tool that “just works”.`),
     ]);
   }
@@ -320,7 +348,7 @@ class WhyGrid extends Component {
       "display": "flex",
       "height": "350px",
       "width": "800px",
-      "align-items": "center", 
+      "align-items": "center",
       "font-size": "22px"
     }
 
@@ -335,8 +363,8 @@ class WhyGrid extends Component {
       h("div", {style: gridItem}, [
         h("div", {style: fs.text, "width": "300px"}, [
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Secure"),
-          h("p", {}, `Formality has a type system capable of proving mathematical theorems about its own programs. 
-          It's not only about preventing bugs or proving the theorem itself. We are talking about a whole new tool to work with, 
+          h("p", {}, `Formality has a type system capable of proving mathematical theorems about its own programs.
+          It's not only about preventing bugs or proving the theorem itself. We are talking about a whole new tool to work with,
           a language of specifications, one on which we can state precisely, in a way that a computer can understand, what an algorithm is supposed to do.  `),
           h("p", {style: {"margin-top": "5px"}}, "This opens doors for use-cases that are only limited by your imagination!"),
           h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageWhyContent1) }),
@@ -392,7 +420,7 @@ class Usage extends Component {
 
     return h("div", {style: s.usageContainer}, [
       h("div", {style: fs.title}, "Usage"),
-      h("div", {style: fs.subtitle }, "Formality is currently implemented as a small, dependency-free JavaScript library. It will futurely be implemented in other languages, and formalized in Agda/Coq. To use the current implementation:"), 
+      h("div", {style: fs.subtitle }, "Formality is currently implemented as a small, dependency-free JavaScript library. It will futurely be implemented in other languages, and formalized in Agda/Coq. To use the current implementation:"),
       h("div", {style: s.usageCodeContainer, "margin-top": "50px"}, [
         h("p", {style: {"color": '#6B747F' }}, "# Installs Formality"),
         h("p", {style: {"color": '#373D41' }}, "npm i -g formality-lang"),
@@ -404,7 +432,7 @@ class Usage extends Component {
         h("p", {style: {"color": '#6B747F' }}, "# Checks and evaluates main"),
         h("p", {style: {"color": '#373D41' }}, "formality main"),
       ]),
-    ]); 
+    ]);
   }
 }
 
@@ -443,13 +471,13 @@ class Footer extends Component {
         ])
       ]),
       h('div', {style: {'flex-direction': 'column'}}, [
-        h('p', {}, [ 
+        h('p', {}, [
           h('span', {}, "Landing images by "),
           h('span', {}, [
             h('a', {'href': 'https://undraw.co', style: {'color': '#68c3d4', 'text-decoration': 'none'}}, "unDraw"),
           ])
         ]),
-        h('p', {style: {'margin-top': '5px'}}, [ 
+        h('p', {style: {'margin-top': '5px'}}, [
           h('span', {}, "Background photo by Paul Earle on "),
           h('span', {}, [
             h('a', {'href': 'https://unsplash.com/photos/wVjd0eWNqI8', style: {'color': '#68c3d4', 'text-decoration': 'none'} }, "Unsplash"),
@@ -457,7 +485,7 @@ class Footer extends Component {
         ])
       ]),
     ],
-    ); 
+    );
   }
 }
 
