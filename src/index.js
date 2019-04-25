@@ -12,7 +12,7 @@ const markdown = require("./markdown/test-template.md.js");
 const pageHome = "home";
 const pageWhyContent1 = "math-proof";
 const pageWhyContent2 = "massive-paralelism";
-const pageSpecification = "specification";
+const pageDocumentation = "documentation";
 const pageTryIt = "tryIt";
 
 
@@ -34,8 +34,8 @@ class Site extends Component {
   componentDidMount(){
     if (window.location.pathname === "/"+pageHome) {
       this.setState({page: pageHome});
-    } else if (window.location.pathname === "/"+pageSpecification) {
-      this.setState({page: pageSpecification});
+    } else if (window.location.pathname === "/"+pageDocumentation) {
+      this.setState({page: pageDocumentation});
     } else if (window.location.pathname === "/"+pageTryIt) {
       this.setState({page: pageTryIt});
     } else if (window.location.pathname === "/"+pageWhyContent1) {
@@ -101,11 +101,11 @@ class Site extends Component {
                   }
                 }
               }),
-        h(Tab, {title: "Specification", isCurrentPage: this.state.page === pageSpecification,
+        h(Tab, {title: "Documentation", isCurrentPage: this.state.page === pageDocumentation,
                 onClick: () => {
-                  if (this.state.page !== pageSpecification) {
-                    this.setState({page: pageSpecification});
-                    history.pushState({page: pageSpecification}, pageSpecification, pageSpecification);
+                  if (this.state.page !== pageDocumentation) {
+                    this.setState({page: pageDocumentation});
+                    history.pushState({page: pageDocumentation}, pageDocumentation, pageDocumentation);
                   }
                 }
               }),
@@ -144,7 +144,7 @@ class Site extends Component {
       ]);
 
     // ============= Specification Page =============
-    } else if (this.state.page === pageSpecification) {
+    } else if (this.state.page === pageDocumentation) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
