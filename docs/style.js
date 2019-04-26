@@ -19,15 +19,6 @@ const formalityTitleContainer = {
   "align-items": "center",
 }
 
-const logo = {
-  "width" : "45px",
-  "height" : "40px",
-  "margin-left" : "100px",
-  "margin-top" : "10px", 
-  "margin-bottom" : "10px",
-  "cursor": "pointer"
-}
-
 const tabs = {
   "height" : "30px", 
   "margin" : "30px 20px 20px",
@@ -129,6 +120,6 @@ const githubIcon = {
   "cursor": "pointer"
 }
 
-export { formalityTitleContainer, primaryColor, secondaryColor, linkColor, logo, tabs, tabsOnFocus, 
+export { formalityTitleContainer, primaryColor, secondaryColor, linkColor, tabs, tabsOnFocus, 
         topContainer, tryItButton, usageContainer, pageContentMD,
         footerContainer, usageCodeContainer, githubIcon };

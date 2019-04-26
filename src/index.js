@@ -200,7 +200,15 @@ class Logo extends Component {
     this.state = {};
   }
   render() {
-    return h("img", {src: logo, alt: "logo", style: s.logo, onClick: this.onClick});
+    const logoStyle = {
+      "width" : "45px",
+      "height" : "40px",
+      "margin-left" : "100px",
+      "margin-top" : "10px", 
+      "margin-bottom" : "10px",
+      "cursor": "pointer"
+    }
+    return h("img", {src: logo, alt: "logo", style: logoStyle, onClick: this.onClick});
   }
 }
 
@@ -494,7 +502,12 @@ class TryIt extends Component {
 class Terminal extends Component {
   constructor(props){
     super(props)
-    this.state = {currentCode: props.currentCode}; // string
+    this.state = {currentCode: "my code comes here ", log: props.log}; // string
+  }
+
+  onUpdateLog(log){
+    console.log("2. on update log, with log: "+log);
+    this.setState({log: log});
   }
 
   render() {
@@ -543,12 +556,52 @@ class Terminal extends Component {
 
     return h("div", {style: container}, [
       h("div", {style: topBar}, [
-        h("p", {}, "Hiii")
+        h(RunCodeButton, {currentCode: this.state.currentCode, onClick: () => {console.log("cliquei no Botão");} , runCode: this.onUpdateLog.bind(this)}),
       ]), 
-      h("div", {style: {"background-color": "#456821", "height": "30px"}}),
       h("div", {style: contentArea}, "content"),
-      h("div", {style: outputArea}, "output")
+      h("div", {style: outputArea}, this.state.log)
     ]);
+  }
+}
+
+// Receive the Terminal.state.currentCode, execute it and updates Terminal.state.log 
+class RunCodeButton extends Component {
+  constructor(props){
+    super(props)
+    this.onClick = props.onClick;
+    this.state = {currentCode: props.currentCode}; // string
+  }
+
+  onRunCode() {
+    const newLog = "Hello World and Hello Maisa!"
+    this.props.runCode(newLog);
+    this.props.onClick();
+    console.log("1. on run code, current code: "+this.state.currentCode);
+  }
+  
+  render(){
+    const style = {
+      "cursor": "pointer"
+    }
+    return h("div", {style: style, onClick: this.onRunCode.bind(this)}, "Run"); // update Terminal.state.log with Hello World
+  }
+}
+
+class DropdownButton extends Component {
+  constructor(props) {
+    super(props)
+    this.state = { isOpen: false };
+    this.doToggle = this.doToggle.bind(this)
+  }
+
+  doToggle() {
+    this.setState({
+      isOpen: !this.state.isOpen
+    })
+  }
+
+  render({ children, ...props }) {
+    return ;
   }
 }
 
