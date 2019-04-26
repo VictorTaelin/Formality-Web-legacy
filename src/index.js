@@ -502,7 +502,7 @@ class TryIt extends Component {
 class Terminal extends Component {
   constructor(props){
     super(props)
-    this.state = {currentCode: "my code comes here ", log: props.log}; // string
+    this.state = {currentCode: props.currentCode, log: props.log}; // string
   }
 
   onUpdateLog(log){
@@ -510,9 +510,14 @@ class Terminal extends Component {
     this.setState({log: log});
   }
 
+  onTypeCode(code){
+    this.setState({currentCode: code});
+    console.log("Type code! Current code: "+this.state.currentCode);
+  }
+
   render() {
     const container = {
-      "margin-top": "10px",
+      "margin-top": "30px",
       "display": "flex",
       "flex-direction": "column",
       "justify-content": "flex-start",
@@ -527,20 +532,13 @@ class Terminal extends Component {
     const topBar = {
       "display": "flex",
       "flex-direction": "row",
-      "justify-content": "flex-start",
+      "justify-content": "flex-end",
       "height": "40px",
       "width": "100%",
       "border-style": "none none solid none",
       "border-color": "#979797",
-      "border-width": "1px"
-    }
-
-    const contentArea = {
-      "display": "flex",
-      "flex-direction": "row",
-      "justify-content": "flex-start",
-      "height": "450px",
-      "width": "100%",
+      "border-width": "1px",
+      "align-items": "center",
     }
 
     const outputArea = {
@@ -558,8 +556,33 @@ class Terminal extends Component {
       h("div", {style: topBar}, [
         h(RunCodeButton, {currentCode: this.state.currentCode, onClick: () => {console.log("cliquei no Botão");} , runCode: this.onUpdateLog.bind(this)}),
       ]), 
-      h("div", {style: contentArea}, "content"),
+      h(TerminalContentArea, {updateCode: this.onTypeCode.bind(this)}),
       h("div", {style: outputArea}, this.state.log)
+    ]);
+  }
+}
+
+class TerminalContentArea extends Component {
+  constructor(props){
+    super(props)
+    this.updateCode = props.updateCode;
+    this.state = {currentCode: "current code on content"}; // string
+  }
+  onType(){
+    console.log("on type!");
+    this.props.updateCode(this.state.currentCode);
+  }
+  render(){
+    const contentArea = {
+      "display": "flex",
+      "flex-direction": "row",
+      "justify-content": "flex-start",
+      "height": "450px",
+      "width": "100%",
+    }
+    // when code is typed here it must be updated in Terminal.state.currentCode
+    return h("div", {style: contentArea, updateCode: this.onType.bind(this) }, [
+      this.state.currentCode
     ]);
   }
 }
@@ -581,7 +604,9 @@ class RunCodeButton extends Component {
   
   render(){
     const style = {
-      "cursor": "pointer"
+      "cursor": "pointer",
+      "width": "40px",
+      "margin-right": "20px",
     }
     return h("div", {style: style, onClick: this.onRunCode.bind(this)}, "Run"); // update Terminal.state.log with Hello World
   }
