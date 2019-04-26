@@ -143,7 +143,7 @@ class Site extends Component {
         h(Footer, {})
       ]);
 
-    // ============= Specification Page =============
+    // ============= Documentation Page =============
     } else if (this.state.page === pageDocumentation) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
@@ -155,18 +155,19 @@ class Site extends Component {
          h(FooterContainer),
       ]);
 
-
     // ============= Try it Page =============
     } else if (this.state.page === pageTryIt) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
           h("div ", {style: s.pageContentMD}, [
-            h(DevelopmentPage)
+            h(TryIt)
           ]),
         ]),
         h(FooterContainer),
       ]);
+
+    // ============= Why content 1 =============
     } else if (this.state.page === pageWhyContent1) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
@@ -177,6 +178,7 @@ class Site extends Component {
         ]),
         h(FooterContainer),
       ]);
+    // ============= Why content 2 =============
     } else if (this.state.page === pageWhyContent2) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
@@ -295,6 +297,33 @@ class DevelopmentPage extends Component {
     ]);
   }
 }
+
+// Read more is used in Why content
+class ReadMoreLink extends Component {
+  constructor(props){
+    super(props)
+    this.onClick = props.onClick;
+    this.title = props.title;
+    this.state = {};
+  }
+  render(){
+    return h("p", {style: {"cursor": "pointer", "margin-top": "15px"}, onClick: this.onClick}, this.title);
+  }
+}
+
+// Link to a page inside of the website
+class InternalLink extends Component {
+  constructor(props) {
+    super(props)
+    this.onClick = props.onClick;
+    this.title = props.title;
+  }
+
+  render(){
+    return h("span", {style: {"cursor": "pointer", "color": "#68c3d4"}, onClick: this.onClick}, this.title);
+  }
+}
+
 // -------------------
 
 class Introduction extends Component {
@@ -396,19 +425,6 @@ class WhyGrid extends Component {
 
 }
 
-// Links to pages inside the App
-class InternalLink extends Component {
-  constructor(props){
-    super(props)
-    this.onClick = props.onClick;
-    this.title = props.title;
-    this.state = {};
-  }
-  render(){
-    return h("p", {style: {"cursor": "pointer", "margin-top": "15px"}, onClick: this.onClick}, this.title);
-  }
-}
-
 // Content about how to use Formality
 class Usage extends Component {
   constructor(props) {
@@ -432,6 +448,106 @@ class Usage extends Component {
         h("p", {style: {"color": '#6B747F' }}, "# Checks and evaluates main"),
         h("p", {style: {"color": '#373D41' }}, "formality main"),
       ]),
+    ]);
+  }
+}
+
+class TryIt extends Component {
+  constructor(props){
+    super(props)
+    this.state = {currentCode: props.currentCode};
+  }
+
+  render(){
+    const container = {
+      "display": "flex",
+      "flex-direction": "column",
+      "justify-content": "flex-start",
+      "align-items": "flex-start",
+      "height": "700px",
+    }
+
+    const title = {
+      ...fs.title,
+      "justify-content": "flex-start",
+    }
+
+    const text = {
+      ...fs.text,
+      "padding": "0px",
+      "margin-top": "10px",
+    }
+
+    return h("div", {style: container}, [
+      h("p", {style: title}, "Online editor"),
+      h("p", {style: text}, [
+        h("span", {}, "You can read more about Formality type system "),
+        h(InternalLink, {title: "here "}), // TODO: add link
+        h("span", {}, "and its installation "),
+        h(InternalLink, {title: "here "}), // TODO: add link
+      ]),
+      h(Terminal),
+    ] );
+  }
+}
+
+class Terminal extends Component {
+  constructor(props){
+    super(props)
+    this.state = {currentCode: props.currentCode}; // string
+  }
+
+  render() {
+    const container = {
+      "margin-top": "10px",
+      "display": "flex",
+      "flex-direction": "column",
+      "justify-content": "flex-start",
+      "align-items": "flex-start",
+      "height": "500px",
+      "width": "100%",
+      "border-style": "solid",
+      "border-color": "#979797",
+      "border-width": "1px"
+    }
+
+    const topBar = {
+      "display": "flex",
+      "flex-direction": "row",
+      "justify-content": "flex-start",
+      "height": "40px",
+      "width": "100%",
+      "border-style": "none none solid none",
+      "border-color": "#979797",
+      "border-width": "1px"
+    }
+
+    const contentArea = {
+      "display": "flex",
+      "flex-direction": "row",
+      "justify-content": "flex-start",
+      "height": "450px",
+      "width": "100%",
+    }
+
+    const outputArea = {
+      "display": "flex",
+      "flex-direction": "row",
+      "justify-content": "flex-start",
+      "height": "100px",
+      "width": "100%",
+      "border-style": "solid none none none",
+      "border-color": "#979797",
+      "border-width": "1px"
+    }
+
+    return h("div", {style: container}, [
+      h("div", {style: topBar}, [
+        h("p", {}, "Hiii")
+      ]), 
+      h("div", {style: {"background-color": "#456821", "height": "30px"}}),
+      h("div", {style: contentArea}, "content"),
+      h("div", {style: outputArea}, "output")
     ]);
   }
 }
