@@ -1,8 +1,11 @@
 const {Component, render, linkEvent} = require("inferno");
-
 const h = require("inferno-hyperscript").h;
 const Canvas = require("inferno-canvas-component-2");
 
+// Formality
+const f = require("formality-lang");
+
+// Style
 const s = require('./style');
 const fs = require("./font-style");
 
@@ -441,6 +444,26 @@ class Usage extends Component {
   }
 
   render() {
+    const usageContainer = {
+      ...s.bigContainer,
+      "background-image": "url(src/images/usageBg2.png)",
+      "align-items": "center",
+      "justify-content": "center",
+    }
+    
+    const usageCodeContainer = {
+      "margin-top": "20px",
+      "heigth": "250px",
+      "width" : "600px",
+      "background-color": s.secondaryColor,
+      "flex-direction": "column",
+      "font-family" : "Inconsolata", 
+      "font-size" : "15px",
+      "padding-top": "20px",
+      "padding-right": "20px",
+      "padding-bottom": "20px",
+      "padding-left": "20px"
+    }
 
     return h("div", {style: s.usageContainer}, [
       h("div", {style: fs.title}, "Usage"),
@@ -502,18 +525,37 @@ class TryIt extends Component {
 class Terminal extends Component {
   constructor(props){
     super(props)
-    this.state = {currentCode: props.currentCode, log: props.log}; // string
+    this.state = {currentCode: `
+
+    .ID
+    : {x : Type} Type
+    = [x] x
+  
+    .main
+      (ID Type)
+  
+  `, log: props.log, outputType: props.outputType}; // string
   }
 
-  onUpdateLog(log){
-    console.log("2. on update log, with log: "+log);
-    this.setState({log: log});
+  // Get a string and tranform it into a Formality code. 
+  // Then, executes an action to compute the normal form or check the type of the code
+  runCode(actionType) {
+    const code = this.state.currentCode;
+    if (code !== undefined) {
+      if (!(code.includes(".main") || code.includes(". main"))) {
+        this.setState({log: "The code must include a '.main' statement. You can check some examples to see how it works :D"})
+      } else {
+        const defs = f.parse(this.state.currentCode); // gets a String and transform it into Formality code
+        const result = actionType === "run" ? f.norm(f.Ref("main"), defs) : f.infer(f.Ref("main"), defs);
+        const log = actionType === "run" ? "Normal form: " : "Check type: ";
+        this.setState({outputType: log});
+        this.setState({log: f.show(result)});
+      }
+    } else {
+      this.setState({log: "Type some code to run it or try some of our examples :D"})
+    }
   }
 
-  onTypeCode(code){
-    this.setState({currentCode: code});
-    console.log("Type code! Current code: "+this.state.currentCode);
-  }
 
   render() {
     const container = {
@@ -535,29 +577,44 @@ class Terminal extends Component {
       "justify-content": "flex-end",
       "height": "40px",
       "width": "100%",
-      "border-style": "none none solid none",
       "border-color": "#979797",
       "border-width": "1px",
       "align-items": "center",
     }
 
-    const outputArea = {
+    const codeArea = {
       "display": "flex",
       "flex-direction": "row",
       "justify-content": "flex-start",
-      "height": "100px",
       "width": "100%",
       "border-style": "solid none none none",
       "border-color": "#979797",
-      "border-width": "1px"
+      "border-width": "1px",
+      "font-family": "Inconsolata",
+      "font-size" : "15px",
+    }
+    const input = {
+      ...codeArea,
+      "height": "500px"
+    }
+    const output = {
+      ...codeArea,
+      "height": "100px"
     }
 
     return h("div", {style: container}, [
       h("div", {style: topBar}, [
-        h(RunCodeButton, {currentCode: this.state.currentCode, onClick: () => {console.log("cliquei no Botão");} , runCode: this.onUpdateLog.bind(this)}),
+        h(TerminalButton, {title: "Run", onClick: () => { this.runCode("run") }}),
+        h(TerminalButton, {title: "Check", onClick: () => { this.runCode() }}),
       ]), 
-      h(TerminalContentArea, {updateCode: this.onTypeCode.bind(this)}),
-      h("div", {style: outputArea}, this.state.log)
+      // h(TerminalContentArea),
+      h("div", {style: input}, this.state.currentCode),
+      h("div", {style: output}, [
+        h("p", {style: {"margin-left": "10px"}}, [
+          h("p", {}, this.state.outputType),
+          h("p", {}, this.state.log),
+        ])
+      ])
     ]);
   }
 }
@@ -568,10 +625,6 @@ class TerminalContentArea extends Component {
     this.updateCode = props.updateCode;
     this.state = {currentCode: "current code on content"}; // string
   }
-  onType(){
-    console.log("on type!");
-    this.props.updateCode(this.state.currentCode);
-  }
   render(){
     const contentArea = {
       "display": "flex",
@@ -579,36 +632,32 @@ class TerminalContentArea extends Component {
       "justify-content": "flex-start",
       "height": "450px",
       "width": "100%",
+      "font-family": "Inconsolata", 
+      "margin-left": "10px",
+      "font-size" : "15px",
     }
     // when code is typed here it must be updated in Terminal.state.currentCode
-    return h("div", {style: contentArea, updateCode: this.onType.bind(this) }, [
+    return h("div", {style: contentArea }, [
       this.state.currentCode
     ]);
   }
 }
 
 // Receive the Terminal.state.currentCode, execute it and updates Terminal.state.log 
-class RunCodeButton extends Component {
+class TerminalButton extends Component {
   constructor(props){
     super(props)
     this.onClick = props.onClick;
-    this.state = {currentCode: props.currentCode}; // string
+    this.title = props.title;
   }
 
-  onRunCode() {
-    const newLog = "Hello World and Hello Maisa!"
-    this.props.runCode(newLog);
-    this.props.onClick();
-    console.log("1. on run code, current code: "+this.state.currentCode);
-  }
-  
   render(){
     const style = {
       "cursor": "pointer",
       "width": "40px",
       "margin-right": "20px",
     }
-    return h("div", {style: style, onClick: this.onRunCode.bind(this)}, "Run"); // update Terminal.state.log with Hello World
+    return h("div", {style: style, onClick: this.onClick}, this.props.title); // update Terminal.state.log with Hello World
   }
 }
 
