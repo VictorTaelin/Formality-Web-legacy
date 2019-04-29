@@ -517,7 +517,13 @@ class TryIt extends Component {
         h("span", {}, "and its installation "),
         h(InternalLink, {title: "here "}), // TODO: add link
       ]),
-      h(Terminal),
+      // h(Terminal, {updateCurrentCode: this.state.currentCode}),
+      h(Terminal, {currentCode: this.state.currentCode }),
+      // h("p", {style: subtitle}, "Check out some examples:"),
+      // h("div", {}, [ // TODO: add an expansible area to contain explanation about the examples      
+      //   h("p", {style: {"cursor": "pointer"}, onClick: () => { this.onClickExample(codeHelloWorld) }}, "1. Hello World"),
+      //   h("p", {style: {"cursor": "pointer"}, onClick: () => { this.onClickExample(codeIdentity) }}, "2. Identity"),
+      // ])
     ] );
   }
 }
@@ -525,17 +531,13 @@ class TryIt extends Component {
 class Terminal extends Component {
   constructor(props){
     super(props)
-    this.state = {currentCode: props.currentCode, log: props.log, outputType: props.outputType}; // string
+    this.state = {currentCode: props.currentCode, log: props.log, outputType: props.outputType};
   }
 
-  /* `
-    .ID
-    : {x : Type} Type
-    = [x] x
-  
-    .main
-      (ID Type)` 
-   */
+  componentDidUpdate(newProps) {
+    console.log(">> Comp did Update. New props: "+ newProps);
+    console.log(this.updateCurrentCode);
+  }
   // Get a string and tranform it into a Formality code. 
   // Then, executes an action to compute the normal form or check the type of the code
   runCode(actionType) {
@@ -559,13 +561,27 @@ class Terminal extends Component {
     }
   }
 
+  // Update the currentState with the user's input
   handleInput(event) {
     this.setState({currentCode: event.target.value});
+  }
+
+  onClickExample(code) {
+    console.log("on click example")
+    this.setState({currentCode: code})
   }
 
   render() {
     const container = {
       "margin-top": "30px",
+      "display": "flex",
+      "flex-direction": "column",
+      "justify-content": "flex-start",
+      "align-items": "flex-start",
+      "height": "700px",
+      "width": "100%",
+    }
+    const containerTerminal = {
       "display": "flex",
       "flex-direction": "column",
       "justify-content": "flex-start",
@@ -611,29 +627,56 @@ class Terminal extends Component {
       "outline": "none", 
       "resize": "none", 
       "width": "100%",
-      "height": "390px",
-      "margin-left": "5px",
-      "margin-right": "5px",
+      "height": "310px",
+      "margin": "5px",
       "font-family": "Inconsolata",
       "font-size" : "15px",
       "border-width": "0px",
     }
 
+    const subtitle = {
+      "margin-top": "30px",
+      "margin-bottom": "10px",
+      "font-size": "23px",
+      "font-family": "Open Sans",
+      "color": s.primaryColor, 
+    }
+    const codeHelloWorld = ` .main (Hello World)`
+
+    const codeIdentity = `
+  .ID
+  : {x : Type} Type
+  = [x] x
+
+  .main
+    (ID Type) 
+    `
+
     return h("div", {style: container}, [
+    h("div", {style: containerTerminal}, [
+      // Header with buttons
       h("div", {style: topBar}, [
         h(TerminalButton, {title: "Run", onClick: () => { this.runCode("run") }}),
         h(TerminalButton, {title: "Check", onClick: () => { this.runCode() }}),
       ]), 
+      // Code input
       h("div", {style: input}, [
         h("textarea", { "outline": "none", "resize": "none", "placeholder": "Type your code or try some of our examples", 
         style: textArea,
         onchange: this.handleInput.bind(this)}, this.state.currentCode)
       ]),
+      // Log output
       h("div", {style: output}, [
         h("p", {style: {"margin-left": "10px"}}, [
           h("p", {}, this.state.outputType),
           h("p", {}, this.state.log),
         ])
+      ])
+    ]),
+    h("p", {style: subtitle}, "Check out some examples:"),
+      h("div", {}, [ // TODO: add an expansible area to contain explanation about the examples      
+        h("p", {style: {"cursor": "pointer"}, onClick: () => { this.onClickExample(codeHelloWorld) }}, "1. Hello World"),
+        h("p", {style: {"cursor": "pointer"}, onClick: () => { this.onClickExample(codeIdentity) }}, "2. Identity"),
       ])
     ]);
   }
@@ -653,7 +696,13 @@ class TerminalButton extends Component {
       "width": "40px",
       "margin-right": "20px",
     }
-    return h("div", {style: style, onClick: this.onClick}, this.props.title); // update Terminal.state.log with Hello World
+    const onFocusStyle = {
+      ... style,
+      "color": "#8091A5"
+    }
+    // TODO: create a tooltip to help people understands what each button means
+    return h(Hover, {normalComponent: h("div", {style: style, onClick: this.onClick}, this.props.title),
+                    onFocusComponent: h("div", {style: onFocusStyle, onClick: this.onClick}, this.props.title),});
   }
 }
 
