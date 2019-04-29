@@ -528,17 +528,13 @@ class Terminal extends Component {
     this.state = {currentCode: props.currentCode, log: props.log, outputType: props.outputType}; // string
   }
 
-  /**
-   * 
-   *`
+  /* `
     .ID
     : {x : Type} Type
     = [x] x
   
     .main
-      (ID Type)
-  
-  ` 
+      (ID Type)` 
    */
   // Get a string and tranform it into a Formality code. 
   // Then, executes an action to compute the normal form or check the type of the code
@@ -548,11 +544,15 @@ class Terminal extends Component {
       if (!(code.includes(".main") || code.includes(". main"))) {
         this.setState({log: "The code must include a '.main' statement. You can check some examples to see how it works :D"})
       } else {
-        const defs = f.parse(this.state.currentCode); // gets a String and transform it into Formality code
-        const result = actionType === "run" ? f.norm(f.Ref("main"), defs) : f.infer(f.Ref("main"), defs);
-        const log = actionType === "run" ? "Normal form: " : "Check type: ";
-        this.setState({outputType: log});
-        this.setState({log: f.show(result)});
+        try {
+          const defs = f.parse(this.state.currentCode); // gets a String and transform it into Formality code
+          const result = actionType === "run" ? f.norm(f.Ref("main"), defs) : f.infer(f.Ref("main"), defs);
+          const log = actionType === "run" ? "Normal form: " : "Check type: ";
+          this.setState({outputType: log});
+          this.setState({log: f.show(result)});
+        } catch (e) { // Compiler errors
+          this.setState({log: e});
+        }
       }
     } else {
       this.setState({log: "Type some code to run it or try some of our examples :D"})
@@ -560,8 +560,6 @@ class Terminal extends Component {
   }
 
   handleInput(event) {
-    console.log(">> Updating current code ");
-    // console.log(event.target.value);
     this.setState({currentCode: event.target.value});
   }
 
