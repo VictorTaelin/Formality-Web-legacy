@@ -525,8 +525,12 @@ class TryIt extends Component {
 class Terminal extends Component {
   constructor(props){
     super(props)
-    this.state = {currentCode: `
+    this.state = {currentCode: props.currentCode, log: props.log, outputType: props.outputType}; // string
+  }
 
+  /**
+   * 
+   *`
     .ID
     : {x : Type} Type
     = [x] x
@@ -534,9 +538,8 @@ class Terminal extends Component {
     .main
       (ID Type)
   
-  `, log: props.log, outputType: props.outputType}; // string
-  }
-
+  ` 
+   */
   // Get a string and tranform it into a Formality code. 
   // Then, executes an action to compute the normal form or check the type of the code
   runCode(actionType) {
@@ -556,6 +559,11 @@ class Terminal extends Component {
     }
   }
 
+  handleInput(event) {
+    console.log(">> Updating current code ");
+    // console.log(event.target.value);
+    this.setState({currentCode: event.target.value});
+  }
 
   render() {
     const container = {
@@ -595,11 +603,22 @@ class Terminal extends Component {
     }
     const input = {
       ...codeArea,
-      "height": "500px"
+      "height": "500px",
     }
     const output = {
       ...codeArea,
       "height": "100px"
+    }
+    const textArea = {
+      "outline": "none", 
+      "resize": "none", 
+      "width": "100%",
+      "height": "390px",
+      "margin-left": "5px",
+      "margin-right": "5px",
+      "font-family": "Inconsolata",
+      "font-size" : "15px",
+      "border-width": "0px",
     }
 
     return h("div", {style: container}, [
@@ -607,38 +626,17 @@ class Terminal extends Component {
         h(TerminalButton, {title: "Run", onClick: () => { this.runCode("run") }}),
         h(TerminalButton, {title: "Check", onClick: () => { this.runCode() }}),
       ]), 
-      // h(TerminalContentArea),
-      h("div", {style: input}, this.state.currentCode),
+      h("div", {style: input}, [
+        h("textarea", { "outline": "none", "resize": "none", "placeholder": "Type your code or try some of our examples", 
+        style: textArea,
+        onchange: this.handleInput.bind(this)}, this.state.currentCode)
+      ]),
       h("div", {style: output}, [
         h("p", {style: {"margin-left": "10px"}}, [
           h("p", {}, this.state.outputType),
           h("p", {}, this.state.log),
         ])
       ])
-    ]);
-  }
-}
-
-class TerminalContentArea extends Component {
-  constructor(props){
-    super(props)
-    this.updateCode = props.updateCode;
-    this.state = {currentCode: "current code on content"}; // string
-  }
-  render(){
-    const contentArea = {
-      "display": "flex",
-      "flex-direction": "row",
-      "justify-content": "flex-start",
-      "height": "450px",
-      "width": "100%",
-      "font-family": "Inconsolata", 
-      "margin-left": "10px",
-      "font-size" : "15px",
-    }
-    // when code is typed here it must be updated in Terminal.state.currentCode
-    return h("div", {style: contentArea }, [
-      this.state.currentCode
     ]);
   }
 }
