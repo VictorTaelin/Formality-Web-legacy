@@ -573,11 +573,11 @@ class Terminal extends Component {
       if (!(code.includes(".main") || code.includes(". main"))) {
         this.setState({log: "The code must include a '.main' statement. You can check some examples to see how it works :D"})
       } else {
+        const log = actionType === "run" ? "Normal form: " : "Check type: ";
+        this.setState({outputType: log});
         try {
           const defs = f.parse(this.state.currentCode); // gets a String and transform it into Formality code
           const result = actionType === "run" ? f.norm(f.Ref("main"), defs) : f.infer(f.Ref("main"), defs);
-          const log = actionType === "run" ? "Normal form: " : "Check type: ";
-          this.setState({outputType: log});
           this.setState({log: f.show(result)});
         } catch (e) { // Compiler errors
           this.setState({log: e});
