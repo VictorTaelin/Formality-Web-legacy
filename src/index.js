@@ -557,7 +557,7 @@ class TryIt extends Component {
 class Terminal extends Component {
   constructor(props){
     super(props)
-    this.state = {currentCode: props.currentCode, log: props.log, outputType: props.outputType, title: props.title};
+    this.state = {currentCode: props.currentCode, codeExample: props.codeExample, log: props.log, outputType: props.outputType, title: props.title};
   }
 
   componentDidUpdate(newProps) {
@@ -593,9 +593,9 @@ class Terminal extends Component {
     this.setState({currentCode: event.target.value});
   }
 
+  // Must override the code type by the user
   onClickExample(code) {
-    console.log("on click example")
-    this.setState({currentCode: code})
+    this.setState({currentCode: code});
   }
 
   render() {
@@ -689,7 +689,7 @@ class Terminal extends Component {
       // Code input
       h("div", {style: input}, [
         h("textarea", { "outline": "none", "resize": "none", "placeholder": "Type your code or try some of our examples", 
-        style: textArea,
+        style: textArea, "value": this.state.currentCode,
         onchange: this.handleInput.bind(this)}, this.state.currentCode),
       ]),
       // Log output
@@ -730,24 +730,6 @@ class TerminalButton extends Component {
     // TODO: create a tooltip to help people understands what each button means
     return h(Hover, {normalComponent: h("div", {style: style, onClick: this.onClick}, this.props.title),
                     onFocusComponent: h("div", {style: onFocusStyle, onClick: this.onClick}, this.props.title),});
-  }
-}
-
-class DropdownButton extends Component {
-  constructor(props) {
-    super(props)
-    this.state = { isOpen: false };
-    this.doToggle = this.doToggle.bind(this)
-  }
-
-  doToggle() {
-    this.setState({
-      isOpen: !this.state.isOpen
-    })
-  }
-
-  render({ children, ...props }) {
-    return ;
   }
 }
 
