@@ -486,7 +486,12 @@ class Usage extends Component {
 class TryIt extends Component {
   constructor(props){
     super(props)
-    this.state = {currentCode: props.currentCode};
+    this.state = {currentCode: props.currentCode, title: "First hi!!"};
+  }
+
+  onClickExample(code){
+    this.setState({currentCode: code});
+    this.setState({title: "title is know updated!!"});
   }
 
   render(){
@@ -506,8 +511,27 @@ class TryIt extends Component {
     const text = {
       ...fs.text,
       "padding": "0px",
-      "margin-top": "10px",
+      "margin-top": "20px",
     }
+
+  //   const subtitle = {
+  //     "margin-top": "30px",
+  //     "margin-bottom": "10px",
+  //     "font-size": "23px",
+  //     "font-family": "Open Sans",
+  //     "color": s.primaryColor, 
+  //   }
+
+  //   const codeHelloWorld = ` .main (Hello World)`
+
+  //   const codeIdentity = `
+  // .ID
+  // : {x : Type} Type
+  // = [x] x
+
+  // .main
+  //   (ID Type) 
+  //   `
 
     return h("div", {style: container}, [
       h("p", {style: title}, "Online editor"),
@@ -517,8 +541,10 @@ class TryIt extends Component {
         h("span", {}, "and its installation "),
         h(InternalLink, {title: "here "}), // TODO: add link
       ]),
-      // h(Terminal, {updateCurrentCode: this.state.currentCode}),
-      h(Terminal, {currentCode: this.state.currentCode }),
+      h(Terminal)
+      // console.log("1. Rendering with the code: "+this.state.currentCode),
+      // console.log("2. Title props: "+this.state.title),
+      // h(Terminal, {currentCode: this.state.currentCode, title: this.props.title}),
       // h("p", {style: subtitle}, "Check out some examples:"),
       // h("div", {}, [ // TODO: add an expansible area to contain explanation about the examples      
       //   h("p", {style: {"cursor": "pointer"}, onClick: () => { this.onClickExample(codeHelloWorld) }}, "1. Hello World"),
@@ -531,12 +557,13 @@ class TryIt extends Component {
 class Terminal extends Component {
   constructor(props){
     super(props)
-    this.state = {currentCode: props.currentCode, log: props.log, outputType: props.outputType};
+    this.state = {currentCode: props.currentCode, log: props.log, outputType: props.outputType, title: props.title};
   }
 
   componentDidUpdate(newProps) {
-    console.log(">> Comp did Update. New props: "+ newProps);
-    console.log(this.updateCurrentCode);
+    // this.setState({currentCode: this.state.currentCode})
+    // console.log(">> Comp did Update. Current code: "+ this.state.currentCode);
+    // console.log("> and title: "+this.props.title)
   }
   // Get a string and tranform it into a Formality code. 
   // Then, executes an action to compute the normal form or check the type of the code
@@ -663,7 +690,7 @@ class Terminal extends Component {
       h("div", {style: input}, [
         h("textarea", { "outline": "none", "resize": "none", "placeholder": "Type your code or try some of our examples", 
         style: textArea,
-        onchange: this.handleInput.bind(this)}, this.state.currentCode)
+        onchange: this.handleInput.bind(this)}, this.state.currentCode),
       ]),
       // Log output
       h("div", {style: output}, [
