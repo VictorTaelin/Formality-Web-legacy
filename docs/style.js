@@ -93,7 +93,7 @@ const usageCodeContainer = {
 
 const pageContentMD = {
   "font-family": 'Open Sans', 
-  "color": primaryColor, 
+  "color": "#373530", 
   "margin-left": "100px", 
   "margin-right": "100px", 
   "margin-top": "20px", 

@@ -7,7 +7,7 @@ var router = express.Router();
 
 app.get('/oi', (req, res) => res.send('Hello World!'));
 
-// Main pages
+// ----- Main pages -----
 app.get('/specification', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });
@@ -21,14 +21,22 @@ app.get('/overview', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });
 
-// Content
+// ----- Home / Why Content -----
 app.get('/math-proof', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });
-
 app.get('/massive-paralelism', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });
+
+// ----- Overview ----- NOT WORKING
+app.get('/overview/getting-started', function (req, res, next) {
+  res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
+});
+app.get('/overview/FAQ', function (req, res, next) {
+  res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
+});
+
 
 app.use(express.static(path.join(__dirname, "..", "docs"))); //Serves resources from public folder
 

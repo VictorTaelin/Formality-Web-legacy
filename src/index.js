@@ -9,15 +9,20 @@ const f = require("formality-lang");
 const s = require('./style');
 const fs = require("./font-style");
 
+// MD Resources
 const markdown = require("./markdown/test-template.md.js");
+const ovGettingStartedMD = require("./markdown/overview/1.GettingStarted.js");
 
 // Pages
 const pageHome = "home";
-const pageOverview = "overview";
 const pageWhyContent1 = "math-proof";
 const pageWhyContent2 = "massive-paralelism";
 const pageDocumentation = "documentation";
 const pageTryIt = "tryIt";
+
+const pageOverview = "overview";
+const pageOVGettingStarted = "overview/getting-started";
+const pageOVFAQ = "overview/FAQ";
 
 
 // Feature images
@@ -38,11 +43,13 @@ class Site extends Component {
   componentDidMount(){
     switch (window.location.pathname) {
       case "/"+pageHome: this.setState({page: pageHome}); break;
-      case "/"+pageOverview: this.setState({page: pageOverview}); break;
       case "/"+pageDocumentation: this.setState({page: pageDocumentation}); break;
       case "/"+pageTryIt: this.setState({page: pageTryIt});
       case "/"+pageWhyContent1: this.setState({page: pageWhyContent1}); break;
       case "/"+pageWhyContent2: this.setState({page: pageWhyContent2}); break;
+
+      case "/"+pageOverview: this.setState({page: pageOverview}); break;
+      case "/"+pageOVGettingStarted: this.setState({page: pageOVGettingStarted}); break;
     }
 
     window.onpopstate = (event) => {
@@ -57,7 +64,7 @@ class Site extends Component {
     }
   }
 
-  onChangeInternalLink(nextPage){
+  onChangeInternalLink(nextPage) {
     history.pushState({page: nextPage}, nextPage, nextPage);
     this.setState({page: nextPage});
     window.scrollTo(0, 0);
@@ -154,18 +161,7 @@ class Site extends Component {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
-          h("div", {style: {"margin-left": "100px", "margin-right": "100px", "margin-top": "60px"}}, [
-            h(ContentNavigatorContainer, {items: [
-              h(ContentNavigatorItem, {title: "LEARNING", isMainTopic: true}),
-              h(ContentNavigatorItem, {title: "Getting started"}),
-              h(ContentNavigatorItem, {title: "Examples"}),
-              h(ContentNavigatorItem, {title: "FAQ"}),
-              h(ContentNavigatorItem, {title: "CONTEXT", isMainTopic: true}),
-              h(ContentNavigatorItem, {title: "Interaction Combinators"}),
-              h(ContentNavigatorItem, {title: "Elementary Affine Calculus"}),
-              h(ContentNavigatorItem, {title: "ESCoC"}),
-            ]})
-          ])
+         h(Overview, {page: pageOverview})
         ]),
          h(FooterContainer),
       ]);
@@ -217,18 +213,86 @@ class Site extends Component {
         ]),
         h(FooterContainer),
       ]);
+    } else if (this.state.page === pageOVGettingStarted) {
+      return h("div", {"display": "flex", "justify-content": "space-between"}, [
+        topMenu,
+        h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
+         h(Overview, {page: pageOVGettingStarted})
+        ]),
+         h(FooterContainer),
+      ]);
     }
   }
 }
 
+class Overview extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {page: props.page};
+  }
+  isCurrentPage(id) {
+    return this.state.page === id;
+  }
+  render(){
+    const contentNavigator = 
+      h(ContentNavigatorContainer, {items: [
+        h(ContentNavigatorItem, {title: "LEARNING", isMainTopic: true}),
+        h(ContentNavigatorItem, {title: "Getting started", onClick: () => {
+          if (this.state.page !== pageOVGettingStarted) {
+            this.setState({ page: pageOVGettingStarted });
+            history.pushState({ page: pageOVGettingStarted }, pageOVGettingStarted, pageOVGettingStarted);
+          }
+        }, isCurrentPage: this.isCurrentPage(pageOVGettingStarted)}),
+        h(ContentNavigatorItem, {title: "Examples"}),
+        h(ContentNavigatorItem, {title: "FAQ", onClick: () => {
+          if (this.state.page !== pageOVFAQ) {
+            this.setState({ page: pageOVFAQ });
+            history.pushState({ page: pageOVFAQ }, pageOVFAQ, pageOVFAQ);
+          }
+        }, isCurrentPage: this.isCurrentPage(pageOVFAQ)}),
+        h(ContentNavigatorItem, {title: "CONTEXT", isMainTopic: true}),
+        h(ContentNavigatorItem, {title: "Interaction Combinators"}),
+        h(ContentNavigatorItem, {title: "Elementary Affine Calculus"}),
+        h(ContentNavigatorItem, {title: "ESCoC"}),
+      ]});
+
+    const contentNavigatorStyle = {
+      "margin-left": "100px", 
+      "margin-right": "100px", 
+      "margin-top": "60px",
+      "display": "flex",
+      "flex-direction": "row",
+      "justify-content": "flex-start",
+    }
+    // ------ Rendering the content of each element on content navigator ------
+    if (this.state.page === pageOverview) {
+      return h("div", {style: contentNavigatorStyle}, [
+        contentNavigator,
+        h("p", {}, "I'm the first Overview!")
+      ]);
+    } else if (this.state.page === pageOVGettingStarted) {
+      return h("div", {style: contentNavigatorStyle}, [
+        contentNavigator,
+        h(DocsMarkdownContainer, {mdResource: ovGettingStartedMD})   
+      ]);
+    } else if (this.state.page === pageOVFAQ) {
+      return h("div", {style: contentNavigatorStyle}, [
+        contentNavigator,
+        h("p", {}, "I'm FAQ")
+      ]);
+    }
+    
+  }
+}
+
+// A container to hold all elements used for the content navigation
 class ContentNavigatorContainer extends Component {
   constructor(props) {
     super(props)
     this.items = props.items;
   }
-
   render(){
-    return h("div", {style: {"width": "110px", "height": "300px"}}, this.props.items)
+    return h("div", {style: {"width": "110px", "height": "300px", "margin-right": "30px", "margin-top": "50px"}}, this.props.items)
   }
 }
 
@@ -239,24 +303,41 @@ class ContentNavigatorItem extends Component {
     this.childs = props.childs;
     this.title = props.title;
     this.isMainTopic = props.isMainTopic;
-    this.state = {isExapanded: props.isExapanded}
+    this.state = {isExpanded: props.isExpanded, isCurrentPage: props.isCurrentPage = false}
   }
   render(){
-    const normalComponent = {
+    const normalComponentStyle = {
       "font-family": "Open Sans", 
       "font-size": "14px", 
       "color": s.shadowBlue,
       "margin-bottom": "8px",
     }
+    const onFocusComponentStyle = { ...normalComponentStyle, "cursor": "pointer", "color": s.primaryColor}
+
     if (this.props.isMainTopic) {
-      return h("p", {style: {...normalComponent, "font-weight": "bold"}}, this.props.title);
+      return h("p", {style: {...normalComponentStyle, "font-weight": "bold"}}, this.props.title);
     } else {
-      return h(Hover, {normalComponent: h("p", {style: normalComponent}, this.props.title),
-      onFocusComponent: h("p", {onClick: this.onClick, style: {...normalComponent, "cursor": "pointer", "color": s.primaryColor}}, this.props.title) });
+      if (this.props.isCurrentPage) {
+        return h("p", {onClick: this.onClick, style: {...onFocusComponentStyle}}, this.props.title);
+      } else {
+        return h(Hover, {normalComponent: h("p", {style: normalComponentStyle}, this.props.title), 
+        onFocusComponent: h("p", {onClick: this.onClick, style: onFocusComponentStyle}, this.props.title)});
+      }
     }
   }
 }
 
+class DocsMarkdownContainer extends Component {
+  constructor(props){
+    super(props)
+    this.mdResource = props.mdResource;
+  }
+
+  render() {
+    return h("div", {style: {"display": "flex", "flex-direction": "column", 
+    "justify-content": "flex-start", "font-family": "Open Sans", "color": "#373530", "line-height": "1.6"}}, this.props.mdResource)
+  }
+}
 
 
 
