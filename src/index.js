@@ -108,7 +108,7 @@ class Site extends Component {
       h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "200px"}}, [
         h(Tab, {title: "Overview", isCurrentPage: this.state.page === pageOverview,
                 onClick: () => {
-                  if (this.state.page !== pageOverview) {
+                  if (!window.location.pathname.includes(pageOverview)) {
                     this.setState({page: pageOverview});
                     history.pushState({page: pageOverview}, pageOverview, pageOverview);
                   }
@@ -240,14 +240,14 @@ class Overview extends Component {
         h(ContentNavigatorItem, {title: "Getting started", onClick: () => {
           if (this.state.page !== pageOVGettingStarted) {
             this.setState({ page: pageOVGettingStarted });
-            history.pushState({ page: pageOVGettingStarted }, pageOVGettingStarted, pageOVGettingStarted);
+            history.pushState({ page: pageOVGettingStarted }, "/"+pageOVGettingStarted, "/"+pageOVGettingStarted);
           }
         }, isCurrentPage: this.isCurrentPage(pageOVGettingStarted)}),
         h(ContentNavigatorItem, {title: "Examples"}),
         h(ContentNavigatorItem, {title: "FAQ", onClick: () => {
           if (this.state.page !== pageOVFAQ) {
             this.setState({ page: pageOVFAQ });
-            history.pushState({ page: pageOVFAQ }, pageOVFAQ, pageOVFAQ);
+            history.pushState({ page: pageOVFAQ }, "/"+pageOVFAQ, "/"+pageOVFAQ);
           }
         }, isCurrentPage: this.isCurrentPage(pageOVFAQ)}),
         h(ContentNavigatorItem, {title: "CONTEXT", isMainTopic: true}),
@@ -292,7 +292,7 @@ class ContentNavigatorContainer extends Component {
     this.items = props.items;
   }
   render(){
-    return h("div", {style: {"width": "110px", "height": "300px", "margin-right": "60px", "margin-top": "50px"}}, this.props.items)
+    return h("div", {style: {"width": "140px", "height": "300px", "margin-right": "30px", "margin-top": "50px"}}, this.props.items)
   }
 }
 
@@ -319,7 +319,7 @@ class ContentNavigatorItem extends Component {
       return h("p", {style: {...normalComponentStyle, "font-weight": "bold"}}, this.props.title);
     } else {
       if (this.props.isCurrentPage) {
-        return h("p", {onClick: this.onClick, style: {...onFocusComponentStyle}}, this.props.title);
+        return h("p", {onClick: this.onClick, style: {...onFocusComponentStyle, "font-weight": "bold"}}, this.props.title);
       } else {
         return h(Hover, {normalComponent: h("p", {style: normalComponentStyle}, this.props.title), 
         onFocusComponent: h("p", {onClick: this.onClick, style: onFocusComponentStyle}, this.props.title)});
