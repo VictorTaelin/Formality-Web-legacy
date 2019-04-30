@@ -94,7 +94,12 @@ class Site extends Component {
 
     // Top menu
     var topMenu = h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
-      h(Logo),
+      h(Logo, {onClick: () => {
+        if (this.state.page !== pageHome) {
+          this.setState({page: pageHome});
+          history.pushState({page: pageHome}, pageHome, pageHome);
+        }
+      }}),
       h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
         h(Tab, {title: "Home", isCurrentPage: this.state.page === pageHome,
                 onClick: () => {
