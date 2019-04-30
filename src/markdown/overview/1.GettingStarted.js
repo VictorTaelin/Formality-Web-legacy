@@ -3,7 +3,7 @@ module.exports = [
 [
   h('h1', {style: {'margin-top': '20px'}}, 
     [
-      "Get started or try our online editor"
+      "Get started"
     ]
   ),
   h('p', 

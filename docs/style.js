@@ -58,20 +58,6 @@ const topContainer = {
   "background-image": "url(src/images/formality-bg-2.jpg)",
 }
 
-const tryItButton = {
-  "width": "100px",
-  "height": "100px",
-  "background-color": secondaryColor, 
-  "border-color": primaryColor,
-  "color": "white", 
-  "padding": "20px",
-  "text-align": "center",
-  "display": "inline-block", 
-  "font-size": "32px", 
-  "margin": "4px 2px",
-  "cursor": "pointer"
-}
-
 const usageContainer = {
   ...bigContainer,
   "background-image": "url(src/images/usageBg2.png)",
@@ -94,33 +80,12 @@ const usageCodeContainer = {
 const pageContentMD = {
   "font-family": 'Open Sans', 
   "color": "#373530", 
-  "margin-left": "100px", 
-  "margin-right": "100px", 
+  "margin-left": "200px", 
+  "margin-right": "200px", 
   "margin-top": "20px", 
   "line-height": "1.6",
 }
 
-const footerContainer = {
-  "display": "flex",
-  "margin-top": "20px",
-  "margin-left": "100px",
-  "font-size": "13px",
-  "font-family": "Open Sans",
-  "color": primaryColor,
-  "flex-direction": "row",
-  "justify-content": "space-between",
-  "background-color": secondaryColor,
-  "height": "100px",
-  "width": "600px",
-}
-
-const githubIcon = {
-  "width" : "20px",
-  "height" : "20px",
-  "margin-top" : "5px", 
-  "cursor": "pointer"
-}
-
 export { formalityTitleContainer, primaryColor, secondaryColor, shadowBlue, linkColor, tabs, tabsOnFocus, 
-        topContainer, tryItButton, usageContainer, pageContentMD,
-        footerContainer, usageCodeContainer, githubIcon };
+        topContainer, usageContainer, pageContentMD,
+         usageCodeContainer };

@@ -105,7 +105,7 @@ class Site extends Component {
           history.pushState({page: pageHome}, pageHome, pageHome);
         }
       }}),
-      h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
+      h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "200px"}}, [
         h(Tab, {title: "Overview", isCurrentPage: this.state.page === pageOverview,
                 onClick: () => {
                   if (this.state.page !== pageOverview) {
@@ -184,9 +184,7 @@ class Site extends Component {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
-          h("div ", {style: s.pageContentMD}, [
             h(TryIt)
-          ]),
         ]),
         h(FooterContainer),
       ]);
@@ -225,6 +223,7 @@ class Site extends Component {
   }
 }
 
+// ==================== Overview page ====================
 class Overview extends Component {
   constructor(props) {
     super(props)
@@ -233,6 +232,7 @@ class Overview extends Component {
   isCurrentPage(id) {
     return this.state.page === id;
   }
+
   render(){
     const contentNavigator = 
       h(ContentNavigatorContainer, {items: [
@@ -257,14 +257,14 @@ class Overview extends Component {
       ]});
 
     const contentNavigatorStyle = {
-      "margin-left": "100px", 
-      "margin-right": "100px", 
+      "margin-left": "200px", 
+      "margin-right": "200px", 
       "margin-top": "60px",
       "display": "flex",
       "flex-direction": "row",
       "justify-content": "flex-start",
     }
-    // ------ Rendering the content of each element on content navigator ------
+    // ------ Rendering the content for each element on Content Navigator ------
     if (this.state.page === pageOverview) {
       return h("div", {style: contentNavigatorStyle}, [
         contentNavigator,
@@ -292,10 +292,11 @@ class ContentNavigatorContainer extends Component {
     this.items = props.items;
   }
   render(){
-    return h("div", {style: {"width": "110px", "height": "300px", "margin-right": "30px", "margin-top": "50px"}}, this.props.items)
+    return h("div", {style: {"width": "110px", "height": "300px", "margin-right": "60px", "margin-top": "50px"}}, this.props.items)
   }
 }
 
+// A navigation item has a Content Title and load the text correspondent to that subject
 class ContentNavigatorItem extends Component {
   constructor(props) {
     super(props)
@@ -327,6 +328,7 @@ class ContentNavigatorItem extends Component {
   }
 }
 
+// A markdown container to be used with the ContentNavigatorContainer structure
 class DocsMarkdownContainer extends Component {
   constructor(props){
     super(props)
@@ -334,11 +336,11 @@ class DocsMarkdownContainer extends Component {
   }
 
   render() {
-    return h("div", {style: {"display": "flex", "flex-direction": "column", 
+    return h("div", {style: {"display": "flex", "flex-direction": "column",
     "justify-content": "flex-start", "font-family": "Open Sans", "color": "#373530", "line-height": "1.6"}}, this.props.mdResource)
   }
 }
-
+// ========================================================
 
 
 class Logo extends Component {
@@ -351,7 +353,7 @@ class Logo extends Component {
     const logoStyle = {
       "width" : "45px",
       "height" : "40px",
-      "margin-left" : "100px",
+      "margin-left" : "200px",
       "margin-top" : "10px", 
       "margin-bottom" : "10px",
       "cursor": "pointer"
@@ -646,6 +648,10 @@ class TryIt extends Component {
       "justify-content": "flex-start",
       "align-items": "flex-start",
       "height": "700px",
+      "margin-right": "200px",
+      "margin-left": "200px",
+      "font-family": "Open Sans",
+      "color": "#373530"
     }
 
     const title = {
@@ -900,8 +906,28 @@ class Footer extends Component {
   }
 
   render() {
+    const footerContainer = {
+      "display": "flex",
+      "margin-top": "20px",
+      "margin-left": "200px",
+      "font-size": "13px",
+      "font-family": "Open Sans",
+      "color": s.primaryColor,
+      "flex-direction": "row",
+      "justify-content": "space-between",
+      "background-color": s.secondaryColor,
+      "height": "100px",
+      "width": "600px",
+    }
 
-    return h("div", {style: s.footerContainer}, [
+    const githubIcon = {
+      "width" : "20px",
+      "height" : "20px",
+      "margin-top" : "5px", 
+      "cursor": "pointer"
+    }
+
+    return h("div", {style: footerContainer}, [
       h("div", {}, [
         h("p", {}, "Talk to us "),
         h("p", {}, "(soon...) "),
@@ -909,7 +935,7 @@ class Footer extends Component {
       h("div", {}, [
         h("p", {}, "Community"),
         h('span', {}, [
-          h('a', {'href': 'https://github.com/moonad/Formality', 'text-decoration': 'none',}, h("img", {src: githubLogo, alt: "logo", style: s.githubIcon}),),
+          h('a', {'href': 'https://github.com/moonad/Formality', 'text-decoration': 'none',}, h("img", {src: githubLogo, alt: "logo", style: githubIcon}),),
         ])
       ]),
       h('div', {style: {'flex-direction': 'column'}}, [
