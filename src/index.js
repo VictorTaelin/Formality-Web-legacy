@@ -13,6 +13,7 @@ const markdown = require("./markdown/test-template.md.js");
 
 // Pages
 const pageHome = "home";
+const pageOverview = "overview";
 const pageWhyContent1 = "math-proof";
 const pageWhyContent2 = "massive-paralelism";
 const pageDocumentation = "documentation";
@@ -35,16 +36,13 @@ class Site extends Component {
   }
 
   componentDidMount(){
-    if (window.location.pathname === "/"+pageHome) {
-      this.setState({page: pageHome});
-    } else if (window.location.pathname === "/"+pageDocumentation) {
-      this.setState({page: pageDocumentation});
-    } else if (window.location.pathname === "/"+pageTryIt) {
-      this.setState({page: pageTryIt});
-    } else if (window.location.pathname === "/"+pageWhyContent1) {
-      this.setState({page: pageWhyContent1});
-    } else if (window.location.pathname === "/"+pageWhyContent2) {
-      this.setState({page: pageWhyContent2});
+    switch (window.location.pathname) {
+      case "/"+pageHome: this.setState({page: pageHome}); break;
+      case "/"+pageOverview: this.setState({page: pageOverview}); break;
+      case "/"+pageDocumentation: this.setState({page: pageDocumentation}); break;
+      case "/"+pageTryIt: this.setState({page: pageTryIt});
+      case "/"+pageWhyContent1: this.setState({page: pageWhyContent1}); break;
+      case "/"+pageWhyContent2: this.setState({page: pageWhyContent2}); break;
     }
 
     window.onpopstate = (event) => {
@@ -54,7 +52,7 @@ class Site extends Component {
           this.setState({page: prevPage});
         }
       } else { // go Home
-        this.setState({page: "home"});
+        this.setState({page: pageHome});
       }
     }
   }
@@ -101,11 +99,11 @@ class Site extends Component {
         }
       }}),
       h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "90px"}}, [
-        h(Tab, {title: "Home", isCurrentPage: this.state.page === pageHome,
+        h(Tab, {title: "Overview", isCurrentPage: this.state.page === pageOverview,
                 onClick: () => {
-                  if (this.state.page !== pageHome) {
-                    this.setState({page: pageHome});
-                    history.pushState({page: pageHome}, pageHome, pageHome);
+                  if (this.state.page !== pageOverview) {
+                    this.setState({page: pageOverview});
+                    history.pushState({page: pageOverview}, pageOverview, pageOverview);
                   }
                 }
               }),
@@ -150,6 +148,28 @@ class Site extends Component {
         h(Usage,{}),
         h(Footer, {})
       ]);
+
+    // ============= Overview Page =============
+    } else if (this.state.page === pageOverview) {
+      return h("div", {"display": "flex", "justify-content": "space-between"}, [
+        topMenu,
+        h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
+          h("div", {style: {"margin-left": "100px", "margin-right": "100px", "margin-top": "60px"}}, [
+            h(ContentNavigatorContainer, {items: [
+              h(ContentNavigatorItem, {title: "LEARNING", isMainTopic: true}),
+              h(ContentNavigatorItem, {title: "Getting started"}),
+              h(ContentNavigatorItem, {title: "Examples"}),
+              h(ContentNavigatorItem, {title: "FAQ"}),
+              h(ContentNavigatorItem, {title: "CONTEXT", isMainTopic: true}),
+              h(ContentNavigatorItem, {title: "Interaction Combinators"}),
+              h(ContentNavigatorItem, {title: "Elementary Affine Calculus"}),
+              h(ContentNavigatorItem, {title: "ESCoC"}),
+            ]})
+          ])
+        ]),
+         h(FooterContainer),
+      ]);
+
 
     // ============= Documentation Page =============
     } else if (this.state.page === pageDocumentation) {
@@ -200,6 +220,45 @@ class Site extends Component {
     }
   }
 }
+
+class ContentNavigatorContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.items = props.items;
+  }
+
+  render(){
+    return h("div", {style: {"width": "110px", "height": "300px"}}, this.props.items)
+  }
+}
+
+class ContentNavigatorItem extends Component {
+  constructor(props) {
+    super(props)
+    this.onClick = props.onClick;
+    this.childs = props.childs;
+    this.title = props.title;
+    this.isMainTopic = props.isMainTopic;
+    this.state = {isExapanded: props.isExapanded}
+  }
+  render(){
+    const normalComponent = {
+      "font-family": "Open Sans", 
+      "font-size": "14px", 
+      "color": s.shadowBlue,
+      "margin-bottom": "8px",
+    }
+    if (this.props.isMainTopic) {
+      return h("p", {style: {...normalComponent, "font-weight": "bold"}}, this.props.title);
+    } else {
+      return h(Hover, {normalComponent: h("p", {style: normalComponent}, this.props.title),
+      onFocusComponent: h("p", {onClick: this.onClick, style: {...normalComponent, "cursor": "pointer", "color": s.primaryColor}}, this.props.title) });
+    }
+  }
+}
+
+
+
 
 class Logo extends Component {
   constructor(props) {

@@ -7,18 +7,21 @@ var router = express.Router();
 
 app.get('/oi', (req, res) => res.send('Hello World!'));
 
+// Main pages
 app.get('/specification', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });
-
 app.get('/home', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });
-
 app.get('/tryIt', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });
+app.get('/overview', function (req, res, next) {
+  res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
+});
 
+// Content
 app.get('/math-proof', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });

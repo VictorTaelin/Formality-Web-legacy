@@ -1,5 +1,6 @@
 const primaryColor = "#444053";
 const secondaryColor = "#ffffff";
+const shadowBlue = "#8091A5";
 const linkColor = "#68c3d4";
 
 import headerBg from './images/formality-bg-2.jpg';
@@ -120,6 +121,6 @@ const githubIcon = {
   "cursor": "pointer"
 }
 
-export { formalityTitleContainer, primaryColor, secondaryColor, linkColor, tabs, tabsOnFocus, 
+export { formalityTitleContainer, primaryColor, secondaryColor, shadowBlue, linkColor, tabs, tabsOnFocus, 
         topContainer, tryItButton, usageContainer, pageContentMD,
         footerContainer, usageCodeContainer, githubIcon };
