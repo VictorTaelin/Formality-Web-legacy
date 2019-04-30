@@ -12,6 +12,7 @@ const fs = require("./font-style");
 // MD Resources
 const markdown = require("./markdown/test-template.md.js");
 const ovGettingStartedMD = require("./markdown/overview/1.GettingStarted.js");
+const ovFAQMD = require("./markdown/overview/3.FAQ.js");
 
 // Pages
 const pageHome = "home";
@@ -160,7 +161,7 @@ class Site extends Component {
     } else if (this.state.page === pageOverview) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
-        h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
+        h("div", {style: {"min-height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center", "margin-bottom": "60px"}}, [
          h(Overview, {page: pageOverview})
         ]),
          h(FooterContainer),
@@ -214,7 +215,7 @@ class Site extends Component {
     } else if (this.state.page === pageOVGettingStarted) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
-        h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
+        h("div", {style: {"min-height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center"}}, [
          h(Overview, {page: pageOVGettingStarted})
         ]),
          h(FooterContainer),
@@ -278,7 +279,7 @@ class Overview extends Component {
     } else if (this.state.page === pageOVFAQ) {
       return h("div", {style: contentNavigatorStyle}, [
         contentNavigator,
-        h("p", {}, "I'm FAQ")
+        h(DocsMarkdownContainer, {mdResource: ovFAQMD})
       ]);
     }
     
