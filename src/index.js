@@ -117,9 +117,9 @@ class Site extends Component {
               }),
         h(Tab, {title: "Documentation", isCurrentPage: this.state.page === pageDocumentation,
                 onClick: () => {
-                  if (this.state.page !== pageDocumentation) {
+                  if (!window.location.pathname.includes(pageDocumentation)) {
                     this.setState({page: pageDocumentation});
-                    history.pushState({page: pageDocumentation}, pageDocumentation, pageDocumentation);
+                    history.pushState({page: pageDocumentation}, "/"+pageDocumentation, "/"+pageDocumentation);
                   }
                 }
               }),
@@ -127,7 +127,7 @@ class Site extends Component {
                 onClick: () => {
                     if (this.state.page !== pageTryIt) {
                       this.setState({page: pageTryIt});
-                      history.pushState({page: pageTryIt}, pageTryIt, pageTryIt);
+                      history.pushState({page: pageTryIt}, "/"+pageTryIt, "/"+pageTryIt);
                     }
                 }
               })
