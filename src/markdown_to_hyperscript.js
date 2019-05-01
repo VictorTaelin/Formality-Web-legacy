@@ -4,6 +4,8 @@ var md2json = require("simple-markdown").defaultBlockParse;
 const file_path = "./markdown/overview/2.Examples";
 var mdFile = fs.readFileSync(file_path+'.md', 'utf8');
 
+const codeBGColor = "#F6F8FA"
+
 /**
  *  TODO
  * - blockquote (não funcionando apropriadamente)
@@ -98,10 +100,10 @@ const json2h = (node) => {
           break;
 
         case "codeBlock":
-          line(lv, "h('pre', {style: {'margin-top': '20px', 'margin-bottom': '20px', 'background-color': '#F6F8FA', 'padding': '15px'}}, [");
-          line(lv+1, "h('code.bash', {style: {'font-size': '15px'}}, `");
+          line(lv, "h('pre', {style: {'margin-top': '10px', 'margin-bottom': '10px', 'padding': '20px', 'background-color': '"+codeBGColor+"'}}, [");
+          line(lv+1, "h('code.bash', {style: {'font-size': '15px'}}, ");
           line(lv+2, JSON.stringify(node.content));
-          line(lv+1, "`)");
+          line(lv+1, ")");
           line(lv, "])");
           break;
 
@@ -124,7 +126,7 @@ const json2h = (node) => {
           break;
 
         case "inlineCode":
-          line(lv, "h('code', {style: {'font-size': '15px'}},`"+node.content+"`)");
+          line(lv, "h('code', {style: {'font-size': '15px', 'background-color': '"+codeBGColor+"'}}, `"+node.content+"`)");
           break;
 
         case "hr":
@@ -188,10 +190,11 @@ const json2h = (node) => {
 // console.log(markdown);
 // console.log("");
 
-// console.log(":: JSON\n");
-// console.log(JSON.stringify(md2json(mdFile), null, 2));
-// console.log("");
+console.log(":: JSON\n");
+console.log(JSON.stringify(md2json(mdFile), null, 2));
+console.log("");
 
+//  ------ Hyperscript formatat
 // json2h(md2json(mdFile), null, 2);
 // console.log("---------------------- OUTPUT");
 // console.log(json2h(md2json(mdFile), null, 2));
