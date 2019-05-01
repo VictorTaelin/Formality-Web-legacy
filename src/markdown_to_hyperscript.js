@@ -42,7 +42,7 @@ const json2h = (node) => {
           break;
 
         case "paragraph":
-          line(lv, "h('p', ");
+          line(lv, "h('p', {style: {'margin-top': '5px'}}, ");
           
           // var auxTitle = 1;
           // var content = "";
@@ -76,11 +76,11 @@ const json2h = (node) => {
 
         case "heading":
           if (node.level === 1) {
-            line(lv, "h('h1', {style: {'margin-top': '20px'}}, ");
+            line(lv, "h('h1', {style: {'margin-top': '25px'}}, ");
           } else if (node.level === 2) {
-            line(lv, "h('h2', {style: {'margin-top': '15px'}}, ");
+            line(lv, "h('h2', {style: {'margin-top': '20px'}}, ");
           } else {
-            line(lv, "h('h3', {style: {'margin-top': '10px'}}, ");
+            line(lv, "h('h3', {style: {'margin-top': '15px'}}, ");
           }
           make(lv + 1, node.content);
           line(lv, ")");
@@ -89,7 +89,7 @@ const json2h = (node) => {
         case "list":
           line(lv, "h(" + (node.ordered ? "'ol'" : "'ul'") + ", {style: {'margin-left': '23px'}}, [");
           for (var i = 0; i < node.items.length; ++i) {
-            line(lv+1, "h('li', ");
+            line(lv+1, "h('li', {style: {'margin-top': '7px'}}, ");
             make(lv+2, node.items[i]);
             line(lv+1, ")");
             text(",");
@@ -198,7 +198,11 @@ const json2h = (node) => {
 
 const requiredCode = `const h = require('inferno-hyperscript').h;
 module.exports = `
-// console.log(":>>>>>>>>>>>>>>  HYPERSCRIPT\n");
-console.log(requiredCode);
-console.log(json2h(md2json(mdFile), null, 2));
-fs.writeFile(file_path+".js", requiredCode + json2h(md2json(mdFile), null, 2), () => {});
+
+// console.log(requiredCode);
+// console.log(json2h(md2json(mdFile), null, 2));
+fs.writeFile(file_path+".js", requiredCode + json2h(md2json(mdFile), null, 2), (err) => { 
+  if (err) throw err;
+  
+  console.log(">>  "+file_path+".js created or updated ");
+ });

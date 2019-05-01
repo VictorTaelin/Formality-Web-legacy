@@ -293,7 +293,7 @@ class ContentNavigatorContainer extends Component {
     this.items = props.items;
   }
   render(){
-    return h("div", {style: {"width": "140px", "height": "300px", "margin-right": "30px", "margin-top": "50px"}}, this.props.items)
+    return h("div", {style: {"width": "150px", "height": "300px", "margin-right": "40px", "margin-top": "50px"}}, this.props.items)
   }
 }
 
@@ -312,7 +312,7 @@ class ContentNavigatorItem extends Component {
       "font-family": "Open Sans", 
       "font-size": "14px", 
       "color": s.shadowBlue,
-      "margin-bottom": "8px",
+      "margin-bottom": "10px",
     }
     const onFocusComponentStyle = { ...normalComponentStyle, "cursor": "pointer", "color": s.primaryColor}
 
@@ -337,7 +337,7 @@ class DocsMarkdownContainer extends Component {
   }
 
   render() {
-    return h("div", {style: {"display": "flex", "flex-direction": "column",
+    return h("div", {style: {"display": "flex", "flex-direction": "column", "width": "900px",
     "justify-content": "flex-start", "font-family": "Open Sans", "color": "#373530", "line-height": "1.6"}}, this.props.mdResource)
   }
 }

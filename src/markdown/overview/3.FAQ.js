@@ -1,12 +1,12 @@
 const h = require('inferno-hyperscript').h;
 module.exports = 
 [
-  h('h1', {style: {'margin-top': '20px'}}, 
+  h('h1', {style: {'margin-top': '25px'}}, 
     [
       "FAQ"
     ]
   ),
-  h('h3', {style: {'margin-top': '10px'}}, 
+  h('h3', {style: {'margin-top': '15px'}}, 
     [
       h('b', 
         [
@@ -16,7 +16,7 @@ module.exports =
       )
     ]
   ),
-  h('p', 
+  h('p', {style: {'margin-top': '5px'}}, 
     [
       "Formality aims to to be both a general",
       "-purpose programming language",
@@ -33,7 +33,7 @@ module.exports =
       "."
     ]
   ),
-  h('h3', {style: {'margin-top': '10px'}}, 
+  h('h3', {style: {'margin-top': '15px'}}, 
     [
       h('b', 
         [
@@ -44,7 +44,7 @@ module.exports =
       )
     ]
   ),
-  h('p', 
+  h('p', {style: {'margin-top': '5px'}}, 
     [
       "Formality has two main differences due to its planned usage in the context of Smart",
       "-Contracts",
@@ -52,7 +52,7 @@ module.exports =
     ]
   ),
   h('ol', {style: {'margin-left': '23px'}}, [
-    h('li', 
+    h('li', {style: {'margin-top': '7px'}}, 
       [
         "It aims to be not just a single implementation",
         ", but also a well",
@@ -77,7 +77,7 @@ module.exports =
         "."
       ]
     ),
-    h('li', 
+    h('li', {style: {'margin-top': '7px'}}, 
       [
         "It is built from the beginning with efficiency as a priority",
         ". That means it includes a series of restrictions that make it more compatible with NASIC and",
@@ -95,7 +95,7 @@ module.exports =
       ]
     ),
   ]),
-  h('h3', {style: {'margin-top': '10px'}}, 
+  h('h3', {style: {'margin-top': '15px'}}, 
     [
       h('b', 
         [
@@ -105,7 +105,7 @@ module.exports =
       )
     ]
   ),
-  h('p', 
+  h('p', {style: {'margin-top': '5px'}}, 
     [
       "NASIC is short for N",
       "-Ary Symmetric Interaction Combinators",
@@ -119,14 +119,14 @@ module.exports =
     ]
   ),
   h('ol', {style: {'margin-left': '23px'}}, [
-    h('li', 
+    h('li', {style: {'margin-top': '7px'}}, 
       [
         "It is inherently parallel",
         ", meaning you can reduce NASIC graphics in massively parallel architectures like the GPU",
         "."
       ]
     ),
-    h('li', 
+    h('li', {style: {'margin-top': '7px'}}, 
       [
         "It is strongly confluent",
         ", which gives us a very clear cost model for use",
@@ -134,7 +134,7 @@ module.exports =
         "."
       ]
     ),
-    h('li', 
+    h('li', {style: {'margin-top': '7px'}}, 
       [
         "It can be used to implement optimal reductions for the λ",
         "-calculus",
@@ -142,7 +142,7 @@ module.exports =
       ]
     ),
   ]),
-  h('p', 
+  h('p', {style: {'margin-top': '5px'}}, 
     [
       "NASIC is based on ",
       h('a', {href: 'https://pdfs.semanticscholar.org/1731/a6e49c6c2afda3e72256ba0afb34957377d3.pdf', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
@@ -155,7 +155,7 @@ module.exports =
     ]
   ),
   h('ol', {style: {'margin-left': '23px'}}, [
-    h('li', 
+    h('li', {style: {'margin-top': '7px'}}, 
       [
         "Instead of only two node ",
         "\"labels",
@@ -172,7 +172,7 @@ module.exports =
         "."
       ]
     ),
-    h('li', 
+    h('li', {style: {'margin-top': '7px'}}, 
       [
         "For simplicity",
         ", there isn",
@@ -184,7 +184,7 @@ module.exports =
       ]
     ),
   ]),
-  h('h3', {style: {'margin-top': '10px'}}, 
+  h('h3', {style: {'margin-top': '15px'}}, 
     [
       h('b', 
         [
@@ -194,7 +194,7 @@ module.exports =
       )
     ]
   ),
-  h('p', 
+  h('p', {style: {'margin-top': '5px'}}, 
     [
       "Cedille is a language invented by Aaron Stump that shares similar goals to Formality",
       ", in special minimalism",
@@ -241,7 +241,7 @@ module.exports =
       "."
     ]
   ),
-  h('h3', {style: {'margin-top': '10px'}}, 
+  h('h3', {style: {'margin-top': '15px'}}, 
     [
       h('b', 
         [
@@ -252,7 +252,7 @@ module.exports =
       )
     ]
   ),
-  h('p', 
+  h('p', {style: {'margin-top': '5px'}}, 
     [
       "Because",
       ", unlike Cedille and Coq",
@@ -273,7 +273,7 @@ module.exports =
       "."
     ]
   ),
-  h('h3', {style: {'margin-top': '10px'}}, 
+  h('h3', {style: {'margin-top': '15px'}}, 
     [
       h('b', 
         [
@@ -283,7 +283,7 @@ module.exports =
       )
     ]
   ),
-  h('p', 
+  h('p', {style: {'margin-top': '5px'}}, 
     [
       "In order to derive inductive datatypes so succinctly",
       ", Formality must feature mutually recursive definitions",
