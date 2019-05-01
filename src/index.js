@@ -24,6 +24,7 @@ const pageTryIt = "tryIt";
 const pageOverview = "overview";
 const pageOVGettingStarted = "overview/getting-started";
 const pageOVFAQ = "overview/FAQ";
+// TODO: add the other pages (Interaction Combinators, EAC, etc)
 
 
 // Feature images
@@ -51,6 +52,7 @@ class Site extends Component {
 
       case "/"+pageOverview: this.setState({page: pageOverview}); break;
       case "/"+pageOVGettingStarted: this.setState({page: pageOVGettingStarted}); break;
+      // TODO: add the other pages (Interaction Combinators, EAC, etc)
     }
 
     window.onpopstate = (event) => {
@@ -98,26 +100,27 @@ class Site extends Component {
       "margin-bottom": "30px"
     }
 
+    const genericContentContainer = { "min-height": "1000px", "flex-direction": "column", "margin-bottom": "60px"}
     // Top menu
     var topMenu = h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
       h(Logo, {onClick: () => {
         if (this.state.page !== pageHome) {
           this.setState({page: pageHome});
-          history.pushState({page: pageHome}, pageHome, pageHome);
+          history.pushState({page: pageHome}, "/"+pageHome, "/"+pageHome);
         }
       }}),
       h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "200px"}}, [
         h(Tab, {title: "Overview", isCurrentPage: this.state.page === pageOverview,
                 onClick: () => {
-                  if (!window.location.pathname.includes(pageOverview)) {
+                  if (this.state.page !== pageOverview) {
                     this.setState({page: pageOverview});
-                    history.pushState({page: pageOverview}, pageOverview, pageOverview);
+                    history.pushState({page: pageOverview}, "/"+pageOverview, "/"+pageOverview);
                   }
                 }
               }),
         h(Tab, {title: "Documentation", isCurrentPage: this.state.page === pageDocumentation,
                 onClick: () => {
-                  if (!window.location.pathname.includes(pageDocumentation)) {
+                  if (this.state.page !== pageDocumentation) {
                     this.setState({page: pageDocumentation});
                     history.pushState({page: pageDocumentation}, "/"+pageDocumentation, "/"+pageDocumentation);
                   }
@@ -161,7 +164,7 @@ class Site extends Component {
     } else if (this.state.page === pageOverview) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
-        h("div", {style: {"min-height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center", "margin-bottom": "60px"}}, [
+        h("div", {style: genericContentContainer}, [
          h(Overview, {page: pageOverview})
         ]),
          h(FooterContainer),
@@ -172,11 +175,9 @@ class Site extends Component {
     } else if (this.state.page === pageDocumentation) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
-        h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
-          h("div ", {style: s.pageContentMD}, [
-            markdown
-          ]),
-        ]),
+        h("div", {style: genericContentContainer}, [
+          h(Documentation, {page: pageDocumentation})
+         ]),
          h(FooterContainer),
       ]);
 
@@ -215,7 +216,7 @@ class Site extends Component {
     } else if (this.state.page === pageOVGettingStarted) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
-        h("div", {style: {"min-height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center"}}, [
+        h("div", {style: genericContentContainer}, [
          h(Overview, {page: pageOVGettingStarted})
         ]),
          h(FooterContainer),
@@ -224,37 +225,33 @@ class Site extends Component {
   }
 }
 
-// ==================== Overview page ====================
-class Overview extends Component {
-  constructor(props) {
+class Documentation extends Component {
+  constructor(props){
     super(props)
     this.state = {page: props.page};
   }
   isCurrentPage(id) {
     return this.state.page === id;
   }
-
   render(){
     const contentNavigator = 
       h(ContentNavigatorContainer, {items: [
-        h(ContentNavigatorItem, {title: "LEARNING", isMainTopic: true}),
-        h(ContentNavigatorItem, {title: "Getting started", onClick: () => {
-          if (this.state.page !== pageOVGettingStarted) {
-            this.setState({ page: pageOVGettingStarted });
-            history.pushState({ page: pageOVGettingStarted }, "/"+pageOVGettingStarted, "/"+pageOVGettingStarted);
+        h(ContentNavigatorItem, {title: "LEARN THE LANGUAGE", isMainTopic: true}),
+        h(ContentNavigatorItem, {title: "Syntax", onClick: () => {
+          if (this.state.page !== "") {
+            // this.setState({ page: pageOVGettingStarted });
+            // history.pushState({ page: pageOVGettingStarted }, "/"+pageOVGettingStarted, "/"+pageOVGettingStarted);
           }
         }, isCurrentPage: this.isCurrentPage(pageOVGettingStarted)}),
-        h(ContentNavigatorItem, {title: "Examples"}),
-        h(ContentNavigatorItem, {title: "FAQ", onClick: () => {
-          if (this.state.page !== pageOVFAQ) {
-            this.setState({ page: pageOVFAQ });
-            history.pushState({ page: pageOVFAQ }, "/"+pageOVFAQ, "/"+pageOVFAQ);
+        h(ContentNavigatorItem, {title: "Functions"}),
+        h(ContentNavigatorItem, {title: "Erasure to EAC", onClick: () => {
+          if (this.state.page !== "") {
+            // this.setState({ page: pageOVFAQ });
+            // history.pushState({ page: pageOVFAQ }, "/"+pageOVFAQ, "/"+pageOVFAQ);
           }
         }, isCurrentPage: this.isCurrentPage(pageOVFAQ)}),
-        h(ContentNavigatorItem, {title: "CONTEXT", isMainTopic: true}),
-        h(ContentNavigatorItem, {title: "Interaction Combinators"}),
-        h(ContentNavigatorItem, {title: "Elementary Affine Calculus"}),
-        h(ContentNavigatorItem, {title: "ESCoC"}),
+        h(ContentNavigatorItem, {title: "Reduction Rules"}),
+        h(ContentNavigatorItem, {title: "Typing rules"}),
       ]});
 
     const contentNavigatorStyle = {
@@ -265,84 +262,15 @@ class Overview extends Component {
       "flex-direction": "row",
       "justify-content": "flex-start",
     }
-    // ------ Rendering the content for each element on Content Navigator ------
-    if (this.state.page === pageOverview) {
-      return h("div", {style: contentNavigatorStyle}, [
-        contentNavigator,
-        h("p", {}, "I'm the first Overview!")
-      ]);
-    } else if (this.state.page === pageOVGettingStarted) {
-      return h("div", {style: contentNavigatorStyle}, [
-        contentNavigator,
-        h(DocsMarkdownContainer, {mdResource: ovGettingStartedMD})   
-      ]);
-    } else if (this.state.page === pageOVFAQ) {
-      return h("div", {style: contentNavigatorStyle}, [
-        contentNavigator,
-        h(DocsMarkdownContainer, {mdResource: ovFAQMD})
-      ]);
-    }
-    
+    return h("div", {style: contentNavigatorStyle}, [
+      contentNavigator,
+      h(DocsMarkdownContainer, {mdResource: markdown})   
+    ]);
   }
 }
 
-// A container to hold all elements used for the content navigation
-class ContentNavigatorContainer extends Component {
-  constructor(props) {
-    super(props)
-    this.items = props.items;
-  }
-  render(){
-    return h("div", {style: {"width": "150px", "height": "300px", "margin-right": "40px", "margin-top": "50px"}}, this.props.items)
-  }
-}
 
-// A navigation item has a Content Title and load the text correspondent to that subject
-class ContentNavigatorItem extends Component {
-  constructor(props) {
-    super(props)
-    this.onClick = props.onClick;
-    this.childs = props.childs;
-    this.title = props.title;
-    this.isMainTopic = props.isMainTopic;
-    this.state = {isExpanded: props.isExpanded, isCurrentPage: props.isCurrentPage = false}
-  }
-  render(){
-    const normalComponentStyle = {
-      "font-family": "Open Sans", 
-      "font-size": "14px", 
-      "color": s.shadowBlue,
-      "margin-bottom": "10px",
-    }
-    const onFocusComponentStyle = { ...normalComponentStyle, "cursor": "pointer", "color": s.primaryColor}
-
-    if (this.props.isMainTopic) {
-      return h("p", {style: {...normalComponentStyle, "font-weight": "bold"}}, this.props.title);
-    } else {
-      if (this.props.isCurrentPage) {
-        return h("p", {onClick: this.onClick, style: {...onFocusComponentStyle, "font-weight": "bold"}}, this.props.title);
-      } else {
-        return h(Hover, {normalComponent: h("p", {style: normalComponentStyle}, this.props.title), 
-        onFocusComponent: h("p", {onClick: this.onClick, style: onFocusComponentStyle}, this.props.title)});
-      }
-    }
-  }
-}
-
-// A markdown container to be used with the ContentNavigatorContainer structure
-class DocsMarkdownContainer extends Component {
-  constructor(props){
-    super(props)
-    this.mdResource = props.mdResource;
-  }
-
-  render() {
-    return h("div", {style: {"display": "flex", "flex-direction": "column", "width": "900px",
-    "justify-content": "flex-start", "font-family": "Open Sans", "color": "#373530", "line-height": "1.6"}}, this.props.mdResource)
-  }
-}
-// ========================================================
-
+// ============= Auxiliars =============
 
 class Logo extends Component {
   constructor(props) {
@@ -363,7 +291,6 @@ class Logo extends Component {
   }
 }
 
-// ------ Auxiliars ----
 class Tab extends Component {
   constructor(props) {
     super(props)
@@ -476,14 +403,77 @@ class InternalLink extends Component {
     super(props)
     this.onClick = props.onClick;
     this.title = props.title;
+    this.color = props.color;
   }
 
   render(){
-    return h("span", {style: {"cursor": "pointer", "color": "#68c3d4"}, onClick: this.onClick}, this.title);
+    if (this.props.color) {
+      return h("span", {style: {"cursor": "pointer", "color": this.props.color}, onClick: this.onClick}, this.title);
+    } else {
+      return h("span", {style: {"cursor": "pointer", "color": "#68c3d4"}, onClick: this.onClick}, this.title);
+    }
+    
   }
 }
 
-// -------------------
+// ------------ Content -------------
+// A container to hold all elements used for the content navigation
+class ContentNavigatorContainer extends Component {
+  constructor(props) {
+    super(props)
+    this.items = props.items;
+  }
+  render(){
+    return h("div", {style: {"width": "150px", "height": "300px", "margin-right": "40px", "margin-top": "50px"}}, this.props.items)
+  }
+}
+
+// A navigation item has a Content Title and load the text correspondent to that subject
+class ContentNavigatorItem extends Component {
+  constructor(props) {
+    super(props)
+    this.onClick = props.onClick;
+    this.childs = props.childs;
+    this.title = props.title;
+    this.isMainTopic = props.isMainTopic;
+    this.state = {isExpanded: props.isExpanded, isCurrentPage: props.isCurrentPage = false}
+  }
+  render(){
+    const normalComponentStyle = {
+      "font-family": "Open Sans", 
+      "font-size": "14px", 
+      "color": s.shadowBlue,
+      "margin-bottom": "10px",
+    }
+    const onFocusComponentStyle = { ...normalComponentStyle, "cursor": "pointer", "color": s.primaryColor}
+
+    if (this.props.isMainTopic) {
+      return h("p", {style: {...normalComponentStyle, "font-weight": "bold"}}, this.props.title);
+    } else {
+      if (this.props.isCurrentPage) {
+        return h("p", {onClick: this.onClick, style: {...onFocusComponentStyle, "font-weight": "bold"}}, this.props.title);
+      } else {
+        return h(Hover, {normalComponent: h("p", {style: normalComponentStyle}, this.props.title), 
+        onFocusComponent: h("p", {onClick: this.onClick, style: onFocusComponentStyle}, this.props.title)});
+      }
+    }
+  }
+}
+
+// A markdown container to be used with the ContentNavigatorContainer structure
+class DocsMarkdownContainer extends Component {
+  constructor(props){
+    super(props)
+    this.mdResource = props.mdResource;
+  }
+
+  render() {
+    return h("div", {style: {"display": "flex", "flex-direction": "column", "width": "900px",
+    "justify-content": "flex-start", "font-family": "Open Sans", "color": "#373530", "line-height": "1.6"}}, this.props.mdResource)
+  }
+}
+
+// ============= Home Page =============
 
 class Introduction extends Component {
   constructor(props){
@@ -554,8 +544,8 @@ class WhyGrid extends Component {
           h("p", {}, `Formality has a type system capable of proving mathematical theorems about its own programs.
           It's not only about preventing bugs or proving the theorem itself. We are talking about a whole new tool to work with,
           a language of specifications, one on which we can state precisely, in a way that a computer can understand, what an algorithm is supposed to do.  `),
-          h("p", {style: {"margin-top": "5px"}}, "This opens doors for use-cases that are only limited by your imagination!"),
-          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageWhyContent1) }),
+          h("p", {style: {"margin-top": "5px", "margin-bottom": "8px"}}, "This opens doors for use-cases that are only limited by your imagination!"),
+          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageWhyContent1), color: s.primaryColor }),
         ]),
         h("img", {src: featureImage1, alt: "image1", style: featureImg})
       ]),
@@ -564,8 +554,8 @@ class WhyGrid extends Component {
         h("div", {style: fs.text, "width": "300px"},[
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Fast"),
           h("p", {}, "No garbage-collection, optimal beta-reduction and a massively parallel GPU compiler make it insanely fast."),
-          h("p", {}, "Massively parallel evaluation is possible due to Symmetric Interaction Calculus (SIC), a new model of computation that combines the best aspects of the Turing Machine and the λ-Calculus."),
-          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageWhyContent2) }),
+          h("p", {style: {"margin-bottom": "8px"}}, "Massively parallel evaluation is possible due to Symmetric Interaction Calculus (SIC), a new model of computation that combines the best aspects of the Turing Machine and the λ-Calculus."),
+          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageWhyContent2), color: s.primaryColor }),
         ]),
         h("img", {src: featureImage2, alt: "image2", style: featureImg})
       ]),
@@ -631,6 +621,7 @@ class Usage extends Component {
   }
 }
 
+// ============= Try it =============
 class TryIt extends Component {
   constructor(props){
     super(props)
@@ -853,7 +844,7 @@ class Terminal extends Component {
       ])
     ]),
     h("p", {style: subtitle}, "Check out some examples:"),
-      h("div", {}, [ // TODO: add an expansible area to contain explanation about the examples      
+      h("div", {style: {"color": s.primaryColor}}, [ // TODO: add an expansible area to contain explanation about the examples      
         h("p", {style: {"cursor": "pointer"}, onClick: () => { this.onClickExample(codeHelloWorld) }}, "1. Hello World"),
         h("p", {style: {"cursor": "pointer"}, onClick: () => { this.onClickExample(codeIdentity) }}, "2. Identity"),
       ])
@@ -884,6 +875,69 @@ class TerminalButton extends Component {
                     onFocusComponent: h("div", {style: onFocusStyle, onClick: this.onClick}, this.props.title),});
   }
 }
+
+// ============= Overview =============
+class Overview extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {page: props.page};
+  }
+  isCurrentPage(id) {
+    return this.state.page === id;
+  }
+
+  render(){
+    const contentNavigator = 
+      h(ContentNavigatorContainer, {items: [
+        h(ContentNavigatorItem, {title: "LEARNING", isMainTopic: true}),
+        h(ContentNavigatorItem, {title: "Getting started", onClick: () => {
+          if (this.state.page !== pageOVGettingStarted) {
+            this.setState({ page: pageOVGettingStarted });
+            history.pushState({ page: pageOVGettingStarted }, "/"+pageOVGettingStarted, "/"+pageOVGettingStarted);
+          }
+        }, isCurrentPage: this.isCurrentPage(pageOVGettingStarted)}),
+        h(ContentNavigatorItem, {title: "Examples"}),
+        h(ContentNavigatorItem, {title: "FAQ", onClick: () => {
+          if (this.state.page !== pageOVFAQ) {
+            this.setState({ page: pageOVFAQ });
+            history.pushState({ page: pageOVFAQ }, "/"+pageOVFAQ, "/"+pageOVFAQ);
+          }
+        }, isCurrentPage: this.isCurrentPage(pageOVFAQ)}),
+        h(ContentNavigatorItem, {title: "CONTEXT", isMainTopic: true}),
+        h(ContentNavigatorItem, {title: "Interaction Combinators"}),
+        h(ContentNavigatorItem, {title: "Elementary Affine Calculus"}),
+        h(ContentNavigatorItem, {title: "ESCoC"}),
+      ]});
+
+    const contentNavigatorStyle = {
+      "margin-left": "200px", 
+      "margin-right": "200px", 
+      "margin-top": "60px",
+      "display": "flex",
+      "flex-direction": "row",
+      "justify-content": "flex-start",
+    }
+    // ------ Rendering the content for each element on Content Navigator ------
+    if (this.state.page === pageOverview) {
+      return h("div", {style: contentNavigatorStyle}, [
+        contentNavigator,
+        h("p", {}, "I'm the first Overview!")
+      ]);
+    } else if (this.state.page === pageOVGettingStarted) {
+      return h("div", {style: contentNavigatorStyle}, [
+        contentNavigator,
+        h(DocsMarkdownContainer, {mdResource: ovGettingStartedMD})   
+      ]);
+    } else if (this.state.page === pageOVFAQ) {
+      return h("div", {style: contentNavigatorStyle}, [
+        contentNavigator,
+        h(DocsMarkdownContainer, {mdResource: ovFAQMD})
+      ]);
+    }
+    
+  }
+}
+
 
 // Footer with a purple line on top of it. Used for pages that is not Home
 class FooterContainer extends Component {

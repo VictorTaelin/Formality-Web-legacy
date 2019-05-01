@@ -1,7 +1,7 @@
 var fs = require("fs");
 var md2json = require("simple-markdown").defaultBlockParse;
 
-const file_path = "./markdown/overview/3.FAQ"
+const file_path = "./markdown/overview/1.GettingStarted";
 var mdFile = fs.readFileSync(file_path+'.md', 'utf8');
 
 /**
@@ -198,7 +198,11 @@ const json2h = (node) => {
 
 const requiredCode = `const h = require('inferno-hyperscript').h;
 module.exports = `
-// console.log(":>>>>>>>>>>>>>>  HYPERSCRIPT\n");
-console.log(requiredCode);
-console.log(json2h(md2json(mdFile), null, 2));
-fs.writeFile(file_path+".js", requiredCode + json2h(md2json(mdFile), null, 2), () => {});
+
+// console.log(requiredCode);
+// console.log(json2h(md2json(mdFile), null, 2));
+fs.writeFile(file_path+".js", requiredCode + json2h(md2json(mdFile), null, 2), (err) => { 
+  if (err) throw err;
+  
+  console.log(">>  "+file_path+".js created or updated ");
+ });

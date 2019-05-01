@@ -8,7 +8,7 @@ var router = express.Router();
 app.get('/oi', (req, res) => res.send('Hello World!'));
 
 // ----- Main pages -----
-app.get('/specification', function (req, res, next) {
+app.get('/documentation', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });
 app.get('/home', function (req, res, next) {
