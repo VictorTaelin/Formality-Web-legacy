@@ -1,7 +1,7 @@
 var fs = require("fs");
 var md2json = require("simple-markdown").defaultBlockParse;
 
-const file_path = "./markdown/overview/3.FAQ"
+const file_path = "./markdown/overview/6.ESCoC";
 var mdFile = fs.readFileSync(file_path+'.md', 'utf8');
 
 /**
