@@ -30,9 +30,10 @@ app.get('/massive-paralelism', function (req, res, next) {
 });
 
 // ----- Overview ----- NOT WORKING
-app.get('/overview/getting-started', function (req, res, next) {
-  res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
+app.get('/overview/getting-started', function (req, res, next){
+  res.sendFile(path.join(__dirname, "..", "docs", "index.html"));
 });
+
 app.get('/overview/FAQ', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });

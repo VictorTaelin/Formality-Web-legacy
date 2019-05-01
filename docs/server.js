@@ -8,7 +8,7 @@ var router = express.Router();
 app.get('/oi', (req, res) => res.send('Hello World!'));
 
 // ----- Main pages -----
-app.get('/specification', function (req, res, next) {
+app.get('/documentation', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });
 app.get('/home', function (req, res, next) {
@@ -30,9 +30,10 @@ app.get('/massive-paralelism', function (req, res, next) {
 });
 
 // ----- Overview ----- NOT WORKING
-app.get('/overview/getting-started', function (req, res, next) {
-  res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
+app.get('/overview/getting-started', function (req, res, next){
+  res.sendFile(path.join(__dirname, "..", "docs", "index.html"));
 });
+
 app.get('/overview/FAQ', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });

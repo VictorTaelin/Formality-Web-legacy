@@ -12,6 +12,7 @@ const fs = require("./font-style");
 // MD Resources
 const markdown = require("./markdown/test-template.md.js");
 const ovGettingStartedMD = require("./markdown/overview/1.GettingStarted.js");
+const ovExamplesMD = require("./markdown/overview/2.Examples.js");
 const ovFAQMD = require("./markdown/overview/3.FAQ.js");
 
 // Pages
@@ -23,6 +24,7 @@ const pageTryIt = "tryIt";
 
 const pageOverview = "overview";
 const pageOVGettingStarted = "overview/getting-started";
+const pageExamples = "overview/examples";
 const pageOVFAQ = "overview/FAQ";
 // TODO: add the other pages (Interaction Combinators, EAC, etc)
 
@@ -51,7 +53,7 @@ class Site extends Component {
       case "/"+pageWhyContent2: this.setState({page: pageWhyContent2}); break;
 
       case "/"+pageOverview: this.setState({page: pageOverview}); break;
-      case "/"+pageOVGettingStarted: this.setState({page: pageOVGettingStarted}); break;
+      case "/"+pageOVGettingStarted: this.setState({page: pageOVGettingStarted}); console.log("> Did mount in case /overview/getting-started"); break;
       // TODO: add the other pages (Interaction Combinators, EAC, etc)
     }
 
@@ -221,6 +223,14 @@ class Site extends Component {
         ]),
          h(FooterContainer),
       ]);
+    } else if (this.state.page === pageExamples) {
+      return h("div", {"display": "flex", "justify-content": "space-between"}, [
+        topMenu,
+        h("div", {style: genericContentContainer}, [
+          h(Overview, {page: pageExamples})
+        ]),
+          h(FooterContainer),
+      ]);
     }
   }
 }
@@ -262,10 +272,20 @@ class Documentation extends Component {
       "flex-direction": "row",
       "justify-content": "flex-start",
     }
-    return h("div", {style: contentNavigatorStyle}, [
-      contentNavigator,
-      h(DocsMarkdownContainer, {mdResource: markdown})   
-    ]);
+   
+    // if (this.props.page === pageExamples) {
+    //   console.log("Rendering pageExamples");
+    //   return h("div", {style: contentNavigatorStyle}, [
+    //           contentNavigator,
+    //           h(DocsMarkdownContainer, {mdResource: ovExamplesMD}) 
+    //         ]);
+    // } else {
+      return h("div", {style: contentNavigatorStyle}, [
+        contentNavigator,
+        h(DocsMarkdownContainer, {mdResource: markdown})   
+      ])
+    // }
+
   }
 }
 
@@ -896,7 +916,12 @@ class Overview extends Component {
             history.pushState({ page: pageOVGettingStarted }, "/"+pageOVGettingStarted, "/"+pageOVGettingStarted);
           }
         }, isCurrentPage: this.isCurrentPage(pageOVGettingStarted)}),
-        h(ContentNavigatorItem, {title: "Examples"}),
+        h(ContentNavigatorItem, {title: "Examples", onClick: () => {
+          if (this.state.page !== pageExamples) {
+            this.setState({ page: pageExamples });
+            history.pushState({ page: pageExamples }, "/"+pageExamples, "/"+pageExamples);
+          }
+        }, isCurrentPage: this.isCurrentPage(pageOVFAQ)}),
         h(ContentNavigatorItem, {title: "FAQ", onClick: () => {
           if (this.state.page !== pageOVFAQ) {
             this.setState({ page: pageOVFAQ });
@@ -927,6 +952,12 @@ class Overview extends Component {
       return h("div", {style: contentNavigatorStyle}, [
         contentNavigator,
         h(DocsMarkdownContainer, {mdResource: ovGettingStartedMD})   
+      ]);
+    } else if (this.state.page === pageExamples) {
+      console.log("Rendering pageExamples");
+      return h("div", {style: contentNavigatorStyle}, [
+        contentNavigator,
+        h(DocsMarkdownContainer, {mdResource: ovExamplesMD}) 
       ]);
     } else if (this.state.page === pageOVFAQ) {
       return h("div", {style: contentNavigatorStyle}, [

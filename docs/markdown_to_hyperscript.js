@@ -1,7 +1,7 @@
 var fs = require("fs");
 var md2json = require("simple-markdown").defaultBlockParse;
 
-const file_path = "./markdown/overview/1.GettingStarted";
+const file_path = "./markdown/overview/2.Examples";
 var mdFile = fs.readFileSync(file_path+'.md', 'utf8');
 
 /**
@@ -99,9 +99,9 @@ const json2h = (node) => {
 
         case "codeBlock":
           line(lv, "h('pre', {style: {'margin-top': '20px', 'margin-bottom': '20px', 'background-color': '#F6F8FA', 'padding': '15px'}}, [");
-          line(lv+1, "h('code.bash', {style: {'font-size': '15px'}},");
+          line(lv+1, "h('code.bash', {style: {'font-size': '15px'}}, `");
           line(lv+2, JSON.stringify(node.content));
-          line(lv+1, ")");
+          line(lv+1, "`)");
           line(lv, "])");
           break;
 
@@ -124,7 +124,7 @@ const json2h = (node) => {
           break;
 
         case "inlineCode":
-          line(lv, "h('code', {style: {'font-size': '15px'}},'"+node.content+"')");
+          line(lv, "h('code', {style: {'font-size': '15px'}},`"+node.content+"`)");
           break;
 
         case "hr":
