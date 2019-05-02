@@ -120,7 +120,7 @@ const json2h = (node) => {
           break;
 
         case "blockQuote":
-          line(lv, "h('blockquote', {style: {'margin-top': '10px', 'margin-bottom': '10px'}}, ");
+          line(lv, "h('div', {style: {'margin-top': '25px', 'margin-bottom': '25px', 'margin-left': '20px', 'margin-right': '20px', 'color': '#6B737F', 'font-style': 'italic' }}, ");
           make(lv + 1, node.content);
           line(lv, ")");
           break;

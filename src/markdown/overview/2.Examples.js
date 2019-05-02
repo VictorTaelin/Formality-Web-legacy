@@ -208,7 +208,7 @@ module.exports =
       ".id [x] x\n.main [val = id] | (val val)\n// Outputs\n// [val = [x] x] |(val val)"
     )
   ]),
-  h('blockquote', {style: {'margin-top': '10px', 'margin-bottom': '10px'}}, 
+  h('div', {style: {'margin-top': '25px', 'margin-bottom': '25px', 'margin-left': '20px', 'margin-right': '20px', 'color': '#6B737F', 'font-style': 'italic' }}, 
     [
       h('p', {style: {'margin-top': '5px'}}, 
         [
