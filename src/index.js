@@ -11,6 +11,7 @@ const fs = require("./font-style");
 
 // MD Resources
 const markdown = require("./markdown/test-template.md.js");
+const ovMain = require("./markdown/overview/0.Overview.js");
 const ovGettingStartedMD = require("./markdown/overview/1.GettingStarted.js");
 const ovExamplesMD = require("./markdown/overview/2.Examples.js");
 const ovFAQMD = require("./markdown/overview/3.FAQ.js");
@@ -946,7 +947,7 @@ class Overview extends Component {
     if (this.state.page === pageOverview) {
       return h("div", {style: contentNavigatorStyle}, [
         contentNavigator,
-        h("p", {}, "I'm the first Overview!")
+        h(DocsMarkdownContainer, {mdResource: ovMain})
       ]);
     } else if (this.state.page === pageOVGettingStarted) {
       return h("div", {style: contentNavigatorStyle}, [

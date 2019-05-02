@@ -1,11 +1,12 @@
 var fs = require("fs");
 var md2json = require("simple-markdown").defaultBlockParse;
 
-const file_path = "./markdown/overview/2.Examples";
+var path = require('path');
+
+const file_path = "./markdown/overview/0.Overview";
 var mdFile = fs.readFileSync(file_path+'.md', 'utf8');
 
 const codeBGColor = "#F6F8FA"
-
 /**
  *  TODO
  * - blockquote (não funcionando apropriadamente)
@@ -45,28 +46,6 @@ const json2h = (node) => {
 
         case "paragraph":
           line(lv, "h('p', {style: {'margin-top': '5px'}}, ");
-          
-          // var auxTitle = 1;
-          // var content = "";
-          // for (var i = 0; i < node.content.length; ++i) {
-          //   if (node.content[i].content.includes("#")) {
-          //     var content = node.content[i].content.split("#");
-          //     if (content[1] !== '') { // last use of #, has the content of the title
-          //       console.log(">>> content[1] !== vazio "+i);
-          //       console.log(content);
-          //       console.log(content[1]);
-          //       console.log(content[1].split("\n"));
-          //       var hs = "h('h"+auxTitle+"', '"+content[1].split("\n")[0]+"'),";
-          //       line(lv, hs);
-          //       auxTitle = 1;
-          //       make(lv+1, "");
-          //     } else {
-          //       auxTitle ++;
-          //     }
-          //   } else {
-          //     make(lv+1, node.content);
-          //   }  
-          // }
 
           make(lv+1, node.content);
           line(lv, ")");
@@ -126,7 +105,7 @@ const json2h = (node) => {
           break;
 
         case "inlineCode":
-          line(lv, "h('code', {style: {'font-size': '15px', 'background-color': '"+codeBGColor+"'}}, `"+node.content+"`)");
+          line(lv, "h('code', {style: {'font-size': '15px', 'background-color': '"+codeBGColor+"', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `"+node.content+"`)");
           break;
 
         case "hr":
@@ -176,6 +155,15 @@ const json2h = (node) => {
           line(lv, "])");
           break;
 
+        case "image": 
+          if (node.alt === "internal") { 
+            line(lv, "h('img', {src: '" + node.target + "', style: {'max-width': '800px', 'height': 'auto' }} )");
+          } else {
+            line(lv, "h('img', {src: '" + node.target + "', style: {'max-width': '800px', 'height': 'auto' }} )");
+          }
+            // TODO
+          break;
+
         default:
           line(lv, "h('div', 'UNKNOWN_TYPE: " + node.type + "')");
           break;
@@ -195,9 +183,8 @@ console.log(JSON.stringify(md2json(mdFile), null, 2));
 console.log("");
 
 //  ------ Hyperscript formatat
-// json2h(md2json(mdFile), null, 2);
-// console.log("---------------------- OUTPUT");
-// console.log(json2h(md2json(mdFile), null, 2));
+console.log("---------------------- OUTPUT");
+console.log(json2h(md2json(mdFile), null, 2));
 
 const requiredCode = `const h = require('inferno-hyperscript').h;
 module.exports = `

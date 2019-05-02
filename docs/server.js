@@ -38,6 +38,10 @@ app.get('/overview/FAQ', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
 });
 
+app.get('/images/*', function (req, res, next) {
+  res.sendFile(path.join(__dirname, "..", "docs", "src", req.url)); 
+});
+
 
 app.use(express.static(path.join(__dirname, "..", "docs"))); //Serves resources from public folder
 
