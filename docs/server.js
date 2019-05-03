@@ -32,7 +32,7 @@ app.get('/massive-paralelism', function (req, res, next) {
 // ----- Overview ----- NOT WORKING
 app.get('/overview/*', function (req, res, next){
   var param = req.param[0];
-  console.log(req)
+  // console.log(req)
   // console.log("Access on overview! With param:"+param);
   // if(!param.includes("src/images")) {
     // console.log("param does not ask for images")

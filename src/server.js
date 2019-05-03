@@ -7,6 +7,15 @@ var router = express.Router();
 
 app.get('/oi', (req, res) => res.send('Hello World!'));
 
+// Temporary used to deal with url like overview/FAQ, overview/examples
+app.get('/*index.js', function (req, res, next) {
+    res.sendFile(path.join(__dirname, "..", "docs", "index.js"));
+});
+
+app.get('/*', function (req, res) {
+  console.log(req.path);
+})
+
 // ----- Main pages -----
 app.get('/documentation', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
@@ -32,13 +41,14 @@ app.get('/massive-paralelism', function (req, res, next) {
 // ----- Overview ----- NOT WORKING
 app.get('/overview/*', function (req, res, next){
   var param = req.param[0];
-  console.log(req)
+  // console.log(req)
   // console.log("Access on overview! With param:"+param);
   // if(!param.includes("src/images")) {
     // console.log("param does not ask for images")
     res.sendFile(path.join(__dirname, "..", "docs", "index.html"));
   // }
 });
+
 // app.get('/overview/getting-started', function (req, res, next){
 //   res.sendFile(path.join(__dirname, "..", "docs", "index.html"));
 // });
@@ -53,7 +63,9 @@ app.get('/images/*', function (req, res, next) {
   res.sendFile(path.join(__dirname, "..", "docs", "src", req.url)); 
 });
 
+// TODO:
+// - fazer todas as rotas cairem num (/*) e aí dentro dele tratar o que foi chamado 
 
-app.use(express.static(path.join(__dirname, "..", "docs"))); //Serves resources from public folder
+//app.use(express.static(path.join(__dirname, "..", "docs"))); //Serves resources from public folder
 
 app.listen(port, () => console.log(`Example app listening on port ${port}!`));

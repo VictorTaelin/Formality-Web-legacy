@@ -121,15 +121,20 @@ class Site extends Component {
         h(Tab, {title: "Overview", isCurrentPage: this.state.page === pageOverview,
                 onClick: () => {
                   this.setState({page: pageOverview});
-                  if (this.props.page !== pageOverview) { 
-                    history.pushState({page: this.state.page}, "/"+pageOverview, "/"+pageOverview);
+                  console.log("Clicking overview wiht path: "+window.location.pathname+" and props: "+this.page+" and state:"+this.state.page);
+                  console.log(window.location.pathname.includes(pageOverview));
+                  if (window.location.pathname.includes(pageOverview) ) {
+                  // if (this.state.page !== pageOverview) {
+                    console.log("> pushing state")               
+                    history.pushState({page: pageOverview}, "/"+pageOverview, "/"+pageOverview);
+                    console.log("Inside if. Path: "+window.location.pathname+" and props: "+this.page+" and state:"+this.state.page);
                   }
                 }
               }),
         h(Tab, {title: "Documentation", isCurrentPage: this.state.page === pageDocumentation,
                 onClick: () => {
                   this.setState({page: pageDocumentation});
-                  if (this.props.page !== pageDocumentation) {
+                  if (this.state.page !== pageDocumentation) {
                     history.pushState({page: pageDocumentation}, "/"+pageDocumentation, "/"+pageDocumentation);
                   }
                 }
@@ -137,7 +142,7 @@ class Site extends Component {
         h(Tab, {title: "Try it!", isCurrentPage: this.state.page === pageTryIt,
                 onClick: () => {
                     this.setState({page: pageTryIt});
-                    if (this.props.page !== pageTryIt) {                     
+                    if (this.state.page !== pageTryIt) {                     
                       history.pushState({page: pageTryIt}, "/"+pageTryIt, "/"+pageTryIt);
                     }
                 }
@@ -904,12 +909,7 @@ class Overview extends Component {
     this.props.changePage(nextPage); // update the father's state
   }
 
-  componentDidMount(){
-    console.log("[ov] Component did mount. State: "+this.state.page+ " and the props.page: "+this.props.page);
-  }
-
   render(){
-    console.log("[ov] Render. State: "+this.state.page+ " and the props.page: "+this.props.page);
     const contentNavigator = 
       h(ContentNavigatorContainer, {items: [
         h(ContentNavigatorItem, {title: "LEARNING", isMainTopic: true}),
@@ -930,29 +930,38 @@ class Overview extends Component {
       "flex-direction": "row",
       "justify-content": "flex-start",
     }
+
+    const pageToOv = {
+      [pageOverview]: ovMain,
+      [pageOVGettingStarted]: ovGettingStartedMD,
+      [pageExamples]: ovExamplesMD,
+      [pageOVFAQ]: ovFAQMD
+    };
     // ------ Rendering the content for each element on Content Navigator ------
-    // console.log(">> On Overview component: "+this.props.page+" and state: "+this.state.page);
-    if (this.props.page === pageOverview) {
-      return h("div", {style: contentNavigatorStyle}, [
-        contentNavigator,
-        h(DocsMarkdownContainer, {mdResource: ovMain})
-      ]);
-    } else if (this.props.page === pageOVGettingStarted) {
-      return h("div", {style: contentNavigatorStyle}, [
-        contentNavigator,
-        h(DocsMarkdownContainer, {mdResource: ovGettingStartedMD})   
-      ]);
-    } else if (this.props.page === pageExamples) {
-      return h("div", {style: contentNavigatorStyle}, [
-        contentNavigator,
-        h(DocsMarkdownContainer, {mdResource: ovExamplesMD}) 
-      ]);
-    } else if (this.props.page === pageOVFAQ) {
-      return h("div", {style: contentNavigatorStyle}, [
-        contentNavigator,
-        h(DocsMarkdownContainer, {mdResource: ovFAQMD})
-      ]);
-    }
+    console.log(">> On Overview component: "+this.props.page+" and state: "+this.state.page);
+
+    return h("div", {style: contentNavigatorStyle}, [
+      contentNavigator,
+      h(DocsMarkdownContainer, {mdResource: h("div", {key: this.props.page}, pageToOv[this.props.page])})
+    ]);
+
+    // } else if (this.props.page === pageOVGettingStarted) {
+    //   console.log("Pathname on gs: "+window.location.pathname);
+    //   return h("div", {style: contentNavigatorStyle}, [
+    //     contentNavigator,
+    //     h(DocsMarkdownContainer, {mdResource: ovGettingStartedMD})   
+    //   ]);
+    // } else if (this.props.page === pageExamples) {
+    //   return h("div", {style: contentNavigatorStyle}, [
+    //     contentNavigator,
+    //     h(DocsMarkdownContainer, {mdResource: ovExamplesMD}) 
+    //   ]);
+    // } else if (this.props.page === pageOVFAQ) {
+    //   return h("div", {style: contentNavigatorStyle}, [
+    //     contentNavigator,
+    //     h(DocsMarkdownContainer, {mdResource: ovFAQMD})
+    //   ]);
+    // }
     
   }
 }

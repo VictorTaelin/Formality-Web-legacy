@@ -8,7 +8,7 @@ module.exports =
   ),
   h('p', {style: {'margin-top': '5px'}}, 
     [
-        h('img', {src: 'images/code.png', style: {'max-width': '100%', 'height': 'auto' }} )
+        h('img', {src: '/images/code.png', style: {'max-width': '100%', 'height': 'auto' }} )
     ]
   ),
   h('p', {style: {'margin-top': '5px'}}, 
