@@ -31,8 +31,13 @@ app.get('/massive-paralelism', function (req, res, next) {
 
 // ----- Overview ----- NOT WORKING
 app.get('/overview/*', function (req, res, next){
-  console.log("Access on overview! With param:"+req.params[0]);
-  res.sendFile(path.join(__dirname, "..", "docs", "index.html"));
+  var param = req.param[0];
+  console.log(req)
+  // console.log("Access on overview! With param:"+param);
+  // if(!param.includes("src/images")) {
+    // console.log("param does not ask for images")
+    res.sendFile(path.join(__dirname, "..", "docs", "index.html"));
+  // }
 });
 // app.get('/overview/getting-started', function (req, res, next){
 //   res.sendFile(path.join(__dirname, "..", "docs", "index.html"));

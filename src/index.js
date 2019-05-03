@@ -68,7 +68,7 @@ class Site extends Component {
   }
 
   onChangeInternalLink(nextPage) {
-    console.log(">> Site > on change internal link, the state is: "+this.state.page+" and next page: "+nextPage)
+    // console.log(">> Site > on change internal link, the state is: "+this.state.page+" and next page: "+nextPage)
     if (this.state.page !== nextPage){
       history.pushState({page: nextPage}, "/"+nextPage, "/"+nextPage);
     }
@@ -77,6 +77,11 @@ class Site extends Component {
   }
 
   render() {
+    // console.log("--");
+    // console.log(":: Image URL: "+logo);
+    // console.log(":: location.pathname: "+window.location.pathname);
+    // console.log("Site state: "+this.state.page);
+
     // function drawCanvas({ctx, time}) {
     //     const {width, height} = ctx.canvas;
     //     ctx.save();
@@ -115,26 +120,24 @@ class Site extends Component {
       h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "200px"}}, [
         h(Tab, {title: "Overview", isCurrentPage: this.state.page === pageOverview,
                 onClick: () => {
-                  console.log("This state is: "+window.location.pathname);
-                  if (window.location.pathname !== pageOverview) {
-                    console.log("Updating page overview");
-                    this.setState({page: pageOverview});
-                    history.pushState({page: pageOverview}, "/"+pageOverview, "/"+pageOverview);
+                  this.setState({page: pageOverview});
+                  if (this.props.page !== pageOverview) { 
+                    history.pushState({page: this.state.page}, "/"+pageOverview, "/"+pageOverview);
                   }
                 }
               }),
         h(Tab, {title: "Documentation", isCurrentPage: this.state.page === pageDocumentation,
                 onClick: () => {
-                  if (this.state.page !== pageDocumentation) {
-                    this.setState({page: pageDocumentation});
+                  this.setState({page: pageDocumentation});
+                  if (this.props.page !== pageDocumentation) {
                     history.pushState({page: pageDocumentation}, "/"+pageDocumentation, "/"+pageDocumentation);
                   }
                 }
               }),
         h(Tab, {title: "Try it!", isCurrentPage: this.state.page === pageTryIt,
                 onClick: () => {
-                    if (this.state.page !== pageTryIt) {
-                      this.setState({page: pageTryIt});
+                    this.setState({page: pageTryIt});
+                    if (this.props.page !== pageTryIt) {                     
                       history.pushState({page: pageTryIt}, "/"+pageTryIt, "/"+pageTryIt);
                     }
                 }
@@ -168,7 +171,6 @@ class Site extends Component {
     // ============= Overview Page =============
     } else if (this.state.page === pageOverview) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
-        console.log("Loading page overview. This.state.page: "+this.state.page),
         topMenu,
         h("div", {style: genericContentContainer}, [
          h(Overview, {page: pageOverview, changePage: this.onChangeInternalLink.bind(this)})
@@ -199,7 +201,6 @@ class Site extends Component {
     
     } else if (this.state.page === pageOVGettingStarted) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
-        console.log("Loading getting started. This.state.page: "+this.state.page),
         topMenu,
         h("div", {style: genericContentContainer}, [
          h(Overview, {page: pageOVGettingStarted, changePage: this.onChangeInternalLink.bind(this)})
@@ -895,15 +896,20 @@ class Overview extends Component {
     this.state = {page: props.page};
   }
   isCurrentPage(id) {
-    return this.state.page === id;
+    return this.props.page === id;
+  }
+  // When a Content Navigator Item is clicked, it must update this componenet and his father's state
+  onChangePage(nextPage) {
+    this.setState({page: nextPage}) // update this componenet current state
+    this.props.changePage(nextPage); // update the father's state
   }
 
-  onChangePage(nextPage) {
-    this.setState({page: nextPage}) // update current state
-    this.props.changePage(nextPage); // update the father state
+  componentDidMount(){
+    console.log("[ov] Component did mount. State: "+this.state.page+ " and the props.page: "+this.props.page);
   }
 
   render(){
+    console.log("[ov] Render. State: "+this.state.page+ " and the props.page: "+this.props.page);
     const contentNavigator = 
       h(ContentNavigatorContainer, {items: [
         h(ContentNavigatorItem, {title: "LEARNING", isMainTopic: true}),
@@ -931,18 +937,17 @@ class Overview extends Component {
         contentNavigator,
         h(DocsMarkdownContainer, {mdResource: ovMain})
       ]);
-    } else if (this.state.page === pageOVGettingStarted) {
+    } else if (this.props.page === pageOVGettingStarted) {
       return h("div", {style: contentNavigatorStyle}, [
         contentNavigator,
         h(DocsMarkdownContainer, {mdResource: ovGettingStartedMD})   
       ]);
-    } else if (this.state.page === pageExamples) {
-      console.log("Rendering pageExamples");
+    } else if (this.props.page === pageExamples) {
       return h("div", {style: contentNavigatorStyle}, [
         contentNavigator,
         h(DocsMarkdownContainer, {mdResource: ovExamplesMD}) 
       ]);
-    } else if (this.state.page === pageOVFAQ) {
+    } else if (this.props.page === pageOVFAQ) {
       return h("div", {style: contentNavigatorStyle}, [
         contentNavigator,
         h(DocsMarkdownContainer, {mdResource: ovFAQMD})
