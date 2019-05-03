@@ -8,18 +8,22 @@ module.exports =
   ),
   h('p', {style: {'margin-top': '5px'}}, 
     [
-      h('img', {src: 'images/code.png', style: {'max-width': '800px', 'height': 'auto' }} )
+        h('img', {src: 'images/code.png', style: {'max-width': '100%', 'height': 'auto' }} )
     ]
   ),
   h('p', {style: {'margin-top': '5px'}}, 
     [
-      h('img', {src: 'https://giphy.com/gifs/dog-lucky-GXmXd0d9W5IMo', style: {'max-width': '800px', 'height': 'auto' }} )
+        h('img', {src: 'https://petgusto.com/wp-content/uploads/2018/09/cachorros-pequenos-e-fofos-10-raças-que-voce-precisa-conhecer-6.jpg', style: {'max-width': '100%', 'height': 'auto' }} )
     ]
   ),
   h('p', {style: {'margin-top': '5px'}}, 
     [
-      "a simples ",
-      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `line of code`)
+      "Go to ",
+      h('a', {href: '/tryIt', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
+        [
+          "Try It"
+        ]
+      )
     ]
   ),
   h('h2', {style: {'margin-top': '20px'}}, 

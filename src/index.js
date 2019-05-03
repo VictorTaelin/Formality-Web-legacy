@@ -31,7 +31,6 @@ const pageOVFAQ = "overview/FAQ";
 
 
 // Feature images
-import formalityTitle from './images/formality-title.png';
 import featureImage1 from './images/math.png';
 import featureImage2 from './images/fast.png';
 import featureImage3 from './images/code.png';
@@ -46,12 +45,10 @@ class Site extends Component {
   }
 
   componentDidMount(){
-    switch (window.location.pathname) {
+    switch (window.location.pathname) {    
       case "/"+pageHome: this.setState({page: pageHome}); break;
       case "/"+pageDocumentation: this.setState({page: pageDocumentation}); break;
-      case "/"+pageTryIt: this.setState({page: pageTryIt});
-      case "/"+pageWhyContent1: this.setState({page: pageWhyContent1}); break;
-      case "/"+pageWhyContent2: this.setState({page: pageWhyContent2}); break;
+      case "/"+pageTryIt: this.setState({page: pageTryIt}); break;
 
       case "/"+pageOverview: this.setState({page: pageOverview}); break;
       case "/"+pageOVGettingStarted: this.setState({page: pageOVGettingStarted}); console.log("> Did mount in case /overview/getting-started"); break;
@@ -71,7 +68,10 @@ class Site extends Component {
   }
 
   onChangeInternalLink(nextPage) {
-    history.pushState({page: nextPage}, nextPage, nextPage);
+    console.log(">> Site > on change internal link, the state is: "+this.state.page+" and next page: "+nextPage)
+    if (this.state.page !== nextPage){
+      history.pushState({page: nextPage}, "/"+nextPage, "/"+nextPage);
+    }
     this.setState({page: nextPage});
     window.scrollTo(0, 0);
   }
@@ -115,7 +115,9 @@ class Site extends Component {
       h("div", {style: {"width": "100%", "height": "30px", "margin-top": "10px", "display": "flex", "justify-content": "flex-end", "align-items": "center", "margin-right": "200px"}}, [
         h(Tab, {title: "Overview", isCurrentPage: this.state.page === pageOverview,
                 onClick: () => {
-                  if (this.state.page !== pageOverview) {
+                  console.log("This state is: "+window.location.pathname);
+                  if (window.location.pathname !== pageOverview) {
+                    console.log("Updating page overview");
                     this.setState({page: pageOverview});
                     history.pushState({page: pageOverview}, "/"+pageOverview, "/"+pageOverview);
                   }
@@ -166,9 +168,10 @@ class Site extends Component {
     // ============= Overview Page =============
     } else if (this.state.page === pageOverview) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
+        console.log("Loading page overview. This.state.page: "+this.state.page),
         topMenu,
         h("div", {style: genericContentContainer}, [
-         h(Overview, {page: pageOverview})
+         h(Overview, {page: pageOverview, changePage: this.onChangeInternalLink.bind(this)})
         ]),
          h(FooterContainer),
       ]);
@@ -179,7 +182,7 @@ class Site extends Component {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: genericContentContainer}, [
-          h(Documentation, {page: pageDocumentation})
+          h(Documentation, {page: pageDocumentation, changePage: this.onChangeInternalLink.bind(this)})
          ]),
          h(FooterContainer),
       ]);
@@ -193,34 +196,13 @@ class Site extends Component {
         ]),
         h(FooterContainer),
       ]);
-
-    // ============= Why content 1 =============
-    } else if (this.state.page === pageWhyContent1) {
-      return h("div", {"display": "flex", "justify-content": "space-between"}, [
-        topMenu,
-        h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
-          h("div ", {style: s.pageContentMD}, [
-            h(DevelopmentPage)
-          ]),
-        ]),
-        h(FooterContainer),
-      ]);
-    // ============= Why content 2 =============
-    } else if (this.state.page === pageWhyContent2) {
-      return h("div", {"display": "flex", "justify-content": "space-between"}, [
-        topMenu,
-        h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
-          h("div ", {style: s.pageContentMD}, [
-            h(DevelopmentPage)
-          ]),
-        ]),
-        h(FooterContainer),
-      ]);
+    
     } else if (this.state.page === pageOVGettingStarted) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
+        console.log("Loading getting started. This.state.page: "+this.state.page),
         topMenu,
         h("div", {style: genericContentContainer}, [
-         h(Overview, {page: pageOVGettingStarted})
+         h(Overview, {page: pageOVGettingStarted, changePage: this.onChangeInternalLink.bind(this)})
         ]),
          h(FooterContainer),
       ]);
@@ -228,7 +210,15 @@ class Site extends Component {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: genericContentContainer}, [
-          h(Overview, {page: pageExamples})
+          h(Overview, {page: pageExamples, changePage: this.onChangeInternalLink.bind(this)})
+        ]),
+          h(FooterContainer),
+      ]);
+    } else if (this.state.page === pageOVFAQ) {
+      return h("div", {"display": "flex", "justify-content": "space-between"}, [
+        topMenu,
+        h("div", {style: genericContentContainer}, [
+          h(Overview, {page: pageOVFAQ, changePage: this.onChangeInternalLink.bind(this)})
         ]),
           h(FooterContainer),
       ]);
@@ -901,34 +891,25 @@ class TerminalButton extends Component {
 class Overview extends Component {
   constructor(props) {
     super(props)
+    this.changePage = props.changePage;
     this.state = {page: props.page};
   }
   isCurrentPage(id) {
     return this.state.page === id;
   }
 
+  onChangePage(nextPage) {
+    this.setState({page: nextPage}) // update current state
+    this.props.changePage(nextPage); // update the father state
+  }
+
   render(){
     const contentNavigator = 
       h(ContentNavigatorContainer, {items: [
         h(ContentNavigatorItem, {title: "LEARNING", isMainTopic: true}),
-        h(ContentNavigatorItem, {title: "Getting started", onClick: () => {
-          if (this.state.page !== pageOVGettingStarted) {
-            this.setState({ page: pageOVGettingStarted });
-            history.pushState({ page: pageOVGettingStarted }, "/"+pageOVGettingStarted, "/"+pageOVGettingStarted);
-          }
-        }, isCurrentPage: this.isCurrentPage(pageOVGettingStarted)}),
-        h(ContentNavigatorItem, {title: "Examples", onClick: () => {
-          if (this.state.page !== pageExamples) {
-            this.setState({ page: pageExamples });
-            history.pushState({ page: pageExamples }, "/"+pageExamples, "/"+pageExamples);
-          }
-        }, isCurrentPage: this.isCurrentPage(pageOVFAQ)}),
-        h(ContentNavigatorItem, {title: "FAQ", onClick: () => {
-          if (this.state.page !== pageOVFAQ) {
-            this.setState({ page: pageOVFAQ });
-            history.pushState({ page: pageOVFAQ }, "/"+pageOVFAQ, "/"+pageOVFAQ);
-          }
-        }, isCurrentPage: this.isCurrentPage(pageOVFAQ)}),
+        h(ContentNavigatorItem, {title: "Getting started", onClick: this.onChangePage.bind(this, pageOVGettingStarted), isCurrentPage: this.isCurrentPage(pageOVGettingStarted)}),
+        h(ContentNavigatorItem, {title: "Examples", onClick: this.onChangePage.bind(this, pageExamples), isCurrentPage: this.isCurrentPage(pageExamples)}),
+        h(ContentNavigatorItem, {title: "FAQ", onClick: this.onChangePage.bind(this, pageOVFAQ), isCurrentPage: this.isCurrentPage(pageOVFAQ)}),
         h(ContentNavigatorItem, {title: "CONTEXT", isMainTopic: true}),
         h(ContentNavigatorItem, {title: "Interaction Combinators"}),
         h(ContentNavigatorItem, {title: "Elementary Affine Calculus"}),
@@ -944,7 +925,8 @@ class Overview extends Component {
       "justify-content": "flex-start",
     }
     // ------ Rendering the content for each element on Content Navigator ------
-    if (this.state.page === pageOverview) {
+    // console.log(">> On Overview component: "+this.props.page+" and state: "+this.state.page);
+    if (this.props.page === pageOverview) {
       return h("div", {style: contentNavigatorStyle}, [
         contentNavigator,
         h(DocsMarkdownContainer, {mdResource: ovMain})

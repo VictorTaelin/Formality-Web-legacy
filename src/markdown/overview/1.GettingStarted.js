@@ -39,7 +39,7 @@ module.exports = [
       ", you can also use it as a JS library or",
       ", if you don’t want to download anything",
       ", you can try our online editor ",
-      h('a', {href: 'localhost:3004/tryIt', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
+      h('a', {href: '/tryIt', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
         [
           "here"
         ]

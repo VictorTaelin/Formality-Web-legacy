@@ -156,13 +156,10 @@ const json2h = (node) => {
           break;
 
         case "image": 
-          if (node.alt === "internal") { 
-            line(lv, "h('img', {src: '" + node.target + "', style: {'max-width': '800px', 'height': 'auto' }} )");
-          } else {
-            line(lv, "h('img', {src: '" + node.target + "', style: {'max-width': '800px', 'height': 'auto' }} )");
-          }
-            // TODO
-          break;
+        // line(lv, "h('div', {style: {'display': 'flex', 'justify-content': 'center', 'flex-direction': 'row' }}, [");
+        line(lv+1, "h('img', {src: '" + node.target + "', style: {'max-width': '100%', 'height': 'auto' }} )");
+        // line(lv, "]), ");
+        break;
 
         default:
           line(lv, "h('div', 'UNKNOWN_TYPE: " + node.type + "')");

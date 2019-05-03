@@ -30,15 +30,21 @@ app.get('/massive-paralelism', function (req, res, next) {
 });
 
 // ----- Overview ----- NOT WORKING
-app.get('/overview/getting-started', function (req, res, next){
+app.get('/overview/*', function (req, res, next){
+  console.log("Access on overview! With param:"+req.params[0]);
   res.sendFile(path.join(__dirname, "..", "docs", "index.html"));
 });
+// app.get('/overview/getting-started', function (req, res, next){
+//   res.sendFile(path.join(__dirname, "..", "docs", "index.html"));
+// });
 
-app.get('/overview/FAQ', function (req, res, next) {
-  res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
-});
+// app.get('/overview/FAQ', function (req, res, next) {
+//   res.sendFile(path.join(__dirname, "..", "docs", "index.html")); 
+// });
 
 app.get('/images/*', function (req, res, next) {
+  console.log("Requesting image in: "+path.join(__dirname, "..", "docs", "src", req.url));
+  console.log("Dirname is: "+__dirname)
   res.sendFile(path.join(__dirname, "..", "docs", "src", req.url)); 
 });
 
