@@ -18,15 +18,13 @@ const ovFAQMD = require("./markdown/overview/3.FAQ.js");
 
 // Pages
 const pageHome = "home";
-const pageWhyContent1 = "math-proof";
-const pageWhyContent2 = "massive-paralelism";
 const pageDocumentation = "documentation";
 const pageTryIt = "tryIt";
 const pageDevelopment = "development";
 
 const pageOverview = "overview";
 const pageOVGettingStarted = "overview/getting-started";
-const pageExamples = "overview/examples";
+const pageOVExamples = "overview/examples";
 const pageOVFAQ = "overview/FAQ";
 // TODO: add the other pages (Interaction Combinators, EAC, etc)
 
@@ -46,7 +44,8 @@ class Site extends Component {
   }
 
   componentDidMount(){
-    switch (window.location.pathname) {    
+    console.log("Site did mount with pathname: "+window.location.pathname); 
+    switch (window.location.pathname) {   
       case "/"+pageHome: this.setState({page: pageHome}); break;
       case "/"+pageDocumentation: this.setState({page: pageDocumentation}); break;
       case "/"+pageTryIt: this.setState({page: pageTryIt}); break;
@@ -76,6 +75,8 @@ class Site extends Component {
     }
     this.setState({page: nextPage});
     window.scrollTo(0, 0);
+    console.log("On site change internal link path: "+window.location.pathname); 
+    console.log("And state: "+this.state.page); 
   }
 
   render() {
@@ -173,7 +174,7 @@ class Site extends Component {
     // ============= Overview Pages =============
     } else if (this.state.page === pageOverview ||
       this.state.page === pageOVGettingStarted ||
-      this.state.page === pageExamples ||
+      this.state.page === pageOVExamples ||
       this.state.page === pageOVFAQ) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
@@ -256,8 +257,8 @@ class Documentation extends Component {
       "justify-content": "flex-start",
     }
    
-    // if (this.props.page === pageExamples) {
-    //   console.log("Rendering pageExamples");
+    // if (this.props.page === OV) {
+    //   console.log("Rendering OV");
     //   return h("div", {style: contentNavigatorStyle}, [
     //           contentNavigator,
     //           h(DocsMarkdownContainer, {mdResource: ovExamplesMD}) 
@@ -846,6 +847,7 @@ class Overview extends Component {
   }
   // When a Content Navigator Item is clicked, it must update this componenet and his father's state
   onChangePage(nextPage) {
+    console.log("[ov] on change page, the next page is: "+nextPage);
     this.setState({page: nextPage}) // update this componenet current state
     this.props.changePage(nextPage); // update the father's state
   }
@@ -855,7 +857,7 @@ class Overview extends Component {
       h(ContentNavigatorContainer, {items: [
         h(ContentNavigatorItem, {title: "LEARNING", isMainTopic: true}),
         h(ContentNavigatorItem, {title: "Getting started", onClick: this.onChangePage.bind(this, pageOVGettingStarted), isCurrentPage: this.isCurrentPage(pageOVGettingStarted)}),
-        h(ContentNavigatorItem, {title: "Examples", onClick: this.onChangePage.bind(this, pageExamples), isCurrentPage: this.isCurrentPage(pageExamples)}),
+        h(ContentNavigatorItem, {title: "Examples", onClick: this.onChangePage.bind(this, pageOVExamples), isCurrentPage: this.isCurrentPage(pageOVExamples)}),
         h(ContentNavigatorItem, {title: "FAQ", onClick: this.onChangePage.bind(this, pageOVFAQ), isCurrentPage: this.isCurrentPage(pageOVFAQ)}),
         h(ContentNavigatorItem, {title: "CONTEXT", isMainTopic: true}),
         h(ContentNavigatorItem, {title: "Interaction Combinators"}),
@@ -872,16 +874,35 @@ class Overview extends Component {
       "justify-content": "flex-start",
     }
 
-    const pageToOv = {
+    const pageContent = {
       [pageOverview]: ovMain,
       [pageOVGettingStarted]: ovGettingStartedMD,
-      [pageExamples]: ovExamplesMD,
+      [pageOVExamples]: ovExamplesMD,
       [pageOVFAQ]: ovFAQMD
-    };
+    }
+
+    const pagesOrder = [pageOverview, pageOVGettingStarted, pageOVExamples, pageOVFAQ];
+    const nextPage = pagesOrder[pagesOrder.indexOf(this.state.page) + 1];
+    const previousPage = (pagesOrder.indexOf(this.state.page) > 0) ? // check if has a previous page
+                          pagesOrder[pagesOrder.indexOf(this.state.page) - 1] : // previous page
+                          pageOverview;
+
+    console.log("---- [overview] ");                      
+    console.log("Next page: "+nextPage);
+    console.log("Previous page: "+previousPage);
+    console.log(".. and state: " +this.state.page);
+
     // ------ Rendering the content for each element on Content Navigator ------
     return h("div", {style: contentNavigatorStyle}, [
       contentNavigator,
-      h(DocsMarkdownContainer, {mdResource: h("div", {key: this.props.page}, pageToOv[this.props.page])})
+      h("div", {style: {"flex-direction": "column"}}, [
+        h(DocsMarkdownContainer, {mdResource: h("div", {key: this.props.page}, pageContent[this.props.page])}),
+        h("div", {style: {"display": "flex", "justify-content": "space-between", "margin-top": "50px", "font-family": "Open Sans"}}, [
+          h(InternalLink, { title: "< Previous", color: s.primaryColor, onClick: this.onChangePage.bind(this, previousPage) }),
+          h(InternalLink, { title: "Next > ", color: s.primaryColor, onClick: this.onChangePage.bind(this, nextPage) }),
+        ])
+    ])
+      
     ]);
     
   }
