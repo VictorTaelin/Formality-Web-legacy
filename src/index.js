@@ -22,6 +22,7 @@ const pageWhyContent1 = "math-proof";
 const pageWhyContent2 = "massive-paralelism";
 const pageDocumentation = "documentation";
 const pageTryIt = "tryIt";
+const pageDevelopment = "development";
 
 const pageOverview = "overview";
 const pageOVGettingStarted = "overview/getting-started";
@@ -52,7 +53,9 @@ class Site extends Component {
 
       case "/"+pageOverview: this.setState({page: pageOverview}); break;
       case "/"+pageOVGettingStarted: this.setState({page: pageOVGettingStarted}); break;
+      
       // TODO: add the other pages (Interaction Combinators, EAC, etc)
+      case "/"+pageDevelopment: this.setState({page: pageDevelopment}); break;
     }
 
     window.onpopstate = (event) => {
@@ -163,22 +166,25 @@ class Site extends Component {
         // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
         h(Introduction),
         h(WhyGrid, {changePage: this.onChangeInternalLink.bind(this)}),
-        h(Usage,{}),
-        h(Footer, {})
+        h(Usage),
+        h(Footer)
       ]);
 
-    // ============= Overview Page =============
-    } else if (this.state.page === pageOverview) {
+    // ============= Overview Pages =============
+    } else if (this.state.page === pageOverview ||
+      this.state.page === pageOVGettingStarted ||
+      this.state.page === pageExamples ||
+      this.state.page === pageOVFAQ) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: genericContentContainer}, [
-         h(Overview, {page: pageOverview, changePage: this.onChangeInternalLink.bind(this)})
+         h(Overview, {page: this.state.page, changePage: this.onChangeInternalLink.bind(this)})
         ]),
          h(FooterContainer),
       ]);
 
 
-    // ============= Documentation Page =============
+    // ============= Documentation Pages =============
     } else if (this.state.page === pageDocumentation) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
@@ -193,34 +199,20 @@ class Site extends Component {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: {"height": "1000px", "flex-direction": "column", "justify-content": "center", "align-items": "center",}}, [
-            h(TryIt)
+          h(TryIt)
         ]),
         h(FooterContainer),
       ]);
-    
-    } else if (this.state.page === pageOVGettingStarted) {
+
+      
+     // ============= Development Page =============
+    } else if (this.state.page === pageDevelopment) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
         topMenu,
         h("div", {style: genericContentContainer}, [
-         h(Overview, {page: pageOVGettingStarted, changePage: this.onChangeInternalLink.bind(this)})
+          h(DevelopmentPage)
         ]),
-         h(FooterContainer),
-      ]);
-    } else if (this.state.page === pageExamples) {
-      return h("div", {"display": "flex", "justify-content": "space-between"}, [
-        topMenu,
-        h("div", {style: genericContentContainer}, [
-          h(Overview, {page: pageExamples, changePage: this.onChangeInternalLink.bind(this)})
-        ]),
-          h(FooterContainer),
-      ]);
-    } else if (this.state.page === pageOVFAQ) {
-      return h("div", {"display": "flex", "justify-content": "space-between"}, [
-        topMenu,
-        h("div", {style: genericContentContainer}, [
-          h(Overview, {page: pageOVFAQ, changePage: this.onChangeInternalLink.bind(this)})
-        ]),
-          h(FooterContainer),
+        h(FooterContainer),
       ]);
     }
   }
@@ -395,19 +387,6 @@ class DevelopmentPage extends Component {
   }
 }
 
-// Read more is used in Why content
-class ReadMoreLink extends Component {
-  constructor(props){
-    super(props)
-    this.onClick = props.onClick;
-    this.title = props.title;
-    this.state = {};
-  }
-  render(){
-    return h("p", {style: {"cursor": "pointer", "margin-top": "15px"}, onClick: this.onClick}, this.title);
-  }
-}
-
 // Link to a page inside of the website
 class InternalLink extends Component {
   constructor(props) {
@@ -421,7 +400,7 @@ class InternalLink extends Component {
     if (this.props.color) {
       return h("span", {style: {"cursor": "pointer", "color": this.props.color}, onClick: this.onClick}, this.title);
     } else {
-      return h("span", {style: {"cursor": "pointer", "color": "#68c3d4"}, onClick: this.onClick}, this.title);
+      return h("span", {style: {"cursor": "pointer", "color": s.linkColor}, onClick: this.onClick}, this.title);
     }
     
   }
@@ -556,7 +535,7 @@ class WhyGrid extends Component {
           It's not only about preventing bugs or proving the theorem itself. We are talking about a whole new tool to work with,
           a language of specifications, one on which we can state precisely, in a way that a computer can understand, what an algorithm is supposed to do.  `),
           h("p", {style: {"margin-top": "5px", "margin-bottom": "8px"}}, "This opens doors for use-cases that are only limited by your imagination!"),
-          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageWhyContent1), color: s.primaryColor }),
+          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageDevelopment), color: s.primaryColor }),
         ]),
         h("img", {src: featureImage1, alt: "image1", style: featureImg})
       ]),
@@ -566,7 +545,7 @@ class WhyGrid extends Component {
           h("p", {style: {"font-size": "25px", "margin-bottom": "10px"}}, "Fast"),
           h("p", {}, "No garbage-collection, optimal beta-reduction and a massively parallel GPU compiler make it insanely fast."),
           h("p", {style: {"margin-bottom": "8px"}}, "Massively parallel evaluation is possible due to Symmetric Interaction Calculus (SIC), a new model of computation that combines the best aspects of the Turing Machine and the λ-Calculus."),
-          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageWhyContent2), color: s.primaryColor }),
+          h(InternalLink, {title: "Read more...", onClick: this.onChangeLink.bind(this, pageDevelopment), color: s.primaryColor }),
         ]),
         h("img", {src: featureImage2, alt: "image2", style: featureImg})
       ]),

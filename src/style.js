@@ -1,7 +1,7 @@
 const primaryColor = "#444053";
 const secondaryColor = "#ffffff";
 const shadowBlue = "#8091A5";
-const linkColor = "#68c3d4";
+const linkColor = "#0769D7";
 
 import headerBg from './images/formality-bg-2.jpg';
 import usageBg from './images/usageBg2.png';
