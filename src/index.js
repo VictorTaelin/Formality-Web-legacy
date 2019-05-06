@@ -110,7 +110,7 @@ class Site extends Component {
       "margin-bottom": "30px"
     }
 
-    const genericContentContainer = { "min-height": "1000px", "flex-direction": "column", "margin-bottom": "60px"}
+    const genericContentContainer = { "min-height": "1450px", "flex-direction": "column", "margin-bottom": "60px"}
     // Top menu
     var topMenu = h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
       h(Logo, {onClick: () => {
@@ -204,7 +204,7 @@ class Site extends Component {
         h(FooterContainer),
       ]);
 
-      
+
      // ============= Development Page =============
     } else if (this.state.page === pageDevelopment) {
       return h("div", {"display": "flex", "justify-content": "space-between"}, [
@@ -414,7 +414,7 @@ class ContentNavigatorContainer extends Component {
     this.items = props.items;
   }
   render(){
-    return h("div", {style: {"width": "150px", "height": "300px", "margin-right": "40px", "margin-top": "50px"}}, this.props.items)
+    return h("div", {style: {"width": "150px", "margin-right": "40px", "margin-top": "50px"}}, this.props.items)
   }
 }
 
@@ -458,8 +458,7 @@ class DocsMarkdownContainer extends Component {
   }
 
   render() {
-    return h("div", {style: {"display": "flex", "flex-direction": "column", "width": "900px",
-    "justify-content": "flex-start", "font-family": "Open Sans", "color": "#373530", "line-height": "1.6"}}, this.props.mdResource)
+    return h("div", {style: {"flex-direction": "column", "justify-content": "center", "font-family": "Open Sans", "color": "#373530", "line-height": "1.6"}}, this.props.mdResource)
   }
 }
 
@@ -510,6 +509,7 @@ class WhyGrid extends Component {
       "flex-direction": "column",
       "justify-content": "center",
       "align-items": "center",
+
     }
 
     const gridItem = {
@@ -963,5 +963,5 @@ class Footer extends Component {
 
 
 window.onload = () => {
-  render(h("div", {}, [h(Site)]), document.getElementById("main"));
+  render(h("div", {style: {"background-color": "#ffffff",}}, [h(Site)]), document.getElementById("main"));
 };

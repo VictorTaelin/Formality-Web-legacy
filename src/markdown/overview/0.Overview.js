@@ -8,11 +8,6 @@ module.exports =
   ),
   h('p', {style: {'margin-top': '5px'}}, 
     [
-        h('img', {src: '/images/code.png', style: {'max-width': '100%', 'height': 'auto' }} )
-    ]
-  ),
-  h('p', {style: {'margin-top': '5px'}}, 
-    [
         h('img', {src: 'https://petgusto.com/wp-content/uploads/2018/09/cachorros-pequenos-e-fofos-10-raças-que-voce-precisa-conhecer-6.jpg', style: {'max-width': '100%', 'height': 'auto' }} )
     ]
   ),

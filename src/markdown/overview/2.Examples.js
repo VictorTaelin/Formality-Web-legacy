@@ -9,7 +9,7 @@ module.exports =
   h('p', {style: {'margin-top': '5px'}}, 
     [
       "Assure you have Formality and npm installed on your computer or use our ",
-      h('a', {href: '', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
+      h('a', {href: '/tryIt', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
         [
           "online editor"
         ]
@@ -31,7 +31,7 @@ module.exports =
       [
         h('p', {style: {'margin-top': '5px'}}, 
           [
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `formality -n main`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `formality -n main`),
             ": computes the normal form"
           ]
         )
@@ -41,7 +41,7 @@ module.exports =
       [
         h('p', {style: {'margin-top': '5px'}}, 
           [
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `formality -inN main`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `formality -inN main`),
             ": ",
             "-N ",
             "(uppercase",
@@ -67,11 +67,11 @@ module.exports =
   h('ul', {style: {'margin-left': '23px'}}, [
     h('li', {style: {'margin-top': '7px'}}, 
       [
-        h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `formality -n main`),
+        h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `formality -n main`),
         " reads all ",
         ".fm files on the current directory and loads the definitions inside them",
         ". The ",
-        h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `-n main`),
+        h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `-n main`),
         " bit means it must eval the main definition and output the result"
       ]
     ),
@@ -144,18 +144,18 @@ module.exports =
   h('p', {style: {'margin-top': '5px'}}, 
     [
       "This program makes a copy of ",
-      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `id`),
+      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `id`),
       " and applies it to itself",
       ". The result should be just ",
-      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `id`),
+      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `id`),
       ", i",
       ".e",
       ".",
       ", ",
-      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `[x] x`),
+      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `[x] x`),
       ", but",
       ", if we run it with ",
-      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `formality -n main`),
+      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `formality -n main`),
       ", it outputs",
       ":"
     ]
@@ -279,7 +279,7 @@ module.exports =
         h('p', {style: {'margin-top': '5px'}}, 
           [
             "Notice how similar it is to Agda’s ",
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `if`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `if`),
             "? That’s because Formality datatypes are simply Agda’s elimination principles for that datatype",
             ", except with self used on the first and last lines",
             "!"
@@ -292,7 +292,7 @@ module.exports =
         h('p', {style: {'margin-top': '5px'}}, 
           [
             "The lambda binding ",
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `-P`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `-P`),
             " is erased to avoid unnecessary runtime costs",
             "."
           ]
@@ -304,13 +304,13 @@ module.exports =
         h('p', {style: {'margin-top': '5px'}}, 
           [
             "Both ",
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `true`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `true`),
             " and ",
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `false`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `false`),
             " must be declared explicitly because",
             ", unlike Agda’s native data syntax",
             ", our ",
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `Bool`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `Bool`),
             " definition won’t automatically define them",
             "."
           ]
@@ -321,11 +321,11 @@ module.exports =
       [
         h('p', {style: {'margin-top': '5px'}}, 
           [
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `$self ...`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `$self ...`),
             " is used to define an inductive datatype ",
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `T`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `T`),
             ", and ",
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `@T ...`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `@T ...`),
             " is used to instantiate each of its constructors",
             "."
           ]
@@ -337,11 +337,11 @@ module.exports =
         h('p', {style: {'margin-top': '5px'}}, 
           [
             "The type of ",
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `Bool`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `Bool`),
             " refers to ",
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `true`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `true`),
             ", which refers to ",
-            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `Bool`),
+            h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `Bool`),
             ", in a “mutually recursive” fashion",
             ". This is clearly necessary",
             ", because inductive datatypes are defined as their own elimination principles",
@@ -377,9 +377,9 @@ module.exports =
       ", the rest is straightforward",
       ". Since datatypes are encoded as their elimination principles",
       ", in order to get them you must just eliminate their self types with a ",
-      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `~`),
+      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `~`),
       ", which can be seen on the body of ",
-      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA'}}, `if`),
+      h('code', {style: {'font-size': '15px', 'background-color': '#F6F8FA', 'padding-left': '5px', 'padding-right': '5px', 'padding-top': '3px', 'padding-bottom': '3px'}}, `if`),
       ". After the bureaucracy of defining a new datatype is complete",
       ", functions that operate on them are basically direct",
       ", syntactical translation of their Agda counterparts",
