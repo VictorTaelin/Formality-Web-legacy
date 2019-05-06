@@ -51,7 +51,7 @@ class Site extends Component {
       case "/"+pageTryIt: this.setState({page: pageTryIt}); break;
 
       case "/"+pageOverview: this.setState({page: pageOverview}); break;
-      case "/"+pageOVGettingStarted: this.setState({page: pageOVGettingStarted}); console.log("> Did mount in case /overview/getting-started"); break;
+      case "/"+pageOVGettingStarted: this.setState({page: pageOVGettingStarted}); break;
       // TODO: add the other pages (Interaction Combinators, EAC, etc)
     }
 
@@ -68,7 +68,6 @@ class Site extends Component {
   }
 
   onChangeInternalLink(nextPage) {
-    // console.log(">> Site > on change internal link, the state is: "+this.state.page+" and next page: "+nextPage)
     if (this.state.page !== nextPage){
       history.pushState({page: nextPage}, "/"+nextPage, "/"+nextPage);
     }
@@ -121,13 +120,8 @@ class Site extends Component {
         h(Tab, {title: "Overview", isCurrentPage: this.state.page === pageOverview,
                 onClick: () => {
                   this.setState({page: pageOverview});
-                  console.log("Clicking overview wiht path: "+window.location.pathname+" and props: "+this.page+" and state:"+this.state.page);
-                  console.log(window.location.pathname.includes(pageOverview));
-                  if (window.location.pathname.includes(pageOverview) ) {
-                  // if (this.state.page !== pageOverview) {
-                    console.log("> pushing state")               
+                  if (this.state.page !== pageOverview) {        
                     history.pushState({page: pageOverview}, "/"+pageOverview, "/"+pageOverview);
-                    console.log("Inside if. Path: "+window.location.pathname+" and props: "+this.page+" and state:"+this.state.page);
                   }
                 }
               }),
@@ -674,25 +668,6 @@ class TryIt extends Component {
       "margin-top": "20px",
     }
 
-  //   const subtitle = {
-  //     "margin-top": "30px",
-  //     "margin-bottom": "10px",
-  //     "font-size": "23px",
-  //     "font-family": "Open Sans",
-  //     "color": s.primaryColor, 
-  //   }
-
-  //   const codeHelloWorld = ` .main (Hello World)`
-
-  //   const codeIdentity = `
-  // .ID
-  // : {x : Type} Type
-  // = [x] x
-
-  // .main
-  //   (ID Type) 
-  //   `
-
     return h("div", {style: container}, [
       h("p", {style: title}, "Online editor"),
       h("p", {style: text}, [
@@ -702,14 +677,6 @@ class TryIt extends Component {
         h(InternalLink, {title: "here "}), // TODO: add link
       ]),
       h(Terminal)
-      // console.log("1. Rendering with the code: "+this.state.currentCode),
-      // console.log("2. Title props: "+this.state.title),
-      // h(Terminal, {currentCode: this.state.currentCode, title: this.props.title}),
-      // h("p", {style: subtitle}, "Check out some examples:"),
-      // h("div", {}, [ // TODO: add an expansible area to contain explanation about the examples      
-      //   h("p", {style: {"cursor": "pointer"}, onClick: () => { this.onClickExample(codeHelloWorld) }}, "1. Hello World"),
-      //   h("p", {style: {"cursor": "pointer"}, onClick: () => { this.onClickExample(codeIdentity) }}, "2. Identity"),
-      // ])
     ] );
   }
 }
@@ -720,11 +687,6 @@ class Terminal extends Component {
     this.state = {currentCode: props.currentCode, codeExample: props.codeExample, log: props.log, outputType: props.outputType, title: props.title};
   }
 
-  componentDidUpdate(newProps) {
-    // this.setState({currentCode: this.state.currentCode})
-    // console.log(">> Comp did Update. Current code: "+ this.state.currentCode);
-    // console.log("> and title: "+this.props.title)
-  }
   // Get a string and tranform it into a Formality code. 
   // Then, executes an action to compute the normal form or check the type of the code
   runCode(actionType) {
@@ -938,30 +900,10 @@ class Overview extends Component {
       [pageOVFAQ]: ovFAQMD
     };
     // ------ Rendering the content for each element on Content Navigator ------
-    console.log(">> On Overview component: "+this.props.page+" and state: "+this.state.page);
-
     return h("div", {style: contentNavigatorStyle}, [
       contentNavigator,
       h(DocsMarkdownContainer, {mdResource: h("div", {key: this.props.page}, pageToOv[this.props.page])})
     ]);
-
-    // } else if (this.props.page === pageOVGettingStarted) {
-    //   console.log("Pathname on gs: "+window.location.pathname);
-    //   return h("div", {style: contentNavigatorStyle}, [
-    //     contentNavigator,
-    //     h(DocsMarkdownContainer, {mdResource: ovGettingStartedMD})   
-    //   ]);
-    // } else if (this.props.page === pageExamples) {
-    //   return h("div", {style: contentNavigatorStyle}, [
-    //     contentNavigator,
-    //     h(DocsMarkdownContainer, {mdResource: ovExamplesMD}) 
-    //   ]);
-    // } else if (this.props.page === pageOVFAQ) {
-    //   return h("div", {style: contentNavigatorStyle}, [
-    //     contentNavigator,
-    //     h(DocsMarkdownContainer, {mdResource: ovFAQMD})
-    //   ]);
-    // }
     
   }
 }
