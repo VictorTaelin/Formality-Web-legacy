@@ -77,22 +77,6 @@ class Site extends Component {
   }
 
   render() {
-    // console.log("--");
-    // console.log(":: Image URL: "+logo);
-    // console.log(":: location.pathname: "+window.location.pathname);
-    // console.log("Site state: "+this.state.page);
-
-    // function drawCanvas({ctx, time}) {
-    //     const {width, height} = ctx.canvas;
-    //     ctx.save();
-    //     ctx.clearRect(0, 0, width, height);
-    //     ctx.fillStyle = 'black';
-    //     ctx.translate(width / 2, height / 2);
-    //     ctx.rotate(((time / 10) % 360) * Math.PI / 180);
-    //     ctx.fillRect(-1 * width / 4, -1 * height / 4, width / 2, height / 2);
-    //     ctx.restore();
-    // }
-
     const formalityTitleContainer = {
       "width": "650px",
       "height": "85px",
@@ -160,8 +144,6 @@ class Site extends Component {
           h(Button, {title: "Try it", onClick: () => { this.setState({page: pageTryIt}); window.scrollTo(0, 0); }}),
         ]),
 
-        // Canvas test
-        // h(Canvas, {draw: drawCanvas, width: 200, height: 200, realtime: true})
         h(Introduction),
         h(WhyGrid, {changePage: this.onChangeInternalLink.bind(this)}),
         h(Usage),
