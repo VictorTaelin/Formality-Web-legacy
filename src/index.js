@@ -44,7 +44,6 @@ class Site extends Component {
   }
 
   componentDidMount(){
-    console.log("Site did mount with pathname: "+window.location.pathname); 
     switch (window.location.pathname) {   
       case "/"+pageHome: this.setState({page: pageHome}); break;
       case "/"+pageDocumentation: this.setState({page: pageDocumentation}); break;
@@ -75,8 +74,6 @@ class Site extends Component {
     }
     this.setState({page: nextPage});
     window.scrollTo(0, 0);
-    console.log("On site change internal link path: "+window.location.pathname); 
-    console.log("And state: "+this.state.page); 
   }
 
   render() {
@@ -847,7 +844,6 @@ class Overview extends Component {
   }
   // When a Content Navigator Item is clicked, it must update this componenet and his father's state
   onChangePage(nextPage) {
-    console.log("[ov] on change page, the next page is: "+nextPage);
     this.setState({page: nextPage}) // update this componenet current state
     this.props.changePage(nextPage); // update the father's state
   }
@@ -874,6 +870,7 @@ class Overview extends Component {
       "justify-content": "flex-start",
     }
 
+    // Relates a page with a markdown file
     const pageContent = {
       [pageOverview]: ovMain,
       [pageOVGettingStarted]: ovGettingStartedMD,
@@ -887,19 +884,14 @@ class Overview extends Component {
                           pagesOrder[pagesOrder.indexOf(this.state.page) - 1] : // previous page
                           pageOverview;
 
-    console.log("---- [overview] ");                      
-    console.log("Next page: "+nextPage);
-    console.log("Previous page: "+previousPage);
-    console.log(".. and state: " +this.state.page);
-
     // ------ Rendering the content for each element on Content Navigator ------
     return h("div", {style: contentNavigatorStyle}, [
       contentNavigator,
       h("div", {style: {"flex-direction": "column"}}, [
         h(DocsMarkdownContainer, {mdResource: h("div", {key: this.props.page}, pageContent[this.props.page])}),
-        h("div", {style: {"display": "flex", "justify-content": "space-between", "margin-top": "50px", "font-family": "Open Sans"}}, [
+        h("div", {key: this.props.page, style: {"display": "flex", "justify-content": "space-between", "margin-top": "50px", "font-family": "Open Sans"}}, [
           h(InternalLink, { title: "< Previous", color: s.primaryColor, onClick: this.onChangePage.bind(this, previousPage) }),
-          h(InternalLink, { title: "Next > ", color: s.primaryColor, onClick: this.onChangePage.bind(this, nextPage) }),
+          h(InternalLink, { title: "Next >", color: s.primaryColor, onClick: this.onChangePage.bind(this, nextPage) }),
         ])
     ])
       
