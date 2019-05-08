@@ -1,16 +1,16 @@
-const Var = (index)                  => ["Var", {index},                  "[" + index + "]"];
-const Typ = ()                       => ["Typ", {},                       "#typ"];
-const All = (name, bind, body, eras) => ["All", {name, bind, body, eras}, "#all" + bind[2] + body[2]];
-const Lam = (name, bind, body, eras) => ["Lam", {name, bind, body, eras}, "#lam" + (bind?bind[2]:"") + body[2]];
-const App = (func, argm, eras)       => ["App", {func, argm, eras},       "#app" + func[2] + argm[2]];
-const Ref = (name, eras)             => ["Ref", {name, eras},             "{" + name + "}"];
-const Box = (expr)                   => ["Box", {expr},                   "#box" + expr[2]];
-const Put = (expr)                   => ["Put", {expr},                   "#put" + expr[2]];
-const Dup = (name, expr, body)       => ["Dup", {name, expr, body},       "#dup" + expr[2] + body[2]];
-const Slf = (name, type)             => ["Slf", {name, type},             "#slf" + type[2]];
-const New = (type, expr)             => ["New", {type, expr},             "#new" + type[2] + expr[2]];
-const Use = (expr)                   => ["Use", {expr},                   "#use" + expr[2]];
-const Ann = (type, expr, done)       => ["Ann", {type, expr, done},       "#ann" + expr[2] + type[2]];
+const Var = (index)                  => ["Var", {index},                  ];
+const Typ = ()                       => ["Typ", {},                       ];
+const All = (name, bind, body, eras) => ["All", {name, bind, body, eras}, ];
+const Lam = (name, bind, body, eras) => ["Lam", {name, bind, body, eras}, ];
+const App = (func, argm, eras)       => ["App", {func, argm, eras},       ];
+const Ref = (name, eras)             => ["Ref", {name, eras},             ];
+const Box = (expr)                   => ["Box", {expr},                   ];
+const Put = (expr)                   => ["Put", {expr},                   ];
+const Dup = (name, expr, body)       => ["Dup", {name, expr, body},       ];
+const Slf = (name, type)             => ["Slf", {name, type},             ];
+const New = (type, expr)             => ["New", {type, expr},             ];
+const Use = (expr)                   => ["Use", {expr},                   ];
+const Ann = (type, expr, done)       => ["Ann", {type, expr, done},       ];
 
 const Ctx = () => null;
 
@@ -112,69 +112,6 @@ const get_name = (ctx, i) => {
   }
 }
 
-// Converts a term to a string
-const show = ([ctor, args], ctx = Ctx()) => {
-  switch (ctor) {
-    case "Var":
-      var name = get_name(ctx, args.index);
-      return name !== null ? name : "#" + args.index;
-    case "Typ":
-      return "Type";
-    case "All":
-      var eras = args.eras ? "-" : "";
-      var name = args.name || "x";
-      var bind = show(args.bind, ctx);
-      var body = show(args.body, extend(ctx, [args.name, null]));
-      return "{" + eras + name + " : " + bind + "} " + body;
-    case "Lam":
-      var eras = args.eras ? "-" : "";
-      var name = args.name || "x";
-      var bind = args.bind && show(args.bind, ctx);
-      var body = show(args.body, extend(ctx, [name, null]));
-      return bind ? "[" + eras + name + " : " + bind + "] " + body : "[" + eras + name + "] " + body;
-    case "App":
-      var text = ")";
-      var term = [ctor, args];
-      while (term[0] === "App") {
-        text = (term[1].eras ? " -" : " ") + show(term[1].argm, ctx) + text;
-        term = term[1].func;
-      }
-      return "(" + show(term, ctx) + text;
-    case "Box":
-      var expr = show(args.expr, ctx);
-      return "!" + expr;
-    case "Put":
-      var expr = show(args.expr, ctx);
-      return "|" + expr;
-    case "Dup":
-      var name = args.name;
-      var expr = show(args.expr, ctx);
-      var body = show(args.body, extend(ctx, [args.name, null]));
-      return "[" + name + " = " + expr + "] " + body;
-    case "Slf":
-      var name = args.name;
-      var type = show(args.type, extend(ctx, [args.name, null]));
-      return "$" + name + " " + type;
-    case "New":
-      var type = show(args.type, ctx);
-      var expr = show(args.expr, ctx);
-      return "@" + type + " " + expr;
-    case "Use":
-      var expr = show(args.expr, ctx);
-      return "~" + expr; 
-    case "Ann":
-      //var type = show(args.type, ctx);
-      //var expr = show(args.expr, ctx);
-      //return ":" + type + " = " + expr;
-      //var type = show(args.type, ctx);
-      var expr = show(args.expr, ctx);
-      return expr;
-    case "Ref":
-      return args.name;
-  }
-}
-
-
 
 // Converts a string to a term
 const parse = (code) => {
@@ -190,7 +127,7 @@ const parse = (code) => {
   function skip_spaces() {
     while (index < code.length && is_space(code[index])) {
       if (code[index] === "\n") {
-        console.log(">>> Line break");
+        // console.log(">>> Line break");
       }
       index += 1;
     }
@@ -245,15 +182,18 @@ const parse = (code) => {
       while (index < code.length && !match(")")) {
         var eras = match("-");
         var argm = parse_term(ctx);
-        var func = App(func, argm, eras);
+        // var func = App(func, argm, eras);
+        var func = " (" +  App(func, argm, eras) 
         skip_spaces();
       }
-      return func;
+      return func + ") ";
+      // return " (" + argm + func +")";
     }
 
     // Type
     else if (match("Type")) {
-      return Typ();
+      // return Typ();
+      return "Type ";
     }
 
     // Forall
@@ -264,7 +204,8 @@ const parse = (code) => {
       var bind = parse_term(ctx);
       var skip = parse_exact("}");
       var body = parse_term(extend(ctx, [name, Var(0)]));
-      return All(name, bind, body, eras);
+      // return All(name, bind, body, eras);
+      return "{"+ name + " : "+ bind + "} " + body;
     }
 
     // Lambda
@@ -275,19 +216,23 @@ const parse = (code) => {
       var expr = match("=") ? parse_term(ctx) : null;
       var skip = parse_exact("]");
       var body = parse_term(extend(ctx, [name, Var(0)]));
-      return expr ? Dup(name, expr, body) : Lam(name, bind, body, eras);
-    }
+      // return expr ? Dup(name, expr, body) : Lam(name, bind, body, eras);
+      return expr ? "[" + name + " = " + expr + "] " + body : 
+             bind ? "[" + name + " : " + bind + "] " + body : "["+ name + "] " + body;
+   }
 
     // Box
     else if (match("!")) {
       var expr = parse_term(ctx);
-      return Box(expr);
+      // return Box(expr);
+      return " ! " + expr;
     }
 
     // Put
     else if (match("|")) {
       var expr = parse_term(ctx);
-      return Put(expr);
+      // return Put(expr);
+      return " | " + expr;
     }
 
     // Let
@@ -295,6 +240,8 @@ const parse = (code) => {
       var name = parse_name();
       var copy = parse_term(ctx);
       var body = parse_term(extend(ctx, [name, Var(0)]));
+      console.log(">> let");
+      console.log(ctx);
       return subst(body, copy, 0);
     }
 
@@ -302,20 +249,23 @@ const parse = (code) => {
     else if (match("$")) {
       var name = parse_name();
       var type = parse_term(extend(ctx, [name, Var(0)]));
-      return Slf(name, type);
+      // return Slf(name, type);
+      return "$" + name + " " + type;
     }
 
     // New
     else if (match("@")) {
       var type = parse_term(ctx);
       var expr = parse_term(ctx);
-      return New(type, expr);
+      // return New(type, expr);
+      return "@" + type + " " + expr;
     }
 
     // Use
     else if (match("~")) {
       var expr = parse_term(ctx);
-      return Use(expr);
+      // return Use(expr);
+      return "~" + expr; 
     }
 
     // Ann
@@ -323,7 +273,8 @@ const parse = (code) => {
       var type = parse_term(ctx);
       var skip = parse_exact("=");
       var expr = parse_term(ctx);
-      return Ann(type, expr, false);
+      // return Ann(type, expr, false);
+      return ": "+ type + " = "+ expr;
     }
 
     // Variable / Reference
@@ -335,8 +286,10 @@ const parse = (code) => {
       }
       var var_index = index_of(ctx, name, skip);
       if (var_index === null) {
-        return Ref(name, false);
+        // return Ref(name, false);
+        return name;
       } else {
+        console.log("[Variable] return get bind, ctx: "+ctx)
         return get_bind(ctx, var_index)[1];
       }
     }
@@ -382,8 +335,8 @@ const code = `. Nat
 = @Nat [-P] [s] [s = s] | [z] z `
 
 const parsedCode = parse(code);
-
-// console.log(parsedCode);
+console.log("\n");
+console.log(parsedCode);
 
 
 
