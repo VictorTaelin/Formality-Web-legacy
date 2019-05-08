@@ -4,7 +4,6 @@ const Canvas = require("inferno-canvas-component-2");
 
 // Formality
 const f = require("formality-lang");
-const t = require("./formality/test");
 
 // Style
 const s = require('./style');
@@ -145,7 +144,7 @@ class Site extends Component {
           ]),
           h(Button, {title: "Try it", onClick: () => { this.setState({page: pageTryIt}); window.scrollTo(0, 0); }}),
         ]),
-        h("div", {style: {"heigth": "300px", "margin": "20px"}}, [t.transform() ]),
+        
         h(Introduction),
         h(WhyGrid, {changePage: this.onChangeInternalLink.bind(this)}),
         h(Usage),

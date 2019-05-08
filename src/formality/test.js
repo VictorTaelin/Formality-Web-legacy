@@ -1,47 +1,68 @@
-const f = require ("./formality");
+const f = require ("./formality0");
+
+const code = `. Nat
+: Type
+= $self
+  {-P : {:Nat} Type}
+  {s : ! {-n : Nat} {h : (P n)} (P (succ n))}
+  ! {z : (P zero)}
+    (P self)
+
+. succ
+: {n : Nat} Nat
+= [n]
+  @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))
+
+. zero
+: Nat
+= @Nat [-P] [s] [s = s] | [z] z `
+
+const parsedCode = f.parse(code);
+
+console.log(parsedCode);
 
 
 // const defs = f.parse(code);
 
-function transform(code) {
-  const codeExample = `
+// function transform(code) {
+//   const codeExample = `
 
-. zero
-: Nat
-= @Nat [-P] [s] [s = s] | [z] z
-`
+// . zero
+// : Nat
+// = @Nat [-P] [s] [s = s] | [z] z
+// `
 
-  const colorPallete = {
-    ["["]: "#",
-    ["]"]: "#",
-    [":"]: "#EE65B6",
-    ["."]: "#EE65B6",
-    ["="]: "#126DD7",
-  }
+//   const colorPallete = {
+//     ["["]: "#",
+//     ["]"]: "#",
+//     [":"]: "#EE65B6",
+//     ["."]: "#EE65B6",
+//     ["="]: "#126DD7",
+//   }
 
-  var str = "h('p', {}, [ '"; // TODO: aspas simples são temporárias
+//   var str = "h('p', {}, [ '"; // TODO: aspas simples são temporárias
 
-  var index = 0;
-  while (index < codeExample.length) {
-    switch (codeExample[index]) {
-      case '=':
-        str += "', h('spam', {style: {'color': '"+ colorPallete['='] +"'}}, '=' ), ";
-      break; 
+//   var index = 0;
+//   while (index < codeExample.length) {
+//     switch (codeExample[index]) {
+//       case '=':
+//         str += " ', h('spam', {style: {'color': '"+ colorPallete['='] +"'}}, '=' ), ' ";
+//       break; 
 
-      default: 
-      str += codeExample[index];
-    }
-    index += 1;
-  }
-  str += " '])"; // TODO: aspas simples são temporárias
-  return str;
-}
+//       default: 
+//       str += codeExample[index];
+//     }
+//     index += 1;
+//   }
+//   str += " ' ])"; // TODO: aspas simples são temporárias
+//   return str;
+// }
 
-// console.log(transform(code));
+// // console.log(transform(code));
 
-module.exports = { transform }
+// module.exports = { transform }
 
-// console.log(parsedCode);
+
 
 // console.log(f.parse(ann))
 
