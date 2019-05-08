@@ -189,6 +189,9 @@ const parse = (code) => {
 
   function skip_spaces() {
     while (index < code.length && is_space(code[index])) {
+      if (code[index] === "\n") {
+        console.log(">>> Line break");
+      }
       index += 1;
     }
     return index;
@@ -320,7 +323,6 @@ const parse = (code) => {
       var type = parse_term(ctx);
       var skip = parse_exact("=");
       var expr = parse_term(ctx);
-      console.log("[Ann] and expr "+expr)
       return Ann(type, expr, false);
     }
 
@@ -383,15 +385,31 @@ const parsedCode = parse(code);
 
 // console.log(parsedCode);
 
-const showCode = (node) => {
-  var str = "";
-  for (var key in node) {
-    str += ". " + key+ " ";
-    str += show(parsedCode[key]);
-    console.log();
-    str += "\n";
-  }
-  return str;
-}
 
-console.log(showCode(parsedCode));
+
+
+
+
+
+
+
+
+
+
+// ======== Using show =========
+// const showCode = (node) => {
+//   var str = "";
+//   for (var key in node) {
+//     str += ". " + key+ " ";
+//     try { 
+//       str += show(parsedCode[key]); 
+//     } catch (e){
+//       console.log(" >>>>>> logging error");
+//       console.log(e);
+//     }    
+//     str += "\n";
+//   }
+//   return str;
+// }
+
+// console.log(showCode(parsedCode));
