@@ -41,7 +41,6 @@ const get_bind = (ctx, i, j = 0) => {
   }
 }
 
-
 // Shifts a term
 const shift = ([ctor, term], inc, depth) => {
   switch (ctor) {
@@ -95,6 +94,21 @@ const shift = ([ctor, term], inc, depth) => {
       return Ann(type, expr, done);
     case "Ref":
       return Ref(term.name, term.eras);
+  }
+}
+
+const get_name = (ctx, i) => {
+  const count = (ctx, name, i) => {
+    return i === 0 ? 0 : (ctx.head[0] === name ? 1 : 0) + count(ctx.tail, name, i - 1);
+  }
+  const repeat = (str, i) => {
+    return i === 0 ? "" : str + repeat(str, i - 1);
+  }
+  var bind = get_bind(ctx, i);
+  if (bind) {
+    return (bind[0] || "x") + repeat("'", count(ctx, bind[0], i));
+  } else {
+    return "#" + i;
   }
 }
 
@@ -159,146 +173,6 @@ const show = ([ctor, args], ctx = Ctx()) => {
       return args.name;
   }
 }
-
-function parse_name() {
-  skip_spaces();
-  var name = "";
-  while (index < code.length && is_name_char(code[index])) {
-    name = name + code[index];
-    index += 1;
-  }
-  return name;
-}
-
-function parse_term(ctx) {
-  // Comment
-  if (match("//")) {
-    while (index < code.length && code[index] !== "\n") {
-      index += 1;
-    }
-    return parse_term(ctx);
-  }
-
-  // Application
-  else if (match("(")) {
-    var func = parse_term(ctx);
-    while (index < code.length && !match(")")) {
-      var eras = match("-");
-      var argm = parse_term(ctx);
-      var func = App(func, argm, eras);
-      skip_spaces();
-    }
-    return func;
-  }
-
-  // Type
-  else if (match("Type")) {
-    return Typ();
-  }
-
-  // Forall
-  else if (match("{")) {
-    var eras = match("-");
-    var name = parse_name();
-    var skip = parse_exact(":");
-    var bind = parse_term(ctx);
-    var skip = parse_exact("}");
-    var body = parse_term(extend(ctx, [name, Var(0)]));
-    return All(name, bind, body, eras);
-  }
-
-  // Lambda
-  else if (match("[")) {
-    var eras = match("-");
-    var name = parse_name();
-    var bind = match(":") ? parse_term(ctx) : null;
-    var expr = match("=") ? parse_term(ctx) : null;
-    var skip = parse_exact("]");
-    var body = parse_term(extend(ctx, [name, Var(0)]));
-    return expr ? Dup(name, expr, body) : Lam(name, bind, body, eras);
-  }
-
-  // Box
-  else if (match("!")) {
-    var expr = parse_term(ctx);
-    return Box(expr);
-  }
-
-  // Put
-  else if (match("|")) {
-    var expr = parse_term(ctx);
-    return Put(expr);
-  }
-
-  // Let
-  else if (match("let")) {
-    var name = parse_name();
-    var copy = parse_term(ctx);
-    var body = parse_term(extend(ctx, [name, Var(0)]));
-    return subst(body, copy, 0);
-  }
-
-  // Slf
-  else if (match("$")) {
-    var name = parse_name();
-    var type = parse_term(extend(ctx, [name, Var(0)]));
-    return Slf(name, type);
-  }
-
-  // New
-  else if (match("@")) {
-    var type = parse_term(ctx);
-    var expr = parse_term(ctx);
-    return New(type, expr);
-  }
-
-  // Use
-  else if (match("~")) {
-    var expr = parse_term(ctx);
-    return Use(expr);
-  }
-
-  // Ann
-  else if (match(":")) {
-    var type = parse_term(ctx);
-    var skip = parse_exact("=");
-    var expr = parse_term(ctx);
-    return Ann(type, expr, false);
-  }
-
-  // Variable / Reference
-  else {
-    var name = parse_name();
-    var skip = 0;
-    while (match("'")) {
-      skip += 1;
-    }
-    var var_index = index_of(ctx, name, skip);
-    if (var_index === null) {
-      return Ref(name, false);
-    } else {
-      return get_bind(ctx, var_index)[1];
-    }
-  }
-}
-
-const code = `. Nat
-: Type
-= $self
-  {-P : {:Nat} Type}
-  {s : ! {-n : Nat} {h : (P n)} (P (succ n))}
-  ! {z : (P zero)}
-    (P self)
-
-. succ
-: {n : Nat} Nat
-= [n]
-  @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))
-
-. zero
-: Nat
-= @Nat [-P] [s] [s = s] | [z] z `
-
 
 
 
@@ -486,6 +360,38 @@ const parse = (code) => {
   return defs;
 }
 
+// ====================================================
+
+const code = `. Nat
+: Type
+= $self
+  {-P : {:Nat} Type}
+  {s : ! {-n : Nat} {h : (P n)} (P (succ n))}
+  ! {z : (P zero)}
+    (P self)
+
+. succ
+: {n : Nat} Nat
+= [n]
+  @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))
+
+. zero
+: Nat
+= @Nat [-P] [s] [s = s] | [z] z `
+
 const parsedCode = parse(code);
 
-console.log(parsedCode);
+// console.log(parsedCode);
+
+const showCode = (node) => {
+  var str = "";
+  for (var key in node) {
+    str += ". " + key+ " ";
+    str += show(parsedCode[key]);
+    console.log();
+    str += "\n";
+  }
+  return str;
+}
+
+console.log(showCode(parsedCode));
