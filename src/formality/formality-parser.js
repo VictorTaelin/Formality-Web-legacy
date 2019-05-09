@@ -20,9 +20,11 @@ const extend = (ctx, bind) => {
 }
 
 const index_of = (ctx, name, skip, i = 0) => {
+  console.log("[index_of] name: "+name+" and skip: "+skip);
+  console.log(ctx);
   if (!ctx) {
     return null;
-  } else if (ctx.head[0] === name && skip > 0) {
+  } else if (ctx.head[0] === name && skip >= 0) { // modified: skip >= 0
     return index_of(ctx.tail, name, skip - 1, i + 1);
   } else if (ctx.head[0] !== name) {
     return index_of(ctx.tail, name, skip, i + 1);
@@ -47,53 +49,68 @@ const shift = ([ctor, term], inc, depth) => {
     case "Var":
       return Var(term.index < depth ? term.index : term.index + inc);
     case "Typ":
+      // return Typ();
+      console.log("[shift] typ: "+Typ());
+      console.log(Typ());
       return Typ();
     case "All":
       var eras = term.eras;
       var name = term.name;
       var bind = shift(term.bind, inc, depth);
       var body = shift(term.body, inc, depth + 1);
-      return All(name, bind, body, eras);
+      // return All(name, bind, body, eras);
+      return "{" + name + " : " + bind + "} " + body;
     case "Lam":
       var eras = term.eras;
       var name = term.name;
       var bind = term.bind && shift(term.bind, inc, depth);
       var body = shift(term.body, inc, depth + 1);
-      return Lam(name, bind, body, eras);
+      // return Lam(name, bind, body, eras);
+      return "["+ name + " : " + bind + "]";
     case "App":
       var eras = term.eras;
       var func = shift(term.func, inc, depth);
       var argm = shift(term.argm, inc, depth);
-      return App(func, argm, eras);
+      // return App(func, argm, eras);
+      return "("+ func + args + ")";
     case "Box":
       var expr = shift(term.expr, inc, depth);
-      return Box(expr);
+      // return Box(expr);
+      return "!" + expr;
     case "Put":
       var expr = shift(term.expr, inc, depth);
-      return Put(expr);
+      // return Put(expr);
+      return "|" + expr;
     case "Dup":
       var name = term.name;
       var expr = shift(term.expr, inc, depth);
       var body = shift(term.body, inc, depth + 1);
-      return Dup(name, expr, body);
+      // return Dup(name, expr, body);
+      return "[" + name + " = " + expr + "] " + body;
     case "Slf":
       var name = term.name;
       var type = shift(term.type, inc, depth + 1);
-      return Slf(name, type);
+      // return Slf(name, type);
+      return "$" + name + " " + type;
     case "New":
       var type = shift(term.type, inc, depth);
       var expr = shift(term.expr, inc, depth);
-      return New(type, expr);
+      // return New(type, expr);
+      return "@" + type + " " + expr;
     case "Use":
       var expr = shift(term.expr, inc, depth);
-      return Use(expr);
+      // return Use(expr);
+      return "~" + expr; 
     case "Ann":
       var type = shift(term.type, inc, depth);
       var expr = shift(term.expr, inc, depth);
       var done = term.done;
-      return Ann(type, expr, done);
+      // return Ann(type, expr, done);
+      console.log("[shift ann] done: "+done);
+      return ": "+ type + " = "+ expr;
     case "Ref":
-      return Ref(term.name, term.eras);
+      // return Ref(term.name, term.eras);
+      return name;
   }
 }
 
@@ -183,7 +200,13 @@ const parse = (code) => {
         var eras = match("-");
         var argm = parse_term(ctx);
         // var func = App(func, argm, eras);
-        var func = " (" +  App(func, argm, eras) 
+        var func = " (" +  func +" "+ argm; // a function an its application
+        console.log("[app] ctx: ");
+        console.log(ctx);
+        console.log("[app] func: ");
+        console.log(func);
+        console.log("[app] argm: ");
+        console.log(argm);
         skip_spaces();
       }
       return func + ") ";
@@ -289,7 +312,6 @@ const parse = (code) => {
         // return Ref(name, false);
         return name;
       } else {
-        console.log("[Variable] return get bind, ctx: "+ctx)
         return get_bind(ctx, var_index)[1];
       }
     }
