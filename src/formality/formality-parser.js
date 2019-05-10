@@ -20,13 +20,14 @@ const extend = (ctx, bind) => {
 }
 
 const index_of = (ctx, name, skip, i = 0) => {
-  console.log("[index_of] name: "+name+" and skip: "+skip);
-  console.log(ctx);
+  // console.log("[index_of] name: "+name+" and skip: "+skip);
+  // console.log(ctx);
   if (!ctx) {
     return null;
   } else if (ctx.head[0] === name && skip >= 0) { // modified: skip >= 0
     return index_of(ctx.tail, name, skip - 1, i + 1);
   } else if (ctx.head[0] !== name) {
+    // console.log("\n Else case");
     return index_of(ctx.tail, name, skip, i + 1);
   } else {
     return i;
@@ -34,12 +35,17 @@ const index_of = (ctx, name, skip, i = 0) => {
 }
 
 const get_bind = (ctx, i, j = 0) => {
+  console.log("Get bind j: "+j+" and i: "+i);
   if (!ctx) {
     return null;
   } else if (j < i) {
     return get_bind(ctx.tail, i, j + 1);
   } else {
-    return [ctx.head[0], ctx.head[1] ? shift(ctx.head[1], i, 0) : null];
+    console.log("---- ctsx.head");
+    console.log(ctx.head);
+    // return [ctx.head[0], ctx.head[1] ? shift(ctx.head[1], i, 0) : null];
+    // WARNING: I'm removing the shift to test the function
+    return [ctx.head[0], ctx.head[1] ? ctx.head[0] : null]
   }
 }
 
@@ -196,20 +202,16 @@ const parse = (code) => {
     // Application
     else if (match("(")) {
       var func = parse_term(ctx);
+      var strg = "";
       while (index < code.length && !match(")")) {
         var eras = match("-");
         var argm = parse_term(ctx);
         // var func = App(func, argm, eras);
-        var func = " (" +  func +" "+ argm; // a function an its application
-        console.log("[app] ctx: ");
-        console.log(ctx);
-        console.log("[app] func: ");
-        console.log(func);
-        console.log("[app] argm: ");
-        console.log(argm);
+        strg = eras ? "-" : "";
+        var func =  func +" "+ strg + argm ; // a function an its application
         skip_spaces();
       }
-      return func + ") ";
+      return " ("+ func + ")";
       // return " (" + argm + func +")";
     }
 
@@ -228,7 +230,8 @@ const parse = (code) => {
       var skip = parse_exact("}");
       var body = parse_term(extend(ctx, [name, Var(0)]));
       // return All(name, bind, body, eras);
-      return "{"+ name + " : "+ bind + "} " + body;
+      var strg = eras ? "-" : "";
+      return "{"+ strg + name + " : "+ bind + "} " + body;
     }
 
     // Lambda
@@ -239,9 +242,10 @@ const parse = (code) => {
       var expr = match("=") ? parse_term(ctx) : null;
       var skip = parse_exact("]");
       var body = parse_term(extend(ctx, [name, Var(0)]));
+      var strg = eras ? "-" : "";
       // return expr ? Dup(name, expr, body) : Lam(name, bind, body, eras);
-      return expr ? "[" + name + " = " + expr + "] " + body : 
-             bind ? "[" + name + " : " + bind + "] " + body : "["+ name + "] " + body;
+      return expr ? "[" + strg + name + " = " + expr + "] " + body : 
+             bind ? "[" + strg + name + " : " + bind + "] " + body : "["+ strg + name + "] " + body;
    }
 
     // Box
@@ -254,7 +258,6 @@ const parse = (code) => {
     // Put
     else if (match("|")) {
       var expr = parse_term(ctx);
-      // return Put(expr);
       return " | " + expr;
     }
 
@@ -263,8 +266,6 @@ const parse = (code) => {
       var name = parse_name();
       var copy = parse_term(ctx);
       var body = parse_term(extend(ctx, [name, Var(0)]));
-      console.log(">> let");
-      console.log(ctx);
       return subst(body, copy, 0);
     }
 
@@ -308,7 +309,7 @@ const parse = (code) => {
         skip += 1;
       }
       var var_index = index_of(ctx, name, skip);
-      if (var_index === null) {
+      if (var_index === null) {    
         // return Ref(name, false);
         return name;
       } else {
@@ -339,22 +340,18 @@ const parse = (code) => {
 
 // ====================================================
 
-const code = `. Nat
-: Type
-= $self
-  {-P : {:Nat} Type}
-  {s : ! {-n : Nat} {h : (P n)} (P (succ n))}
-  ! {z : (P zero)}
-    (P self)
-
-. succ
-: {n : Nat} Nat
-= [n]
-  @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))
-
-. zero
-: Nat
-= @Nat [-P] [s] [s = s] | [z] z `
+const code = `
+. rewrite
+: {-T : Type}
+  {-a : T}
+  {-b : T}
+  {e  : (Eq T a b)}
+  {-P : {a : T} Type}
+  {x  : (P a)}
+  (P b)
+= [-T] [-a] [-b] [e] [-P] [x]
+  (~e -[b] [self] (P b) x)
+`
 
 const parsedCode = parse(code);
 console.log("\n");
