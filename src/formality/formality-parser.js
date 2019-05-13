@@ -45,7 +45,11 @@ const get_bind = (ctx, i, j = 0) => {
     console.log(ctx.head);
     // return [ctx.head[0], ctx.head[1] ? shift(ctx.head[1], i, 0) : null];
     // WARNING: I'm removing the shift to test the function
-    return [ctx.head[0], ctx.head[1] ? ctx.head[0] : null]
+    // return [ctx.head[0], ctx.head[1] ? ctx.head[0] : null]
+
+
+    return [ctx.head[0], ctx.head[1] ? "h('span', {}, '"+ctx.head[0]+"'),"  : null]
+    // return [ctx.head[0], ctx.head[1] ? shift(ctx.head[1], i, 0)  : null]
   }
 }
 
@@ -54,10 +58,9 @@ const shift = ([ctor, term], inc, depth) => {
   switch (ctor) {
     case "Var":
       return Var(term.index < depth ? term.index : term.index + inc);
+      // return term.index < depth ? term.index : term.index + inc;
     case "Typ":
       // return Typ();
-      console.log("[shift] typ: "+Typ());
-      console.log(Typ());
       return Typ();
     case "All":
       var eras = term.eras;
@@ -208,18 +211,20 @@ const parse = (code) => {
         var argm = parse_term(ctx);
         // var func = App(func, argm, eras);
         strg = eras ? "-" : "";
-        var func =  func +" "+ strg + argm ; // a function an its application
+        // var func =  func +" "+ strg + argm ; // a function an its application
+        var func = "h('span', {}, ["+ func +", ' ', '"+strg+"', "+ argm +" ]),"; 
         skip_spaces();
       }
-      return " ("+ func + ")";
-      // return " (" + argm + func +")";
+       // return " (" + argm + func +")";
+      // return " ("+ func + ")";
+      return "h('span', {}, [' (', "+ func +", ') ']), ";
     }
 
     // Type
     else if (match("Type")) {
       // return Typ();
       // return "Type ";
-      return "h('span', {}, 'Type'),"
+      return "h('span', {}, 'Type'),";
     }
 
     // Forall
@@ -233,7 +238,7 @@ const parse = (code) => {
       // return All(name, bind, body, eras);
       var strg = eras ? "-" : "";
       // return "{"+ strg + name + " : "+ bind + "} " + body;
-      return "h('span', {}, ['{', '"+ strg +"', "+ name +" : "+ bind +", '}', "+ body +"])," // strg is a string
+      return "h('span', {}, [' {', '"+ strg + name +"', ' : ', "+ bind +", '} ', "+ body +"]),"; // strg is a string
     }
 
     // Lambda
@@ -246,23 +251,26 @@ const parse = (code) => {
       var body = parse_term(extend(ctx, [name, Var(0)]));
       var strg = eras ? "-" : "";
       // return expr ? Dup(name, expr, body) : Lam(name, bind, body, eras);
-      return expr ? "[" + strg + name + " = " + expr + "] " + body : 
-             bind ? "[" + strg + name + " : " + bind + "] " + body : "["+ strg + name + "] " + body;
-      // var dup = "h('span', {}, ['[',"+  +",']'])"
-      // return "h('span', {}, []), "
+      // return expr ? "[" + strg + name + " = " + expr + "] " + body : 
+      //        bind ? "[" + strg + name + " : " + bind + "] " + body : "["+ strg + name + "] " + body;
+      var dup = "h('span', {}, ['[', '"+ strg + name +"', ' = ', "+ expr +", '] ', "+ body +"]), "; // strg and name are a string
+      var lam = "h('span', {}, ['[', '"+ strg + name +"', ' : ', "+ bind +", '] ', "+ body +"]), "; 
+      return expr ? dup : (bind ? lam : "h('span', {}, [' [', '"+ strg + name +"', '] ', "+ body +" ]), ");
    }
 
     // Box
     else if (match("!")) {
       var expr = parse_term(ctx);
       // return Box(expr);
-      return " ! " + expr;
+      // return " ! " + expr;
+      return "h('span', {}, [ ' ! ', "+ expr +"]), ";
     }
 
     // Put
     else if (match("|")) {
       var expr = parse_term(ctx);
-      return " | " + expr;
+      // return " | " + expr;
+      return "h('span', {}, [ ' | ', "+ expr +"]), ";
     }
 
     // Let
@@ -279,7 +287,7 @@ const parse = (code) => {
       var type = parse_term(extend(ctx, [name, Var(0)]));
       // return Slf(name, type);
       // return "$" + name + " " + type;
-      return "h('span', {}, ['$', '"+ name +"', "+ type +"]), " // name is a string
+      return "h('span', {}, ['$', '"+ name +"', "+ type +"]), "; // name is a string
     }
 
     // New
@@ -288,14 +296,15 @@ const parse = (code) => {
       var expr = parse_term(ctx);
       // return New(type, expr);
       // return "@" + type + " " + expr;
-      return "h('span', {}, '@"+ type +" "+ expr +"')," //TODO: check if use an span or div
+      return "h('span', {}, ['@', "+ type +" "+ expr +"]), "; //TODO: check if use an span or div
     }
 
     // Use
     else if (match("~")) {
       var expr = parse_term(ctx);
       // return Use(expr);
-      return "~" + expr; 
+      // return "~" + expr; 
+      return "h('span', {}, [ '~', "+ expr +"]), ";
     }
 
     // Ann
@@ -308,7 +317,7 @@ const parse = (code) => {
       return "h('div', {}, ["
       +"h('p', {}, [': ', "+type+"] ), "
       +"h('p', {},  ['= ', "+expr+"] ), "+
-      "]),"
+      "]),";
     }
 
     // Variable / Reference
@@ -321,8 +330,10 @@ const parse = (code) => {
       var var_index = index_of(ctx, name, skip);
       if (var_index === null) {    
         // return Ref(name, false);
-        return name;
+        // return name;
+        return "h('span', {}, '"+ name +"'), "
       } else {
+        console.log(">>> Variable calling get_bind");
         return get_bind(ctx, var_index)[1];
       }
     }
@@ -351,22 +362,10 @@ const parse = (code) => {
 // ====================================================
 
 const code = `
-. Nat
-: Type
-= $self
-  {-P : {:Nat} Type}
-  {s : ! {-n : Nat} {h : (P n)} (P (succ n))}
-  ! {z : (P zero)}
-    (P self)
-
 . succ
 : {n : Nat} Nat
 = [n]
   @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))
-
-. zero
-: Nat
-= @Nat [-P] [s] [s = s] | [z] z
 `
 
 const parsedCode = parse(code);
