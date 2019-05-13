@@ -27,7 +27,6 @@ const index_of = (ctx, name, skip, i = 0) => {
   } else if (ctx.head[0] === name && skip >= 0) { // modified: skip >= 0
     return index_of(ctx.tail, name, skip - 1, i + 1);
   } else if (ctx.head[0] !== name) {
-    // console.log("\n Else case");
     return index_of(ctx.tail, name, skip, i + 1);
   } else {
     return i;
@@ -53,10 +52,13 @@ const get_bind = (ctx, i, j = 0) => {
   }
 }
 
+// IMPORTANT: not being used in get_bind
 // Shifts a term
 const shift = ([ctor, term], inc, depth) => {
   switch (ctor) {
     case "Var":
+      console.log("In Shift: ");
+      console.log([ctor, term]);
       return Var(term.index < depth ? term.index : term.index + inc);
       // return term.index < depth ? term.index : term.index + inc;
     case "Typ":
@@ -115,7 +117,6 @@ const shift = ([ctor, term], inc, depth) => {
       var expr = shift(term.expr, inc, depth);
       var done = term.done;
       // return Ann(type, expr, done);
-      console.log("[shift ann] done: "+done);
       return ": "+ type + " = "+ expr;
     case "Ref":
       // return Ref(term.name, term.eras);
@@ -333,7 +334,6 @@ const parse = (code) => {
         // return name;
         return "h('span', {}, '"+ name +"'), "
       } else {
-        console.log(">>> Variable calling get_bind");
         return get_bind(ctx, var_index)[1];
       }
     }
@@ -362,15 +362,41 @@ const parse = (code) => {
 // ====================================================
 
 const code = `
+. Nat
+: Type
+= $self
+  {-P : {:Nat} Type}
+  {s : ! {-n : Nat} {h : (P n)} (P (succ n))}
+  ! {z : (P zero)}
+    (P self)
+
 . succ
 : {n : Nat} Nat
 = [n]
   @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))
+
+. zero
+: Nat
+= @Nat [-P] [s] [s = s] | [z] z
 `
 
 const parsedCode = parse(code);
 console.log("\n");
 console.log(parsedCode);
+
+
+function parseCode(code) {
+  var output = "";
+  for (key in parsedCode) {
+    var formattedKey = ". "+key;
+    output += "h('p', {}, '"+ formattedKey +"'), "+parsedCode[key];
+    output += "h('br'), "
+  }
+  return output;
+}
+
+module.exports = {parseCode};
+
 
 
 

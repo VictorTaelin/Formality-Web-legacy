@@ -4,6 +4,7 @@ const Canvas = require("inferno-canvas-component-2");
 
 // Formality
 const f = require("formality-lang");
+const p = require("./formality/formality-parser");
 
 // Style
 const s = require('./style');
@@ -93,6 +94,23 @@ class Site extends Component {
       "margin-bottom": "30px"
     }
 
+    var formalityCode = `. Nat
+: Type
+= $self
+  {-P : {:Nat} Type}
+  {s : ! {-n : Nat} {h : (P n)} (P (succ n))}
+  ! {z : (P zero)}
+    (P self)
+
+. succ
+: {n : Nat} Nat
+= [n]
+  @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))
+
+. zero
+: Nat
+= @Nat [-P] [s] [s = s] | [z] z`;
+
     const genericContentContainer = { "min-height": "1450px", "flex-direction": "column", "margin-bottom": "60px"}
     // Top menu
     var topMenu = h("div", {style: {"width": "100%", "display": "flex", "flex-flow": "row nowrap", "background-color": s.primaryColor, "color": s.secondaryColor}}, [
@@ -145,9 +163,8 @@ class Site extends Component {
           h(Button, {title: "Try it", onClick: () => { this.setState({page: pageTryIt}); window.scrollTo(0, 0); }}),
         ]),
 
-        h("div", {}, [
-          h('div', {}, [h('p', {}, [': ', h('span', {}, [' {', 'n', ' : ', h('span', {}, 'Nat'), , '} ', h('span', {}, 'Nat'), ]),] ), h('p', {},  ['= ', h('span', {}, [' [', 'n', '] ', h('span', {}, ['@', h('span', {}, 'Nat'),  h('span', {}, [' [', '-P', '] ', h('span', {}, [' [', 's', '] ', h('span', {}, ['[', 's', ' = ', h('span', {}, 's'), , '] ', h('span', {}, ['[', 'A', ' = ', h('span', {}, [' (', h('span', {}, [h('span', {}, [h('span', {}, [ '~', h('span', {}, 'n'), ]), , ' ', '-', h('span', {}, 'P'),  ]),, ' ', '', h('span', {}, [ ' | ', h('span', {}, 's'),]),  ]),, ') ']), , '] ', h('span', {}, [ ' | ', h('span', {}, [' [', 'z', '] ', h('span', {}, [' (', h('span', {}, [h('span', {}, [h('span', {}, 's'),, ' ', '-', h('span', {}, 'n'),  ]),, ' ', '', h('span', {}, [' (', h('span', {}, [h('span', {}, 'A'), , ' ', '', h('span', {}, 'z'),  ]),, ') ']),  ]),, ') ']),  ]), ]), ]), ]),  ]),  ]), ]),  ]), ] ), ]),
-
+        h("div", {style: {'font-family': "Inconsolata"}}, [
+          
         ]),
         
         h(Introduction),
