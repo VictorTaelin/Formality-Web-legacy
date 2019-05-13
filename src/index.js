@@ -144,6 +144,21 @@ class Site extends Component {
           ]),
           h(Button, {title: "Try it", onClick: () => { this.setState({page: pageTryIt}); window.scrollTo(0, 0); }}),
         ]),
+
+        h("div", {}, [
+          h('div', {}, 
+            [h('p', {}, [': ', 
+              h('span', {}, 'Type'),] ), 
+              h('p', {},  ['= ', 
+                h('span', {}, ['$', 'self',
+                  h('span', {}, ['{', '-', 'P :', 
+                    h('span', {}, ['{', '',  ': Nat', '}', 
+                    h('span', {}, 'Type'),]),, '}', 
+                    h('span', {}, ['{', '', 's :  !', h('span', {}, ['{', '-', 'n : Nat', '}', 
+                    h('span', {}, ['{', '', 'h :  (P n)', '}',  '(P  (succ n))']),]),, '}',  '!', 
+                    h('span', {}, ['{', '', 'z :  (P zero)', '}',  '(P self)']),]),]),]), ] ), ]),
+
+        ]),
         
         h(Introduction),
         h(WhyGrid, {changePage: this.onChangeInternalLink.bind(this)}),

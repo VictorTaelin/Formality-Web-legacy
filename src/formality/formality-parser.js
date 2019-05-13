@@ -218,7 +218,8 @@ const parse = (code) => {
     // Type
     else if (match("Type")) {
       // return Typ();
-      return "Type ";
+      // return "Type ";
+      return "h('span', {}, 'Type'),"
     }
 
     // Forall
@@ -231,7 +232,8 @@ const parse = (code) => {
       var body = parse_term(extend(ctx, [name, Var(0)]));
       // return All(name, bind, body, eras);
       var strg = eras ? "-" : "";
-      return "{"+ strg + name + " : "+ bind + "} " + body;
+      // return "{"+ strg + name + " : "+ bind + "} " + body;
+      return "h('span', {}, ['{', '"+ strg +"', "+ name +" : "+ bind +", '}', "+ body +"])," // strg is a string
     }
 
     // Lambda
@@ -246,6 +248,8 @@ const parse = (code) => {
       // return expr ? Dup(name, expr, body) : Lam(name, bind, body, eras);
       return expr ? "[" + strg + name + " = " + expr + "] " + body : 
              bind ? "[" + strg + name + " : " + bind + "] " + body : "["+ strg + name + "] " + body;
+      // var dup = "h('span', {}, ['[',"+  +",']'])"
+      // return "h('span', {}, []), "
    }
 
     // Box
@@ -274,7 +278,8 @@ const parse = (code) => {
       var name = parse_name();
       var type = parse_term(extend(ctx, [name, Var(0)]));
       // return Slf(name, type);
-      return "$" + name + " " + type;
+      // return "$" + name + " " + type;
+      return "h('span', {}, ['$', '"+ name +"', "+ type +"]), " // name is a string
     }
 
     // New
@@ -282,7 +287,8 @@ const parse = (code) => {
       var type = parse_term(ctx);
       var expr = parse_term(ctx);
       // return New(type, expr);
-      return "@" + type + " " + expr;
+      // return "@" + type + " " + expr;
+      return "h('span', {}, '@"+ type +" "+ expr +"')," //TODO: check if use an span or div
     }
 
     // Use
@@ -298,7 +304,11 @@ const parse = (code) => {
       var skip = parse_exact("=");
       var expr = parse_term(ctx);
       // return Ann(type, expr, false);
-      return ": "+ type + " = "+ expr;
+      // return ": "+ type + " = "+ expr;
+      return "h('div', {}, ["
+      +"h('p', {}, [': ', "+type+"] ), "
+      +"h('p', {},  ['= ', "+expr+"] ), "+
+      "]),"
     }
 
     // Variable / Reference
@@ -341,16 +351,22 @@ const parse = (code) => {
 // ====================================================
 
 const code = `
-. rewrite
-: {-T : Type}
-  {-a : T}
-  {-b : T}
-  {e  : (Eq T a b)}
-  {-P : {a : T} Type}
-  {x  : (P a)}
-  (P b)
-= [-T] [-a] [-b] [e] [-P] [x]
-  (~e -[b] [self] (P b) x)
+. Nat
+: Type
+= $self
+  {-P : {:Nat} Type}
+  {s : ! {-n : Nat} {h : (P n)} (P (succ n))}
+  ! {z : (P zero)}
+    (P self)
+
+. succ
+: {n : Nat} Nat
+= [n]
+  @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))
+
+. zero
+: Nat
+= @Nat [-P] [s] [s = s] | [z] z
 `
 
 const parsedCode = parse(code);
