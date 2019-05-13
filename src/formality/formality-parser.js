@@ -1,5 +1,5 @@
 const Var = (index)                  => ["Var", {index},                  ];
-const Typ = ()                       => ["Typ", {},                       ];
+const Typ = ()                       => ["Typ", {style: {'color': ''}},                       ];
 const All = (name, bind, body, eras) => ["All", {name, bind, body, eras}, ];
 const Lam = (name, bind, body, eras) => ["Lam", {name, bind, body, eras}, ];
 const App = (func, argm, eras)       => ["App", {func, argm, eras},       ];
@@ -14,6 +14,23 @@ const Ann = (type, expr, done)       => ["Ann", {type, expr, done},       ];
 
 const Ctx = () => null;
 
+const colorPallete = {
+  "[]": "#01BCD4", // cyan
+  "{}": "#E91F63", // ligth blue
+  "()": "#673AB7", // deep purple
+
+  ":": "#EE65B6", // pink
+  "=": "#EE65B6",
+  ".": "#EE65B6",
+
+  "!": "#ED7A6E", // orange
+  "$": "#ED7A6E",
+  "~": "#ED7A6E",
+  "|": "#ED7A6E",
+  "@": "#ED7A6E",
+
+  "text": "#383D42", // dark gray
+}
 
 const extend = (ctx, bind) => {
   return {head: bind, tail: ctx};
@@ -40,14 +57,11 @@ const get_bind = (ctx, i, j = 0) => {
   } else if (j < i) {
     return get_bind(ctx.tail, i, j + 1);
   } else {
-    console.log("---- ctsx.head");
-    console.log(ctx.head);
     // return [ctx.head[0], ctx.head[1] ? shift(ctx.head[1], i, 0) : null];
     // WARNING: I'm removing the shift to test the function
     // return [ctx.head[0], ctx.head[1] ? ctx.head[0] : null]
 
-
-    return [ctx.head[0], ctx.head[1] ? "h('span', {}, '"+ctx.head[0]+"'),"  : null]
+    return [ctx.head[0], ctx.head[1] ? "h('span', {style: {'color': '"+ colorPallete["text"] +"'}}, '"+ctx.head[0]+"'),"  : null]
     // return [ctx.head[0], ctx.head[1] ? shift(ctx.head[1], i, 0)  : null]
   }
 }
@@ -213,19 +227,19 @@ const parse = (code) => {
         // var func = App(func, argm, eras);
         strg = eras ? "-" : "";
         // var func =  func +" "+ strg + argm ; // a function an its application
-        var func = "h('span', {}, ["+ func +", ' ', '"+strg+"', "+ argm +" ]),"; 
+        var func = "h('span', {style: {'color': '"+ colorPallete["text"] +"'}}, ["+ func +", ' ', '"+strg+"', "+ argm +" ]),"; 
         skip_spaces();
       }
        // return " (" + argm + func +")";
       // return " ("+ func + ")";
-      return "h('span', {}, [' (', "+ func +", ') ']), ";
+      return "h('span', {style: {'color': '"+colorPallete["()"]+"'}}, [' (', "+ func +", ') ']), ";
     }
 
     // Type
     else if (match("Type")) {
       // return Typ();
       // return "Type ";
-      return "h('span', {}, 'Type'),";
+      return "h('span', {style: {'color': '"+ colorPallete["text"] +"'}}, 'Type'),";
     }
 
     // Forall
@@ -239,7 +253,7 @@ const parse = (code) => {
       // return All(name, bind, body, eras);
       var strg = eras ? "-" : "";
       // return "{"+ strg + name + " : "+ bind + "} " + body;
-      return "h('span', {}, [' {', '"+ strg + name +"', ' : ', "+ bind +", '} ', "+ body +"]),"; // strg is a string
+      return "h('span', {style: {'color': '"+ colorPallete["{}"] +"'}}, [' {', '"+ strg + name +"', ' : ', "+ bind +", '} ', "+ body +"]),"; // strg is a string
     }
 
     // Lambda
@@ -254,9 +268,9 @@ const parse = (code) => {
       // return expr ? Dup(name, expr, body) : Lam(name, bind, body, eras);
       // return expr ? "[" + strg + name + " = " + expr + "] " + body : 
       //        bind ? "[" + strg + name + " : " + bind + "] " + body : "["+ strg + name + "] " + body;
-      var dup = "h('span', {}, ['[', '"+ strg + name +"', ' = ', "+ expr +", '] ', "+ body +"]), "; // strg and name are a string
-      var lam = "h('span', {}, ['[', '"+ strg + name +"', ' : ', "+ bind +", '] ', "+ body +"]), "; 
-      return expr ? dup : (bind ? lam : "h('span', {}, [' [', '"+ strg + name +"', '] ', "+ body +" ]), ");
+      var dup = "h('span', {style: {'color': '"+ colorPallete["[]"] +"'}}, ['[', '"+ strg + name +"', ' = ', "+ expr +", '] ', "+ body +"]), "; // strg and name are a string
+      var lam = "h('span', {style: {'color': '"+ colorPallete["[]"] +"'}}, ['[', '"+ strg + name +"', ' : ', "+ bind +", '] ', "+ body +"]), "; 
+      return expr ? dup : (bind ? lam : "h('span', {style: {'color': '"+ colorPallete["[]"] +"'}}, [' [', '"+ strg + name +"', '] ', "+ body +" ]), ");
    }
 
     // Box
@@ -264,14 +278,14 @@ const parse = (code) => {
       var expr = parse_term(ctx);
       // return Box(expr);
       // return " ! " + expr;
-      return "h('span', {}, [ ' ! ', "+ expr +"]), ";
+      return "h('span', {style: {'color': '"+ colorPallete["!"] +"'}}, [ ' ! ', "+ expr +"]), ";
     }
 
     // Put
     else if (match("|")) {
       var expr = parse_term(ctx);
       // return " | " + expr;
-      return "h('span', {}, [ ' | ', "+ expr +"]), ";
+      return "h('span', {style: {'color': '"+ colorPallete["|"] +"'}}, [ ' | ', "+ expr +"]), ";
     }
 
     // Let
@@ -288,7 +302,7 @@ const parse = (code) => {
       var type = parse_term(extend(ctx, [name, Var(0)]));
       // return Slf(name, type);
       // return "$" + name + " " + type;
-      return "h('span', {}, ['$', '"+ name +"', "+ type +"]), "; // name is a string
+      return "h('span', {style: {'color': '"+ colorPallete["$"] +"'}}, ['$', '"+ name +"', "+ type +"]), "; // name is a string
     }
 
     // New
@@ -297,7 +311,7 @@ const parse = (code) => {
       var expr = parse_term(ctx);
       // return New(type, expr);
       // return "@" + type + " " + expr;
-      return "h('span', {}, ['@', "+ type +" "+ expr +"]), "; //TODO: check if use an span or div
+      return "h('span', {style: {'color': '"+ colorPallete["@"] +"'}}, ['@', "+ type +" "+ expr +"]), "; //TODO: check if use an span or div
     }
 
     // Use
@@ -305,7 +319,7 @@ const parse = (code) => {
       var expr = parse_term(ctx);
       // return Use(expr);
       // return "~" + expr; 
-      return "h('span', {}, [ '~', "+ expr +"]), ";
+      return "h('span', {style: {'color': '"+ colorPallete["~"] +"'}}, [ '~', "+ expr +"]), ";
     }
 
     // Ann
@@ -316,8 +330,8 @@ const parse = (code) => {
       // return Ann(type, expr, false);
       // return ": "+ type + " = "+ expr;
       return "h('div', {}, ["
-      +"h('p', {}, [': ', "+type+"] ), "
-      +"h('p', {},  ['= ', "+expr+"] ), "+
+      +"h('p', {style: {'color': '"+ colorPallete[":"] +"'}}, [': ', "+type+"] ), "
+      +"h('p', {style: {'color': '"+ colorPallete["="] +"'}},  ['= ', "+expr+"] ), "+
       "]),";
     }
 
@@ -332,7 +346,7 @@ const parse = (code) => {
       if (var_index === null) {    
         // return Ref(name, false);
         // return name;
-        return "h('span', {}, '"+ name +"'), "
+        return "h('span', {style: {'color': '"+ colorPallete["text"] +"'}}, '"+ name +"'), "
       } else {
         return get_bind(ctx, var_index)[1];
       }
@@ -389,7 +403,7 @@ function parseCode(code) {
   var output = "";
   for (key in parsedCode) {
     var formattedKey = ". "+key;
-    output += "h('p', {}, '"+ formattedKey +"'), "+parsedCode[key];
+    output += "h('p', {style: {'color': ''}}, '"+ formattedKey +"'), "+parsedCode[key];
     output += "h('br'), "
   }
   return output;
