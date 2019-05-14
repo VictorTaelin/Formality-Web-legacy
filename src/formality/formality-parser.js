@@ -15,21 +15,22 @@ const Ann = (type, expr, done)       => ["Ann", {type, expr, done},       ];
 const Ctx = () => null;
 
 const colorPallete = {
-  "[]": "#01BCD4", // cyan
-  "{}": "#E91F63", // ligth blue
-  "()": "#673AB7", // deep purple
+  "[]": "#6A266F", // purple
+  "{}": "#37889F", // dark blue
+  "()": "#FF4F54", // red
 
-  ":": "#EE65B6", // pink
-  "=": "#EE65B6",
-  ".": "#EE65B6",
+  ":": "#9F37A7", // Pink/purple
+  "=": "#9F37A7",
+  ".": "#9F37A7",
 
-  "!": "#ED7A6E", // orange
-  "$": "#ED7A6E",
-  "~": "#ED7A6E",
-  "|": "#ED7A6E",
-  "@": "#ED7A6E",
+  "!": "#EE7D6D", // orange
+  "|": "#EE7D6D",
 
-  "text": "#383D42", // dark gray
+  "$": "#F2C068", // golden
+  "@": "#F2C068",
+
+  "~": "#383D42", // dark gray
+  "text": "#383D42",
 }
 
 const extend = (ctx, bind) => {
@@ -252,8 +253,10 @@ const parse = (code) => {
       var body = parse_term(extend(ctx, [name, Var(0)]));
       // return All(name, bind, body, eras);
       var strg = eras ? "-" : "";
+      var formattedName = "h('span', {style: {'color': '"+ colorPallete["text"] +"'}}, '"+ strg + name+ "'), ";
+      var formattedColon = "h('span', {style: {'color': '"+ colorPallete[":"] +"'}}, ' : '), ";
       // return "{"+ strg + name + " : "+ bind + "} " + body;
-      return "h('span', {style: {'color': '"+ colorPallete["{}"] +"'}}, [' {', '"+ strg + name +"', ' : ', "+ bind +", '} ', "+ body +"]),"; // strg is a string
+      return "h('span', {style: {'color': '"+ colorPallete["{}"] +"'}}, [' {', "+ formattedName +", "+formattedColon+", "+ bind +", '} ', "+ body +"]),"; // strg is a string
     }
 
     // Lambda
@@ -268,9 +271,14 @@ const parse = (code) => {
       // return expr ? Dup(name, expr, body) : Lam(name, bind, body, eras);
       // return expr ? "[" + strg + name + " = " + expr + "] " + body : 
       //        bind ? "[" + strg + name + " : " + bind + "] " + body : "["+ strg + name + "] " + body;
-      var dup = "h('span', {style: {'color': '"+ colorPallete["[]"] +"'}}, ['[', '"+ strg + name +"', ' = ', "+ expr +", '] ', "+ body +"]), "; // strg and name are a string
-      var lam = "h('span', {style: {'color': '"+ colorPallete["[]"] +"'}}, ['[', '"+ strg + name +"', ' : ', "+ bind +", '] ', "+ body +"]), "; 
-      return expr ? dup : (bind ? lam : "h('span', {style: {'color': '"+ colorPallete["[]"] +"'}}, [' [', '"+ strg + name +"', '] ', "+ body +" ]), ");
+
+      var formattedName = "h('span', {style: {'color': '"+ colorPallete["text"] +"'}}, '"+ strg + name+ "'), ";
+      var formattedEqual = "h('span', {style: {'color': '"+ colorPallete["="] +"'}}, ' = '), ";
+      var formattedColon = "h('span', {style: {'color': '"+ colorPallete[":"] +"'}}, ' : '), ";
+
+      var dup = "h('span', {style: {'color': '"+ colorPallete["[]"] +"'}}, ['[', "+formattedName+", "+formattedEqual+", "+ expr +", '] ', "+ body +"]), "; // strg and name are a string
+      var lam = "h('span', {style: {'color': '"+ colorPallete["[]"] +"'}}, ['[', "+formattedName+", "+formattedColon+", "+ bind +", '] ', "+ body +"]), "; 
+      return expr ? dup : (bind ? lam : "h('span', {style: {'color': '"+ colorPallete["[]"] +"'}}, [' [', "+formattedName+", '] ', "+ body +" ]), ");
    }
 
     // Box
@@ -302,7 +310,8 @@ const parse = (code) => {
       var type = parse_term(extend(ctx, [name, Var(0)]));
       // return Slf(name, type);
       // return "$" + name + " " + type;
-      return "h('span', {style: {'color': '"+ colorPallete["$"] +"'}}, ['$', '"+ name +"', "+ type +"]), "; // name is a string
+      var formattedName = "h('span', {style: {'color': '"+ colorPallete["text"] +"'}}, '"+name+"'), "
+      return "h('span', {style: {'color': '"+ colorPallete["$"] +"'}}, ['$', "+ formattedName +", "+ type +"]), "; // name is a string
     }
 
     // New
@@ -403,7 +412,7 @@ function parseCode(code) {
   var output = "";
   for (key in parsedCode) {
     var formattedKey = ". "+key;
-    output += "h('p', {style: {'color': ''}}, '"+ formattedKey +"'), "+parsedCode[key];
+    output += "h('p', {style: {'color': "+colorPallete["."]+"}}, '"+ formattedKey +"'), "+parsedCode[key];
     output += "h('br'), "
   }
   return output;
