@@ -1,3 +1,5 @@
+const h = require("inferno-hyperscript").h;
+
 const Var = (index)                  => ["Var", {index},                  ];
 const Typ = ()                       => ["Typ", {style: {'color': ''}},                       ];
 const All = (name, bind, body, eras) => ["All", {name, bind, body, eras}, ];
@@ -408,6 +410,10 @@ console.log("\n");
 console.log(parsedCode);
 
 
+
+// TODO: como passar o código corretamente pro index.js?
+// 1. o parser fazer o import do hyperscript
+// 2. Remover o primeiro e último caractere antes de enviar pro index. > ruim por causa da performance
 function parseCode(code) {
   var output = "";
   for (key in parsedCode) {
@@ -415,7 +421,8 @@ function parseCode(code) {
     output += "h('p', {style: {'color': "+colorPallete["."]+"}}, '"+ formattedKey +"'), "+parsedCode[key];
     output += "h('br'), "
   }
-  return output;
+  var test = h('p', {}, 'Testiing code inside string');
+  return test;
 }
 
 module.exports = {parseCode};

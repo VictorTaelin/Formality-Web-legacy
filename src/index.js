@@ -131,6 +131,10 @@ class Site extends Component {
       ]),
     ])
 
+    var code = `. succ
+    : {n : Nat} Nat
+    = [n]
+      @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))`;
     // ============= Home =============
     if (this.state.page === pageHome || this.state.page === null ) {
       return h("div", [
@@ -148,6 +152,7 @@ class Site extends Component {
 
         h("div", {style: {'font-family': "Inconsolata"}}, [
          h('div', {}, [h('p', {style: {'color': '#9F37A7'}}, [': ', h('span', {style: {'color': '#37889F'}}, [' {', h('span', {style: {'color': '#383D42'}}, 'n'), , h('span', {style: {'color': '#9F37A7'}}, ':'), , h('span', {style: {'color': '#383D42'}}, 'Nat'), , '} ', h('span', {style: {'color': '#383D42'}}, 'Nat'), ]),] ), h('p', {style: {'color': '#9F37A7'}},  ['= ', h('span', {style: {'color': '#6A266F'}}, [' [', h('span', {style: {'color': '#383D42'}}, 'n'), , '] ', h('span', {style: {'color': '#F2C068'}}, ['@', h('span', {style: {'color': '#383D42'}}, 'Nat'),  h('span', {style: {'color': '#6A266F'}}, [' [', h('span', {style: {'color': '#383D42'}}, '-P'), , '] ', h('span', {style: {'color': '#6A266F'}}, [' [', h('span', {style: {'color': '#383D42'}}, 's'), , '] ', h('span', {style: {'color': '#6A266F'}}, ['[', h('span', {style: {'color': '#383D42'}}, 's'), , h('span', {style: {'color': '#9F37A7'}}, '='), , h('span', {style: {'color': '#383D42'}}, 's'), , '] ', h('span', {style: {'color': '#6A266F'}}, ['[', h('span', {style: {'color': '#383D42'}}, 'A'), , h('span', {style: {'color': '#9F37A7'}}, '='), , h('span', {style: {'color': '#FF4F54'}}, [' (', h('span', {style: {'color': '#383D42'}}, [h('span', {style: {'color': '#383D42'}}, [h('span', {style: {'color': '#EE7D6D'}}, [ '~', h('span', {style: {'color': '#383D42'}}, 'n'), ]), , ' ', '-', h('span', {style: {'color': '#383D42'}}, 'P'),  ]),, ' ', '', h('span', {style: {'color': '#EE7D6D'}}, [ ' | ', h('span', {style: {'color': '#383D42'}}, 's'),]),  ]),, ') ']), , '] ', h('span', {style: {'color': '#EE7D6D'}}, [ ' | ', h('span', {style: {'color': '#6A266F'}}, [' [', h('span', {style: {'color': '#383D42'}}, 'z'), , '] ', h('span', {style: {'color': '#FF4F54'}}, [' (', h('span', {style: {'color': '#383D42'}}, [h('span', {style: {'color': '#383D42'}}, [h('span', {style: {'color': '#383D42'}}, 's'),, ' ', '-', h('span', {style: {'color': '#383D42'}}, 'n'),  ]),, ' ', '', h('span', {style: {'color': '#FF4F54'}}, [' (', h('span', {style: {'color': '#383D42'}}, [h('span', {style: {'color': '#383D42'}}, 'A'), , ' ', '', h('span', {style: {'color': '#383D42'}}, 'z'),  ]),, ') ']),  ]),, ') ']),  ]), ]), ]), ]),  ]),  ]), ]),  ]), ] ), ]),
+          p.parseCode(code)
         ]),
         
         h(Introduction),
