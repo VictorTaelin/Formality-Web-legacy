@@ -381,6 +381,7 @@ const parse = (code) => {
 }
 
 function parseCode(code) {
+  const parsedCode = parse(code);
   var children = [];
   for (var key in parsedCode) {
     var formattedKey = ". "+key;
