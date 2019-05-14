@@ -16,7 +16,7 @@ const Ann = (type, expr, done)       => ["Ann", {type, expr, done},       ];
 
 const Ctx = () => null;
 
-const colorPallete = {
+const colorPalette = {
   "[]": "#6A266F", // purple
   "{}": "#37889F", // dark blue
   "()": "#FF4F54", // red
@@ -63,7 +63,7 @@ const get_bind = (ctx, i, j = 0) => {
     // WARNING: I'm removing the shift to test the function
     // return [ctx.head[0], ctx.head[1] ? ctx.head[0] : null]
 
-    return [ctx.head[0], ctx.head[1] ? h('span', {style: {'color': colorPallete["text"] }}, ctx.head[0])  : null]
+    return [ctx.head[0], ctx.head[1] ? h('span', {style: {'color': colorPalette["text"] }}, ctx.head[0])  : null]
     // return [ctx.head[0], ctx.head[1] ? shift(ctx.head[1], i, 0)  : null]
   }
 }
@@ -227,19 +227,19 @@ const parse = (code) => {
         // var func = App(func, argm, eras);
         strg = eras ? "-" : "";
         // var func =  func +" "+ strg + argm ; // a function an its application
-        var func = h('span', {style: {'color': colorPallete["text"] }}, [ func , ' ', strg, argm ]); 
+        var func = h('span', {style: {'color': colorPalette["text"] }}, [ func , ' ', strg, argm ]); 
         skip_spaces();
       }
        // return " (" + argm + func +")";
       // return " ("+ func + ")";
-      return h('span', {style: {'color': colorPallete["()"] }}, [' (', func , ') ']);
+      return h('span', {style: {'color': colorPalette["()"] }}, [' (', func , ') ']);
     }
 
     // Type
     else if (match("Type")) {
       // return Typ();
       // return "Type ";
-      return h('span', {style: {'color': colorPallete["text"] }}, 'Type');
+      return h('span', {style: {'color': colorPalette["text"] }}, 'Type');
     }
 
     // Forall
@@ -252,10 +252,10 @@ const parse = (code) => {
       var body = parse_term(extend(ctx, [name, Var(0)]));
       // return All(name, bind, body, eras);
       var strg = eras ? "-" : "";
-      var formattedName = h('span', {style: {'color': colorPallete["text"] }}, strg + name );
-      var formattedColon = h('span', {style: {'color': colorPallete[":"] }}, ' : ');
+      var formattedName = h('span', {style: {'color': colorPalette["text"] }}, strg + name );
+      var formattedColon = h('span', {style: {'color': colorPalette[":"] }}, ' : ');
       // return "{"+ strg + name + " : "+ bind + "} " + body;
-      return h('span', {style: {'color': colorPallete["{}"] }}, [' {', formattedName, formattedColon, bind, '} ', body]); // strg is a string
+      return h('span', {style: {'color': colorPalette["{}"] }}, [' {', formattedName, formattedColon, bind, '} ', body]); // strg is a string
     }
 
     // Lambda
@@ -271,13 +271,13 @@ const parse = (code) => {
       // return expr ? "[" + strg + name + " = " + expr + "] " + body : 
       //        bind ? "[" + strg + name + " : " + bind + "] " + body : "["+ strg + name + "] " + body;
 
-      var formattedName = h('span', {style: {'color': colorPallete["text"] }}, strg + name);
-      var formattedEqual = h('span', {style: {'color': colorPallete["="] }}, ' = ');
-      var formattedColon = h('span', {style: {'color': colorPallete[":"] }}, ' : ');
+      var formattedName = h('span', {style: {'color': colorPalette["text"] }}, strg + name);
+      var formattedEqual = h('span', {style: {'color': colorPalette["="] }}, ' = ');
+      var formattedColon = h('span', {style: {'color': colorPalette[":"] }}, ' : ');
 
-      var dup = h('span', {style: {'color': colorPallete["[]"] }}, ['[', formattedName, formattedEqual, expr, '] ', body]); // strg and name are a string
-      var lam = h('span', {style: {'color': colorPallete["[]"] }}, ['[', formattedName, formattedColon, bind , '] ', body]); 
-      return expr ? dup : (bind ? lam : h('span', {style: {'color': colorPallete["[]"] }}, [' [', formattedName, '] ', body ]));
+      var dup = h('span', {style: {'color': colorPalette["[]"] }}, ['[', formattedName, formattedEqual, expr, '] ', body]); // strg and name are a string
+      var lam = h('span', {style: {'color': colorPalette["[]"] }}, ['[', formattedName, formattedColon, bind , '] ', body]); 
+      return expr ? dup : (bind ? lam : h('span', {style: {'color': colorPalette["[]"] }}, [' [', formattedName, '] ', body ]));
    }
 
     // Box
@@ -285,14 +285,14 @@ const parse = (code) => {
       var expr = parse_term(ctx);
       // return Box(expr);
       // return " ! " + expr;
-      return h('span', {style: {'color': colorPallete["!"] }}, [ ' ! ', expr]);
+      return h('span', {style: {'color': colorPalette["!"] }}, [ ' ! ', expr]);
     }
 
     // Put
     else if (match("|")) {
       var expr = parse_term(ctx);
       // return " | " + expr;
-      return h('span', {style: {'color': colorPallete["|"] }}, [ ' | ', expr]);
+      return h('span', {style: {'color': colorPalette["|"] }}, [ ' | ', expr]);
     }
 
     // Let
@@ -309,8 +309,8 @@ const parse = (code) => {
       var type = parse_term(extend(ctx, [name, Var(0)]));
       // return Slf(name, type);
       // return "$" + name + " " + type;
-      var formattedName = h('span', {style: {'color': colorPallete["text"] }}, name);
-      return h('span', {style: {'color': colorPallete["$"] }}, ['$', formattedName, type]);
+      var formattedName = h('span', {style: {'color': colorPalette["text"] }}, name);
+      return h('span', {style: {'color': colorPalette["$"] }}, ['$', formattedName, type]);
     }
 
     // New
@@ -319,7 +319,7 @@ const parse = (code) => {
       var expr = parse_term(ctx);
       // return New(type, expr);
       // return "@" + type + " " + expr;
-      return h('span', {style: {'color': colorPallete["@"]}}, ['@',type, expr ]);
+      return h('span', {style: {'color': colorPalette["@"]}}, ['@',type, expr ]);
     }
 
     // Use
@@ -327,7 +327,7 @@ const parse = (code) => {
       var expr = parse_term(ctx);
       // return Use(expr);
       // return "~" + expr; 
-      return h('span', {style: {'color': colorPallete["~"] }}, [ '~', expr]);
+      return h('span', {style: {'color': colorPalette["~"] }}, [ '~', expr]);
     }
 
     // Ann
@@ -338,8 +338,8 @@ const parse = (code) => {
       // return Ann(type, expr, false);
       // return ": "+ type + " = "+ expr;
       return h('div', {}, [
-      h('p', {style: {'color': colorPallete[":"] }}, [': ', type] ), 
-      h('p', {style: {'color': colorPallete["="] }},  ['= ', expr] )]);
+      h('p', {style: {'color': colorPalette[":"] }}, [': ', type] ), 
+      h('p', {style: {'color': colorPalette["="] }},  ['= ', expr] )]);
     }
 
     // Variable / Reference
@@ -353,7 +353,7 @@ const parse = (code) => {
       if (var_index === null) {    
         // return Ref(name, false);
         // return name;
-        return h('span', {style: {'color': colorPallete["text"] }}, name);
+        return h('span', {style: {'color': colorPalette["text"] }}, name);
       } else {
         return get_bind(ctx, var_index)[1];
       }
@@ -380,77 +380,39 @@ const parse = (code) => {
   return defs;
 }
 
-// ====================================================
-
-const code = `
-. Nat
-: Type
-= $self
-  {-P : {:Nat} Type}
-  {s : ! {-n : Nat} {h : (P n)} (P (succ n))}
-  ! {z : (P zero)}
-    (P self)
-
-. succ
-: {n : Nat} Nat
-= [n]
-  @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))
-
-. zero
-: Nat
-= @Nat [-P] [s] [s = s] | [z] z
-`
-
-const parsedCode = parse(code);
-// console.log("\n");
-console.log(parsedCode);
-
-
-
-// TODO: como passar o código corretamente pro index.js?
-// 1. o parser fazer o import do hyperscript
-// 2. Remover o primeiro e último caractere antes de enviar pro index. > ruim por causa da performance
 function parseCode(code) {
-  var output = "";
-  for (key in parsedCode) {
+  var children = [];
+  for (var key in parsedCode) {
     var formattedKey = ". "+key;
-    output += h('p', {style: {'color': colorPallete["."]}}, formattedKey), parsedCode[key];
-    output += h('br');
+    children.push(h('p', {style: {'color': colorPalette["."]}}, formattedKey), parsedCode[key]);
+    children.push(h('br'));
   }
-  // var test = "h('p', {}, 'Testiing code inside string')";
-  return output;
+  return h("div", {}, children);
 }
-
-// console.log(parseCode(code));
 
 module.exports = {parseCode};
 
+// ====================================================
 
+// const code = `
+// . Nat
+// : Type
+// = $self
+//   {-P : {:Nat} Type}
+//   {s : ! {-n : Nat} {h : (P n)} (P (succ n))}
+//   ! {z : (P zero)}
+//     (P self)
 
+// . succ
+// : {n : Nat} Nat
+// = [n]
+//   @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))
 
+// . zero
+// : Nat
+// = @Nat [-P] [s] [s = s] | [z] z
+// `
 
-
-
-
-
-
-
-
-
-// ======== Using show =========
-// const showCode = (node) => {
-//   var str = "";
-//   for (var key in node) {
-//     str += ". " + key+ " ";
-//     try { 
-//       str += show(parsedCode[key]); 
-//     } catch (e){
-//       console.log(" >>>>>> logging error");
-//       console.log(e);
-//     }    
-//     str += "\n";
-//   }
-//   return str;
-// }
-
-// console.log(showCode(parsedCode));
+// const parsedCode = parse(code);
+// console.log("\n");
+// console.log(parsedCode);
