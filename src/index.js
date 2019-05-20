@@ -131,10 +131,6 @@ class Site extends Component {
       ]),
     ])
 
-    var code = `. succ
-    : {n : Nat} Nat
-    = [n]
-      @Nat [-P] [s] [s = s] [A = (~n -P |s)] | [z] (s -n (A z))`;
     // ============= Home =============
     if (this.state.page === pageHome || this.state.page === null ) {
       return h("div", [
@@ -148,10 +144,6 @@ class Site extends Component {
             h("span", {style: {"font-family": 'Open Sans' }}, "gramming language"),
           ]),
           h(Button, {title: "Try it", onClick: () => { this.setState({page: pageTryIt}); window.scrollTo(0, 0); }}),
-        ]),
-
-        h("div", {style: {'font-family': "Inconsolata"}}, [
-          p.parseCode(code)
         ]),
         
         h(Introduction),
