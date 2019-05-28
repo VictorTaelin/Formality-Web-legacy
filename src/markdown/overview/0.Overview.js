@@ -6,21 +6,6 @@ module.exports =
       "Overview"
     ]
   ),
-  h('p', {style: {'margin-top': '5px'}}, 
-    [
-        h('img', {src: 'https://petgusto.com/wp-content/uploads/2018/09/cachorros-pequenos-e-fofos-10-raças-que-voce-precisa-conhecer-6.jpg', style: {'max-width': '100%', 'height': 'auto' }} )
-    ]
-  ),
-  h('p', {style: {'margin-top': '5px'}}, 
-    [
-      "Go to ",
-      h('a', {href: '/tryIt', style: {'color': '#0769D7', 'text-decoration': 'none'}},  
-        [
-          "Try It"
-        ]
-      )
-    ]
-  ),
   h('h2', {style: {'margin-top': '20px'}}, 
     [
       "Why",

@@ -4,7 +4,7 @@ const Canvas = require("inferno-canvas-component-2");
 
 // Formality
 const f = require("formality-lang");
-const p = require("./formality/formality-parser");
+const p = require("./parsers/formality-parser");
 
 // Style
 const s = require('./style');
@@ -631,12 +631,12 @@ class TryIt extends Component {
 
     return h("div", {style: container}, [
       h("p", {style: title}, "Online editor"),
-      h("p", {style: text}, [
-        h("span", {}, "You can read more about Formality type system "),
-        h(InternalLink, {title: "here "}), // TODO: add link
-        h("span", {}, "and its installation "),
-        h(InternalLink, {title: "here "}), // TODO: add link
-      ]),
+      // h("p", {style: text}, [
+      //   h("span", {}, "You can read more about Formality type system "),
+      //   h(InternalLink, {title: "here "}), // TODO: add link
+      //   h("span", {}, "and its installation "),
+      //   h(InternalLink, {title: "here "}), // TODO: add link
+      // ]),
       h(Terminal)
     ] );
   }
